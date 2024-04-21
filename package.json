@@ -1,0 +1,20 @@
+{
+  "name": "h5-design",
+  "version": "1.0.0",
+  "packageManager": "pnpm@8.15.5",
+  "main": "index.js",
+  "scripts": {
+    "client:dev": "pnpm -F client dev",
+    "server:dev": "pnpm -F api start:dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "@kirklin/eslint-config": "^2.2.0",
+    "@types/node": "^20.11.30",
+    "eslint": "^8.57.0",
+    "eslint-plugin-format": "^0.1.0"
+  }
+}
