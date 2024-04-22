@@ -15,11 +15,11 @@ export default defineConfig({
       scale: 1.5,
     }),
     presetDaisy({
-      themes: true,
+      themes: true
     }),
   ],
   transformers: [
     transformerDirectives(),
     transformerVariantGroup(),
-  ],
+  ]
 });

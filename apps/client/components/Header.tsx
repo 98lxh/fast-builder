@@ -2,18 +2,17 @@ function Header() {
   const { toggleDarkMode, darkMode } = useDarkMode();
 
   return (
-    <header class="top-0 bg-opacity-50 backdrop-blur-xl z-40 font-customFont w-full"  >
-      <div class="mx-auto max-w-screen-xl mt-2">
+    <header class="top-0 bg-opacity-50 z-40 font-customFont w-full "  >
+      <div class="mx-[24px] mt-2">
         <div class="flex h-16 items-center justify-between">
           <div class="logo flex items-center w-[32px] h-[32px] relative">
             <div class="logo-bg"></div>
             <img class="w-[30px] h-[30px] absolute" src="/logo.png" />
-            <span class="absolute left-[42px] text-2xl">start</span>
+            <p class="w-[150px] color-primary select-none absolute left-[45px] text-2xl font-bold">H5 Designer</p>
           </div>
 
-          {/* 主题 */}
           < div class="login-out flex items-center" >
-            < button class="btn btn-sm btn-ghost rounded-md mx-1 w-8 h-8 p-0" onClick={toggleDarkMode}>
+            < button class="btn  btn-ghost rounded-md mx-1 w-8 h-8 p-0" onClick={toggleDarkMode}>
               {
                 darkMode.value === Theme.DARK ? (
                   <svg

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "client:dev": "pnpm -F client dev",
+    "client:build": "pnpm -F client build",
     "server:dev": "pnpm -F api start:dev"
   },
   "keywords": [],

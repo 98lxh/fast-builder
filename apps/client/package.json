@@ -17,18 +17,18 @@
     "daisyui": "^3.9.4",
     "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
-    "vite-plugin-vueact": "^0.0.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@css-render/vue3-ssr": "^0.15.10",
+    "@css-render/vue3-ssr": "^0.15.12",
     "@unocss/eslint-config": "^0.58.6",
     "naive-ui": "^2.38.1",
     "unocss": "^0.58.6",
     "unocss-preset-chinese": "^0.3.2",
     "unocss-preset-daisy": "^7.0.0",
     "unocss-preset-ease": "^0.0.3",
-    "unplugin-auto-import": "^0.17.5"
+    "unplugin-auto-import": "^0.17.5",
+    "vite-plugin-vueact": "^0.0.2"
   }
 }

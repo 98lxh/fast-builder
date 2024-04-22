@@ -7,6 +7,13 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@vueuse/nuxt'
   ],
+  unocss: {
+    theme: {
+      colors: {
+        'primary': '#1A5CFF'
+      }
+    }
+  },
   build: {
     transpile:
       process.env.NODE_ENV === 'production'
