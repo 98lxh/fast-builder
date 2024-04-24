@@ -105,6 +105,9 @@ importers:
       pinia:
         specifier: ^2.1.7
         version: 2.1.7(typescript@5.4.5)(vue@3.4.23)
+      vite-plugin-vueact:
+        specifier: ^0.0.7
+        version: 0.0.7(vite@5.2.10)(vue@3.4.23)
       vue:
         specifier: ^3.4.21
         version: 3.4.23(typescript@5.4.5)
@@ -133,9 +136,6 @@ importers:
       unplugin-auto-import:
         specifier: ^0.17.5
         version: 0.17.5(@vueuse/core@10.9.0)
-      vite-plugin-vueact:
-        specifier: ^0.0.6
-        version: 0.0.6(typescript@5.4.5)
 
 packages:
 
@@ -11102,13 +11102,15 @@ packages:
       - supports-color
     dev: false
 
-  /vite-plugin-vueact@0.0.6(typescript@5.4.5):
-    resolution: {integrity: sha512-Kt0YpIdHZCP2uzV+aS1wWCaFJY+TQWVah9ABvXEm0kukgVF9kuY5LVqqKVYVsWTxxB2bhta2KW0kKO+lU8lNjw==}
+  /vite-plugin-vueact@0.0.7(vite@5.2.10)(vue@3.4.23):
+    resolution: {integrity: sha512-tBAEEM2nN7dDuxd+a2fbtZvDWC5Ag8XezyIOo0rOpUrWQfsRnYcZNi/GmRjYPGzKG8MsbN8szo3Zy07JHE+AkA==}
+    peerDependencies:
+      vite: ^5.0.0
+      vue: ^3.0.0
     dependencies:
+      vite: 5.2.10(@types/node@20.12.7)
       vue: 3.4.23(typescript@5.4.5)
-    transitivePeerDependencies:
-      - typescript
-    dev: true
+    dev: false
 
   /vite@5.2.10(@types/node@20.12.7):
     resolution: {integrity: sha512-PAzgUZbP7msvQvqdSD+ErD5qGnSFiGOoWmV5yAKUEI0kdhjbH6nMWVyZQC/hSc4aXwc0oJ9aEdIiF9Oje0JFCw==}

@@ -13,6 +13,10 @@ body {
   margin: 0;
 }
 
+dialog {
+  border: 0;
+}
+
 :root {
   --p: 223 100% 55% !important;
   --pf: 223 100% 55% !important;

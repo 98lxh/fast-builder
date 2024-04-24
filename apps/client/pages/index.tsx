@@ -1,6 +1,8 @@
-import type { FC } from "vite-plugin-vueact";
+import MessageBox from "~/components/message/MessageBox";
 
-const Index: FC = function () {
+function Index() {
+  const visible = shallowRef(false)
+
   return (
     <div class="flex w-full">
       <div class="w-[248px] p-[24px]">
@@ -8,7 +10,7 @@ const Index: FC = function () {
         <button class="btn btn-ghost w-full mt-2">我的项目</button>
         <div class="divider" />
         <button class="btn btn-ghost w-full mt-2">后台管理</button>
-        <button class="btn btn-ghost w-full mt-2">接口文档</button>
+        <button class="btn btn-ghost w-full mt-2" onClick={() => visible.value = true}>接口文档</button>
       </div>
 
       <div class="flex-1 p-[24px]">
@@ -29,6 +31,12 @@ const Index: FC = function () {
           </div>
         </div>
       </div>
+
+
+      <MessageBox
+        v-model:visible={visible.value}
+        content="该功能未开发完成"
+      />
     </div>
   )
 }
