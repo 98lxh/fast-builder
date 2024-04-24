@@ -1,5 +1,5 @@
 {
-  "name": "h5-design",
+  "name": "H5-Designer",
   "version": "1.0.0",
   "packageManager": "pnpm@8.15.5",
   "main": "index.js",
