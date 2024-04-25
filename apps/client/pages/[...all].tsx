@@ -1,7 +1,4 @@
-
 function NotFound() {
-  const { push } = useRouter();
-
   return (
     <div class="w-full">
       <p class="text-2xl text-center">Not Found</p>

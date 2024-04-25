@@ -20,8 +20,8 @@ const MessageBox: FC<DefineProps, DefineEmits> = function (componentProps, { emi
     visible: false,
     title: '提示',
     content: '你确定吗?',
-    confirmBtnText: '确定',
-    cancelBtnText: '取消'
+    cancelBtnText: '取消',
+    confirmBtnText: '确定'
   })
 
   const dialogRef = ref<HTMLDialogElement | null>(null);

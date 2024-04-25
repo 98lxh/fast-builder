@@ -10,7 +10,7 @@ function Header() {
             <img class="w-[30px] h-[30px] absolute" src="/logo.png" />
             <p class="w-[150px] color-primary select-none absolute left-[45px] text-2xl font-bold">H5 Designer</p>
           </div>
-
+          
           < div class="login-out flex items-center" >
             < button class="btn  btn-ghost rounded-md mx-1 w-8 h-8 p-0" onClick={toggleDarkMode}>
               {

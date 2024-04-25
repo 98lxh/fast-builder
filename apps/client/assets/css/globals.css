@@ -1,12 +1,16 @@
 .logo-bg {
-  background: #1a5cff;
+  filter: blur(20px) !important;
+  background: #1A5CFF;
   position: absolute;
   border-radius: 50%;
   width: 34px;
   height: 34px;
   left: 0;
   top: 0;
-  filter: blur(25px) !important;
+}
+
+.btn {
+  border-color: transparent !important;
 }
 
 body {
