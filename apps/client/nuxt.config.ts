@@ -7,6 +7,9 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@vueuse/nuxt'
   ],
+  devServer:{
+    port: 8888
+  },
   unocss: {
     theme: {
       colors: {

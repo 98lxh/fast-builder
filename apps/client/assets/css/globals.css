@@ -1,21 +1,30 @@
-.logo-bg {
-  filter: blur(20px) !important;
-  background: #1A5CFF;
-  position: absolute;
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  left: 0;
-  top: 0;
-}
-
 :root {
   --p: 223 100% 55% !important;
   --pf: 223 100% 55% !important;
   --pc: 0 0% 100% !important;
 }
 
+.logo-bg {
+  filter: blur(20px) !important;
+  background: #1A5CFF;
+  position: absolute;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  left: 5px;
+  top: 5px;
+}
 
 .tab {
   height: auto !important;
+}
+
+.shadow-custom {
+  box-shadow:0  2px 12px 0 rgba(0,0,0,.1) !important;
+}
+
+.dark {
+  .shadow-custom {
+    box-shadow:0  2px 12px 0 rgba(0,0,0,.3) !important;
+  }
 }

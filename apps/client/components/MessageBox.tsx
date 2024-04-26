@@ -1,4 +1,5 @@
 import { type FC } from "vite-plugin-vueact"
+import { Teleport } from "vue";
 import useMergeProps from "~/composables/props";
 
 interface DefineProps {
@@ -37,26 +38,28 @@ const MessageBox: FC<DefineProps, DefineEmits> = function (componentProps, { emi
   }
 
   return (
-    <dialog open={props.value.visible} class="modal invisible">
-      <div ref={dialogRef} class="modal-box">
-        <h3 class="text-lg font-bold">{props.value.title}</h3>
-        <p class="py-4">{props.value.content}</p>
-        <div class="modal-action">
-          <form method="dialog">
-            <button onClick={handleCancel} class="cancel btn btn-sm">
-              {props.value.cancelBtnText}
-            </button>
-          </form>
-          {
-            props.value.confirmBtnText && (
-              <button class="confirm btn  btn-sm btn-primary" onClick={handleConfirm}>
-                {props.value.confirmBtnText}
+    <Teleport to="body">
+      <dialog open={props.value.visible} class="modal invisible">
+        <div ref={dialogRef} class="modal-box">
+          <h3 class="text-lg font-bold">{props.value.title}</h3>
+          <p class="py-4">{props.value.content}</p>
+          <div class="modal-action">
+            <form method="dialog">
+              <button onClick={handleCancel} class="cancel btn btn-sm">
+                {props.value.cancelBtnText}
               </button>
-            )
-          }
+            </form>
+            {
+              props.value.confirmBtnText && (
+                <button class="confirm btn  btn-sm btn-primary" onClick={handleConfirm}>
+                  {props.value.confirmBtnText}
+                </button>
+              )
+            }
+          </div >
         </div >
-      </div >
-    </dialog >
+      </dialog>
+    </Teleport>
   )
 }
 
