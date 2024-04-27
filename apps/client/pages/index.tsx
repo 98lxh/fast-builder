@@ -1,5 +1,5 @@
-import Sidebar from "~/components/home/Sidebar";
-import Content from "~/components/home/Content"
+import Sidebar from "~/components/Home/Sidebar";
+import Content from "~/components/Home/Content"
 
 function Home() {
   return (

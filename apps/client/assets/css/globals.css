@@ -15,16 +15,12 @@
   top: 5px;
 }
 
-.tab {
-  height: auto !important;
-}
-
 .shadow-custom {
-  box-shadow:0  2px 12px 0 rgba(0,0,0,.1) !important;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1) !important;
 }
 
 .dark {
   .shadow-custom {
-    box-shadow:0  2px 12px 0 rgba(0,0,0,.3) !important;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .3) !important;
   }
 }

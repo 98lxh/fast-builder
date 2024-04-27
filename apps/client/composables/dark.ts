@@ -35,6 +35,7 @@ export function useDarkMode() {
       setDarkMode(!isDark);
       return;
     }
+
     const x = event.clientX;
     const y = event.clientY;
     const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
@@ -60,7 +61,10 @@ export function useDarkMode() {
   function setDarkMode(state = false) {
     const themeClass = state ? DARK_THEME_CLASS : LIGHT_THEME_CLASS;
     const themeValue = state ? Theme.DARK : Theme.LIGHT;
-    document.documentElement.classList.toggle(DARK_THEME_CLASS, state);
+
+    document.documentElement.classList.remove(state ? LIGHT_THEME_CLASS : DARK_THEME_CLASS)
+    document.documentElement.classList.add(state ? DARK_THEME_CLASS : LIGHT_THEME_CLASS)
+
     document.documentElement.setAttribute("data-theme", themeClass);
     darkMode.value = themeValue;
     localStorage.setItem(DARK_MODE, themeValue);
