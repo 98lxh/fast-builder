@@ -20,7 +20,7 @@ const Tabs: FC<DefineProps, DefineEmits> = function (props, { emit }) {
             class={`tab flex flex-col p-[0] w-[62px] h-[68px] box-border border-r-2 ${item.key === props.active ? 'border-primary' : 'border-transparent'}`}
             onClick={() => emit('update:active', item.key)}
           >
-            <NuxtIcon name={item.icon} />
+            <NuxtIcon name={item.icon} size="18px" />
             <span class={`${item.key === props.active ? 'text-primary' : ''}`}>
               {item.text}
             </span>
