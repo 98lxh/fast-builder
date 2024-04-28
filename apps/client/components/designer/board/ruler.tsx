@@ -156,10 +156,10 @@ const Ruler: FC<DefineProps> = function (props) {
 
   onMounted(() => {
     render();
-    canvasRef.value && canvasRef.value.addEventListener('resize', handleSizeFn)
+    window.addEventListener('resize', handleSizeFn)
   });
 
-  onUnmounted(() => canvasRef.value && canvasRef.value.removeEventListener('resize', handleSizeFn))
+  onUnmounted(() => window.removeEventListener('resize', handleSizeFn))
 
   return (
     <canvas

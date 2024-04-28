@@ -1,5 +1,6 @@
 import { DesignerComponents } from "~/constants/pageConstant";
 import Tabs from "./tabs";
+import ArrowButton from "~/components/ArrowButton";
 
 function Library(){
   const active = shallowRef(DesignerComponents[0].key);
@@ -18,13 +19,7 @@ function Library(){
     >
       <Tabs v-model:active={active.value} />
 
-      <div 
-        class="cursor-pointer absolute h-[80px] bg-base-100  w-[25px] right-[-25px] top-[50%] flex items-center" 
-        onClick={() => isHidden.value = !isHidden.value}
-        style="border-radius:0 16px 16px 0"
-      >
-        { isHidden.value ? <NuxtIcon name="right-arrow" /> : <NuxtIcon name="left-arrow" /> }
-      </div>
+      <ArrowButton v-model={isHidden.value} direction="left" />
     </div>
   )
 }
