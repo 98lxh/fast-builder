@@ -29,8 +29,8 @@ body {
   }
 }
 
-.nuxt-icon svg{
-  width: 1.5em !important;
-  height: 1.5em !important;
+.nuxt-icon svg {
+  width: 100% !important;
+  height: 100% !important;
   margin-bottom: 0 !important;
 }
