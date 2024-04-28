@@ -1,8 +1,19 @@
-import { HomeSideItems } from "~/constants/pageConstant";
-import MessageBox from "../MessageBox";
+import { HomeSideItems } from "~/constants/pageConstant"
+import MessageBox from "~/components/MessageBox"
 
 function SidebarItems() {
   const visible = shallowRef(false)
+  const router = useRouter();
+
+  function patch(isFinished?: boolean, path?: string){
+
+    if(!isFinished || !path){
+      visible.value = true;
+      return;
+    }
+
+    router.push(path)
+  }
 
   return (
     <>
@@ -10,8 +21,8 @@ function SidebarItems() {
         HomeSideItems.map((item) => (
           item.divider ? <div class="my-2 border-b-1 dark:border-neutral" /> : (
               <div class="flex justify-center">
-                <div class={`btn w-full ${item.class && item.class}`} onClick={() => !item.isFinished && (visible.value = true)}>
-                    <i class={item.icon} />
+                <div class={`btn w-full ${item.class && item.class}`} onClick={() => patch(item.isFinished,item.patch)}>
+                    <NuxtIcon name={item.icon} />
                     <span>{item.text}</span>
                 </div>
               </div>

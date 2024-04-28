@@ -1,12 +1,14 @@
-import Components from "~/components/Designer/Components"
-import Board from "~/components/Designer/Board"
-import Setting from "~/components/Designer/Setting"
+import {
+  Setting,
+  Library,
+  Board,
+} from "~/components/designer"
+
 
 function Designer() {
-
   return (
     <div class="flex w-full">
-      <Components />
+      <Library />
       <Board />
       <Setting />
     </div>

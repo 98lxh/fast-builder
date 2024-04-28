@@ -20,6 +20,8 @@ export function useDarkMode() {
     isAppearanceTransition = document.startViewTransition && !window.matchMedia(`(prefers-reduced-motion: reduce)`).matches;
   })
 
+  const isDark = computed(() => darkMode.value === Theme.DARK)
+
   const initDarkMode = () => {
     if (isDarkMode && !cacheDarkMode) {
       setDarkMode(true);
@@ -75,5 +77,6 @@ export function useDarkMode() {
     initDarkMode,
     setDarkMode,
     darkMode,
+    isDark
   };
 }

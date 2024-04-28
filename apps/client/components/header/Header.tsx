@@ -1,4 +1,4 @@
-import HomeSidebarItems from "~/components/Home/SidebarItems"
+import { HomeSidebarItems } from "~/components/home"
 import ThemeButton from "./ThemeButton"
 
 function Header() {

@@ -1,0 +1,172 @@
+import type { FC } from "vite-plugin-vueact";
+
+interface DefineProps {
+  mode?: string | 'vertical' | 'horizontal';
+  offsetX: number;
+  offsetY: number;
+  scale: number;
+}
+
+const Ruler: FC<DefineProps> = function (props) {
+  const canvasRef = ref<HTMLCanvasElement | null>(null);
+  const { isDark } = useDarkMode();
+
+
+  const styles = computed(() => ({
+    width: props.mode === 'horizontal' ? '100%' : '30px',
+    height: props.mode === 'horizontal' ? '30px' : '100%',
+    cursor: props.mode === 'horizontal' ? 'row-resize' : 'col-resize',
+    backgroundColor: isDark.value ? '#191E24' : '#F2F2F2',
+    display: 'block',
+    zIndex: 1
+  }))
+
+  function getFixed(sparsity: number) {
+    const pointIdx = String(sparsity).indexOf('.')
+    const len = String(sparsity).length
+    return pointIdx < 0 ? 0 : len - pointIdx - 1
+  }
+
+  function isCloseToInteger(num: number) {
+    return Math.abs(num - Math.round(num)) < 0.0000001
+  }
+
+  // 获取间隔
+  function getSparsity(scale: number) {
+    if (scale <= 1) {
+      return 100
+    } else if (scale <= 3) {
+      return 50
+    } else if (scale <= 4) {
+      return 20
+    } else if (scale <= 5) {
+      return 10
+    }
+    return 5
+  }
+
+
+  function horizontal(
+    ctx: CanvasRenderingContext2D,
+    offset: number,
+    index: number,
+    pixelPerUnit: number,
+    sparsity: number,
+    h: number,
+    w: number,
+    gap: number
+  ) {
+    ctx.translate(29.5, 0)
+    const fixed = getFixed(sparsity)
+
+    do {
+      const num = ((offset + index) / pixelPerUnit) * sparsity
+      if (isCloseToInteger(num / sparsity)) {
+        ctx.moveTo(index, h * 0.5)
+        ctx.lineTo(index, h)
+        const text = num.toFixed(fixed)
+        const textWidth = ctx.measureText(text).width
+        ctx.fillText(text, index - textWidth / 2, 10)
+      } else {
+        ctx.moveTo(index, h * 0.7)
+        ctx.lineTo(index, h)
+      }
+      index += gap
+    } while (index < w)
+  }
+
+
+  function vertical(
+    ctx: CanvasRenderingContext2D,
+    offset: number,
+    index: number,
+    pixelPerUnit: number,
+    sparsity: number,
+    h: number,
+    w: number,
+    gap: number
+  ) {
+    ctx.translate(0, -0.5)
+    const fixed = getFixed(sparsity)
+
+    do {
+      const num = ((offset + index) / pixelPerUnit) * sparsity
+      if (isCloseToInteger(num / sparsity)) {
+        ctx.moveTo(w * 0.5, index + (num === 0 ? 1 : 0))
+        ctx.lineTo(w, index + (num === 0 ? 1 : 0))
+        const text = num.toFixed(fixed)
+        ctx.save()
+        ctx.rotate((-90 * Math.PI) / 180)
+        const textWidth = ctx.measureText(text).width
+        ctx.fillText(text, -((text === '0' ? index + 5 : index) + textWidth / 2), 12)
+        ctx.rotate((0 * Math.PI) / 180)
+        ctx.restore()
+      } else {
+        ctx.moveTo(w * 0.7, index)
+        ctx.lineTo(w, index)
+      }
+      index += gap
+    } while (index < h)
+  }
+
+  function render() {
+    const canvas = canvasRef.value
+    if (!canvas) return
+
+    const { width, height } = canvas.getBoundingClientRect()
+    const dpi = 2
+    canvas.width = width * dpi
+    canvas.height = height * dpi
+    canvas.style.width = width + 'px'
+    canvas.style.height = height + 'px'
+    let { width: w, height: h } = canvas
+    w /= dpi
+    h /= dpi
+    const ctx = canvas.getContext('2d')!
+    ctx.scale(dpi, dpi)
+    ctx.clearRect(0, 0, w, h)
+    ctx.save()
+    ctx.lineWidth = 1
+    ctx.strokeStyle = isDark.value ? '#d9d9d9' : '#191E24'
+    ctx.fillStyle = isDark.value ? '#d9d9d9' : '#191E24'
+    ctx.font = '12px serif'
+    ctx.beginPath()
+    const { offsetX, offsetY, scale } = props
+    const offset = props.mode === 'horizontal' ? offsetX : offsetY
+
+    const sparsity = getSparsity(scale)
+
+    const part = 10
+    const pixelPerUnit = scale * sparsity
+    const gap = pixelPerUnit / part
+    let index = offset % gap > 0 ? gap - (offset % gap) : -offset % gap
+
+
+    props.mode === 'vertical'
+      ? vertical(ctx, offset, index, pixelPerUnit, sparsity, h, w, gap)
+      : horizontal(ctx, offset, index, pixelPerUnit, sparsity, h, w, gap)
+
+    ctx.closePath()
+    ctx.stroke()
+    ctx.restore()
+  }
+
+  const handleSizeFn = useDebounceFn(render, 150);
+  watch(() => [props, isDark], render, { deep: true })
+
+  onMounted(() => {
+    render();
+    canvasRef.value && canvasRef.value.addEventListener('resize', handleSizeFn)
+  });
+
+  onUnmounted(() => canvasRef.value && canvasRef.value.removeEventListener('resize', handleSizeFn))
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{ ...styles.value, flex: 'none' }}
+    />
+  )
+}
+
+export default Ruler;

@@ -1,11 +1,14 @@
-import Sidebar from "~/components/Home/Sidebar";
-import Content from "~/components/Home/Content"
+import {
+  HomeSidebar,
+  HomeContent
+} from "~/components/home";
+
 
 function Home() {
   return (
     <div class="flex w-full">
-      <Sidebar />
-      <Content />
+      <HomeSidebar />
+      <HomeContent />
     </div>
   )
 }

@@ -4,14 +4,14 @@ export const HomeSideItems = [
     class: 'btn-primary',
     text: '开始创作',
     isFinished: true,
-    icon: 'i-mdi-monitor'
+    icon: 'add'
   },
   {
     patch: '/mine',
     class: 'btn-ghost',
-    text: '我的项目',
+    text: '我的页面',
     isFinished: false,
-    icon: 'i-mdi-add-circle'
+    icon: 'page'
   },
   {
     divider: true
@@ -21,14 +21,14 @@ export const HomeSideItems = [
     class: 'btn-ghost',
     text: '后台管理',
     isFinished: false,
-    icon: 'i-mdi-add-circle'
+    icon: 'admin'
   },
   {
     patch: '/docs',
     class: 'btn-ghost',
     text: '接口文档',
     isFinished: false,
-    icon: 'i-mdi-add-circle'
+    icon: 'doc'
   }
 ];
 
@@ -37,11 +37,11 @@ export const DesignerComponents = [
   {
     text: '基础',
     key: 'basic',
-    icon: 'i-mdi-monitor'
+    icon: 'computer'
   },
   {
     text: '图片',
     key: 'image',
-    icon: 'i-tabler-photo'
+    icon: 'image'
   }
 ]

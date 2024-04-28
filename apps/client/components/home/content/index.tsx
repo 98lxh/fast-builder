@@ -1,5 +1,5 @@
-import TabTemplate from "./TabTemplate";
-import TabMine from "./TabMine";
+import TabTemplate from "./TabTemplate"
+import TabMine from "./TabMine"
 
 function HomeContent() {
   const isTemplate = shallowRef(false);
