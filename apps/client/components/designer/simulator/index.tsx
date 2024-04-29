@@ -1,4 +1,5 @@
 import Ruler from "./ruler"
+import Board from "./board"
 
 function Simulator() {
   const el = ref<HTMLDivElement | null>(null)
@@ -6,11 +7,13 @@ function Simulator() {
 
   return (
     <div
-      class="m-[15px] flex-1 relative overflow-hidden relative cursor-pointer"
-      style="height:calc(100vh - 103px)"
+      class="m-[15px] flex-1 relative overflow-hidden relative cursor-pointer main-height"
       ref={el}
     >
 
+      <Board />
+
+      
       <Ruler
         mode="horizontal"
         width={size.width}

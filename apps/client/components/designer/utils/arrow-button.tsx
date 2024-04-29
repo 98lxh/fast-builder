@@ -20,10 +20,12 @@ const ArrowButton: FC<DefineProps, DefineEmits> = function (props, { emit }) {
       `}
     >
       {
-        (props.direction === 'right' && !props.modelValue)
-          ? <NuxtIcon name="right-arrow" />
-          : <NuxtIcon name="left-arrow" />
+        ( props.modelValue
+          ? <NuxtIcon name={props.direction === 'right' ? 'left-arrow' : 'right-arrow'} />
+          : <NuxtIcon name={props.direction === 'right' ? 'right-arrow' : 'left-arrow'} />
+        )
       }
+
     </div>
   )
 }

@@ -14,7 +14,7 @@ function Home() {
         </div>
       </div>
 
-      <div class="card bg-base-100  shadow-custom m-[14px] flex-1" style="height:calc(100vh - 103px)">
+      <div class="card bg-base-100  shadow-custom m-[14px] flex-1 main-height">
         <TabMine /> 
         <TabTemplate />
       </div>

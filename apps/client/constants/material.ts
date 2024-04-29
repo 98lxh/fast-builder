@@ -3,6 +3,10 @@ enum MATERIAL_KEY {
   MEDIA = 'MEDIA'
 }
 
+export type MaterialComponentItem = {
+  text: string;
+  icon: string
+}
 
 export const MaterialCategories = [
   {
@@ -17,12 +21,6 @@ export const MaterialCategories = [
   }
 ]
 
-
-type MaterialComponentItem = {
-  text: string;
-  icon: string
-}
-
 export const MaterialComponents:Record<MATERIAL_KEY, MaterialComponentItem[]> = {
   [MATERIAL_KEY.BASIC]: [
     {
@@ -31,7 +29,7 @@ export const MaterialComponents:Record<MATERIAL_KEY, MaterialComponentItem[]> = 
     },
     {
       text: '图片组件',
-      icon: 'designer/text'
+      icon: 'designer/image'
     }
   ],
   [MATERIAL_KEY.MEDIA]: [

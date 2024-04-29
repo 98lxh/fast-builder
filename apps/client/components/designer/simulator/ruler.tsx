@@ -126,8 +126,8 @@ const Ruler: FC<DefineProps> = function (props, { expose }) {
     ctx.clearRect(0, 0, w, h)
     ctx.save()
     ctx.lineWidth = 1
-    ctx.strokeStyle = isDark.value ? '#d9d9d9' : '#191E24'
-    ctx.fillStyle = isDark.value ? '#d9d9d9' : '#191E24'
+    ctx.strokeStyle = isDark.value ? '#E5E7EB' : '#8F949B'
+    ctx.fillStyle = isDark.value ? '#E5E7EB' : '#8F949B'
     ctx.font = '12px serif'
     ctx.beginPath()
     const { offsetX, offsetY, scale } = props
