@@ -1,4 +1,4 @@
-import ArrowButton from "~/components/ArrowButton";
+import ArrowButton from "./../utils/arrow-button";
 
 function Setting(){
   const isHidden = shallowRef(false);

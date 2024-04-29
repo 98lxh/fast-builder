@@ -17,7 +17,7 @@ const Ruler: FC<DefineProps> = function (props, { expose }) {
     width: props.mode === 'horizontal' ? '100%' : '30px',
     height: props.mode === 'horizontal' ? '30px' : '100%',
     cursor: props.mode === 'horizontal' ? 'row-resize' : 'col-resize',
-    backgroundColor: isDark.value ? '#191E24' : '#F2F2F2',
+    backgroundColor: 'transparent',
     display: 'block',
     zIndex: 1
   }))
@@ -174,7 +174,10 @@ const Ruler: FC<DefineProps> = function (props, { expose }) {
   return (
     <canvas
       ref={canvasRef}
-      style={{ ...styles.value, flex: 'none' }}
+      style={{ 
+        ...styles.value, 
+        flex: 'none' 
+      }}
     />
   )
 }

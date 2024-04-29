@@ -1,6 +1,6 @@
 import Ruler from "./ruler"
 
-function Board() {
+function Simulator() {
   const el = ref<HTMLDivElement | null>(null)
   const size = reactive(useElementSize(el))
 
@@ -32,4 +32,4 @@ function Board() {
   )
 }
 
-export default Board;
+export default Simulator;

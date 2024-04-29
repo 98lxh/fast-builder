@@ -1,15 +1,15 @@
 import {
-  Setting,
-  Library,
-  Board,
+  Simulator,
+  Material,
+  Setting
 } from "~/components/designer"
 
 
 function Designer() {
   return (
     <div class="flex w-full">
-      <Library />
-      <Board />
+      <Material />
+      <Simulator />
       <Setting />
     </div>
   )

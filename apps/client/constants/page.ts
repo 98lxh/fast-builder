@@ -1,4 +1,4 @@
-export const HomeSideItems = [
+export const SidebarItems = [
   {
     patch: '/designer/start',
     class: 'btn-primary',

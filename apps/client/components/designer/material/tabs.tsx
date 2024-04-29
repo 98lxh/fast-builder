@@ -1,5 +1,5 @@
 import type { FC } from "vite-plugin-vueact";
-import { DesignerCategories } from "~/constants/designer";
+import { MaterialCategories } from "~/constants/material";
 
 interface DefineProps {
   active?: string
@@ -13,7 +13,7 @@ const Tabs: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   return (
     <div role="tablist" class="tabs h-full tabs-bordered flex-col w-[62px] border-r-1 dark:border-neutral">
       {
-        DesignerCategories.map((item) => (
+        MaterialCategories.map((item) => (
           <p
             role="tab"
             key={item.key}

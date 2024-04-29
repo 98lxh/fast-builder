@@ -1,3 +1,4 @@
-export { default as Board } from "./board"
-export { default as Library } from "./library"
+export { default as Simulator } from "./simulator"
 export { default as Setting } from "./setting"
+export { default as Material } from "./material"
+

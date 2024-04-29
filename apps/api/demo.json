@@ -1,0 +1,66 @@
+{
+  "pages": {
+    "/": {
+      "title": "首页",
+      "path": "/",
+      "config": {
+        "bgColor": "#5D44FE",
+        "bgImage": "",
+        "keepAlive": false
+      },
+      "blocks": [
+        {
+          "_vid": "vid_f5f875d2f6",
+          "moduleName": "baseWidgets",
+          "componentKey": "button",
+          "label": "按钮",
+          "adjustPosition": true,
+          "focus": false,
+          "styles": {
+            "display": "flex",
+            "justifyContent": "flex-start",
+            "paddingTop": "0",
+            "paddingRight": "0",
+            "paddingLeft": "0",
+            "paddingBottom": "0",
+            "tempPadding": "0"
+          },
+          "hasResize": false,
+          "props": {
+            "text": "按钮",
+            "type": "default",
+            "size": "normal",
+            "native-type": "button",
+            "loading-type": "circular"
+          },
+          "draggable": true,
+          "showStyleConfig": true,
+          "animations": [],
+          "actions": [],
+          "events": [
+            {
+              "label": "点击按钮，且按钮状态不为加载或禁用时触发",
+              "value": "click"
+            },
+            {
+              "label": "开始触摸按钮时触发",
+              "value": "touchstart"
+            }
+          ],
+          "model": {}
+        }
+      ]
+    }
+  },
+  "models": [],
+  "actions": {
+    "fetch": {
+      "name": "接口请求",
+      "apis": []
+    },
+    "dialog": {
+      "name": "对话框",
+      "handlers": []
+    }
+  }
+}

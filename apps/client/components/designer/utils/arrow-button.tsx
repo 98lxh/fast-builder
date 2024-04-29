@@ -12,9 +12,12 @@ interface DefineEmits {
 const ArrowButton: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   return (
     <div
-      class={`cursor-pointer absolute h-[80px] bg-base-100  w-[25px] top-[50%] flex items-center ${props.direction === 'right' ? 'left-[-25px]' : 'right-[-25px]'}`}
-      style={`border-radius:${props.direction === 'right' ? '16px 0 0 16px'  : '0 16px 16px 0'}`}
+      style={`border-radius:${props.direction === 'right' ? '16px 0 0 16px' : '0 16px 16px 0'}`}
       onClick={() => emit('update:modelValue', !props.modelValue)}
+      class={`
+        cursor-pointer absolute h-[80px] bg-base-100  w-[25px] top-[50%] flex items-center justify-center
+        ${props.direction === 'right' ? 'left-[-25px]' : 'right-[-25px]'}
+      `}
     >
       {
         (props.direction === 'right' && !props.modelValue)

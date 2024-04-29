@@ -1,5 +1,5 @@
-import { HomeSidebarItems } from "~/components/home"
-import ThemeButton from "./ThemeButton"
+import { SidebarItems } from "~/components/home"
+import ThemeButton from "./theme"
 
 function Header() {
   const router = useRouter();
@@ -13,7 +13,7 @@ function Header() {
           </div>
 
           <ul tabindex={0} class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-            <HomeSidebarItems />
+            <SidebarItems />
           </ul>
         </div>
       </div>

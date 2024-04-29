@@ -1,12 +1,11 @@
-import { HomeSideItems } from "~/constants/pageConstant"
-import MessageBox from "~/components/MessageBox"
+import { SidebarItems } from "~/constants/page"
+import MessageBox from "~/components/message"
 
-function SidebarItems() {
+function HomeSidebarItems() {
   const visible = shallowRef(false)
   const router = useRouter();
 
   function patch(isFinished?: boolean, path?: string){
-
     if(!isFinished || !path){
       visible.value = true;
       return;
@@ -18,7 +17,7 @@ function SidebarItems() {
   return (
     <>
       {
-        HomeSideItems.map((item) => (
+        SidebarItems.map((item) => (
           item.divider ? <div class="my-2 border-b-1 dark:border-neutral" /> : (
               <div class="flex justify-center">
                 <div class={`btn w-full ${item.class && item.class}`} onClick={() => patch(item.isFinished,item.patch)}>
@@ -38,4 +37,4 @@ function SidebarItems() {
   )
 }
 
-export default SidebarItems;
+export default HomeSidebarItems;
