@@ -1,7 +1,4 @@
-enum MATERIAL_KEY {
-  BASIC = 'BASIC',
-  MEDIA = 'MEDIA'
-}
+import { MATERIAL_KEY } from "./enums";
 
 export type MaterialComponentItem = {
   text: string;
@@ -21,7 +18,7 @@ export const MaterialCategories = [
   }
 ]
 
-export const MaterialComponents:Record<MATERIAL_KEY, MaterialComponentItem[]> = {
+export const MaterialComponents: Record<MATERIAL_KEY, MaterialComponentItem[]> = {
   [MATERIAL_KEY.BASIC]: [
     {
       text: '文本组件',

@@ -1,6 +1,6 @@
 import ArrowButton from "./../utils/arrow-button";
 
-function Setting(){
+function Setting() {
   const isHidden = shallowRef(false);
 
   const styles = computed(() => ({
@@ -9,12 +9,12 @@ function Setting(){
   }))
 
   return (
-    <div 
-      class="flex card bg-base-100 shadow-custom m-[14px] w-[248px] absolute z-[2] main-height  right-[0px]"
+    <div
+      class="flex bg-base-100 shadow-custom w-[248px] absolute z-[2] main-height  right-[0px]"
       style={styles.value}
-      >
+    >
 
-     <ArrowButton v-model={isHidden.value} direction="right" />
+      <ArrowButton v-model={isHidden.value} direction="right" />
     </div>
   )
 }

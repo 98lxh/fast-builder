@@ -54,7 +54,7 @@ function Board() {
         lastX = currentX;
         lastY = currentY;
 
-        setTranslate(deltaX,deltaY);
+        setTranslate(deltaX, deltaY);
       };
 
       document.onmouseup = function () {
@@ -68,11 +68,11 @@ function Board() {
 
   return (
     <div
-      class="w-full h-full absolute top-[50%] left-[50%] translate-[-50%] flex items-center justify-center"
+      class="w-full h-full absolute top-[50%] left-[50%] translate-[-50%]"
       ref={boardRef}
     >
       <div
-        class={`w-[375px] h-[667px] shadow-custom  bg-base-100 absolute cursor-auto`}
+        class={`w-[375px] h-[667px] shadow-custom  top-[60px] left-[30%] bg-base-100 absolute cursor-auto`}
         style={`transform:translate(${translate.x}px,${translate.y}px)`}
         ref={contentRef}
       >

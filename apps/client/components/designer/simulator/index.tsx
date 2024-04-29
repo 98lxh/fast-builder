@@ -16,7 +16,7 @@ function Simulator() {
 
   return (
     <div
-      class="m-[15px] flex-1 relative overflow-hidden relative cursor-pointer main-height"
+      class="flex-1 relative overflow-hidden relative cursor-pointer main-height"
       ref={el}
     >
       <Ruler mode="horizontal" {...rulerProps.value} />

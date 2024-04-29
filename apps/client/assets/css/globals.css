@@ -2,6 +2,8 @@
   --p: 223 100% 55% !important;
   --pf: 223 100% 55% !important;
   --pc: 0 0% 100% !important;
+
+  --rounded-btn: 0% !important;
 }
 
 .logo-bg {
@@ -20,12 +22,12 @@ body {
 }
 
 .shadow-custom {
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1) !important;
+  box-shadow: 0 10px 12px 0 rgba(0, 0, 0, .1) !important;
 }
 
 .dark {
   .shadow-custom {
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .3) !important;
+    box-shadow: 0 10px 12px 0 rgba(0, 0, 0, .3) !important;
   }
 }
 
@@ -36,7 +38,7 @@ body {
 }
 
 .main-height {
-  height: calc(100vh - 103px) !important;
+  height: calc(100vh - 60px) !important;
 }
 
 
@@ -78,6 +80,3 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #cecacac7;
 }
-
-
-

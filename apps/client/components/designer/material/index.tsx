@@ -12,15 +12,14 @@ function Material(){
   const styles = computed(() => ({
     transition: 'width .3s',
     width: isHidden.value ? '60px' : '248px',
-    borderRadius: isHidden.value ? '16px 0px 0px 16px' :'16px'
   }))
 
   return (
     <div 
-      class="flex  bg-base-100 shadow-custom m-[14px] w-[248px] main-height relative"
+      class="flex  bg-base-100 shadow-custom w-[248px] main-height relative"
       style={styles.value}
     >
-      <Categories v-model:category={category.value} />
+      <Categories v-model:category={category.value} isHidden={isHidden.value} />
       <Components components={components.value} isHidden={isHidden.value} />
       <ArrowButton v-model={isHidden.value} direction="left" />
     </div>

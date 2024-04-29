@@ -9,7 +9,7 @@ interface DefineProps {
   scale: number;
 }
 
-const Ruler: FC<DefineProps> = function (props, { expose }) {
+const Ruler: FC<DefineProps> = function (props) {
   const canvasRef = ref<HTMLCanvasElement | null>(null);
   const { isDark } = useDarkMode();
 
@@ -19,6 +19,7 @@ const Ruler: FC<DefineProps> = function (props, { expose }) {
     cursor: props.mode === 'horizontal' ? 'row-resize' : 'col-resize',
     backgroundColor: 'transparent',
     display: 'block',
+    flex: 'none',
     zIndex: 1
   }))
 
@@ -60,18 +61,17 @@ const Ruler: FC<DefineProps> = function (props, { expose }) {
   ) {
     ctx.translate(29.5, 0)
     const fixed = getFixed(sparsity)
-
     do {
       const num = ((offset + index) / pixelPerUnit) * sparsity
       if (isCloseToInteger(num / sparsity)) {
-        ctx.moveTo(index, h * 0.5)
-        ctx.lineTo(index, h)
+        ctx.moveTo(index, 0)
+        ctx.lineTo(index, num === 0 ? h : h - 15)
         const text = num.toFixed(fixed)
         const textWidth = ctx.measureText(text).width
-        ctx.fillText(text, index - textWidth / 2, 10)
+        num !== 0 && ctx.fillText(text, index - textWidth / 2, h)
       } else {
-        ctx.moveTo(index, h * 0.7)
-        ctx.lineTo(index, h)
+        ctx.moveTo(index, 0)
+        ctx.lineTo(index, h - 20)
       }
       index += gap
     } while (index < w)
@@ -94,18 +94,18 @@ const Ruler: FC<DefineProps> = function (props, { expose }) {
     do {
       const num = ((offset + index) / pixelPerUnit) * sparsity
       if (isCloseToInteger(num / sparsity)) {
-        ctx.moveTo(w * 0.5, index + (num === 0 ? 1 : 0))
-        ctx.lineTo(w, index + (num === 0 ? 1 : 0))
+        ctx.moveTo(0, num === 0 ? index + 1 : index)
+        ctx.lineTo(num === 0 ? w : w - 15, num === 0 ? index + 1 : index)
         const text = num.toFixed(fixed)
         ctx.save()
         ctx.rotate((-90 * Math.PI) / 180)
         const textWidth = ctx.measureText(text).width
-        ctx.fillText(text, -((text === '0' ? index + 5 : index) + textWidth / 2), 12)
+        num !== 0 && ctx.fillText(text, -((index) + textWidth / 2), w)
         ctx.rotate((0 * Math.PI) / 180)
         ctx.restore()
       } else {
-        ctx.moveTo(w * 0.7, index)
-        ctx.lineTo(w, index)
+        ctx.moveTo(0, index)
+        ctx.lineTo(w - 20, index)
       }
       index += gap
     } while (index < h)
@@ -126,9 +126,9 @@ const Ruler: FC<DefineProps> = function (props, { expose }) {
     ctx.clearRect(0, 0, w, h)
     ctx.save()
     ctx.lineWidth = 1
-    ctx.strokeStyle = isDark.value ? '#E5E7EB' : '#8F949B'
-    ctx.fillStyle = isDark.value ? '#E5E7EB' : '#8F949B'
-    ctx.font = '12px serif'
+    ctx.strokeStyle = isDark.value ? '#8b8b8d' : '#8F949B'
+    ctx.fillStyle = isDark.value ? '#8b8b8d' : '#8F949B'
+    ctx.font = '14px serif'
     ctx.beginPath()
     const { offsetX, offsetY, scale } = props
     const offset = props.mode === 'horizontal' ? offsetX : offsetY
@@ -153,11 +153,7 @@ const Ruler: FC<DefineProps> = function (props, { expose }) {
 
   function render() {
     const canvas = canvasRef.value
-
-    if (!canvas) {
-      return
-    }
-
+    if (!canvas) { return }
     const { ctx, offset, index, pixelPerUnit, sparsity, h, w, gap } = getRenderOptions(canvas);
 
     props.mode === 'vertical'
@@ -171,14 +167,10 @@ const Ruler: FC<DefineProps> = function (props, { expose }) {
 
   watch(() => [props.height, props.width, isDark], useDebounceFn(render, 50), { deep: true })
 
+  onMounted(render)
+
   return (
-    <canvas
-      ref={canvasRef}
-      style={{ 
-        ...styles.value, 
-        flex: 'none' 
-      }}
-    />
+    <canvas ref={canvasRef} style={{ ...styles.value }} />
   )
 }
 
