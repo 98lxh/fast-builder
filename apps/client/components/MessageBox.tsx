@@ -1,5 +1,5 @@
-import { type FC } from "vite-plugin-vueact"
 import { Teleport } from "vue";
+import { type FC } from "vite-plugin-vueact"
 import useMergeProps from "~/composables/props";
 
 interface DefineProps {

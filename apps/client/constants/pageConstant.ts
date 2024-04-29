@@ -31,17 +31,3 @@ export const HomeSideItems = [
     icon: 'doc'
   }
 ];
-
-
-export const DesignerComponents = [
-  {
-    text: '基础',
-    key: 'basic',
-    icon: 'computer'
-  },
-  {
-    text: '图片',
-    key: 'image',
-    icon: 'image'
-  }
-]

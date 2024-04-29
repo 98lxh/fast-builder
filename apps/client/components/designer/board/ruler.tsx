@@ -4,13 +4,14 @@ interface DefineProps {
   mode?: string | 'vertical' | 'horizontal';
   offsetX: number;
   offsetY: number;
+  height: number;
+  width: number;
   scale: number;
 }
 
-const Ruler: FC<DefineProps> = function (props) {
+const Ruler: FC<DefineProps> = function (props, { expose }) {
   const canvasRef = ref<HTMLCanvasElement | null>(null);
   const { isDark } = useDarkMode();
-
 
   const styles = computed(() => ({
     width: props.mode === 'horizontal' ? '100%' : '30px',
@@ -20,6 +21,7 @@ const Ruler: FC<DefineProps> = function (props) {
     display: 'block',
     zIndex: 1
   }))
+
 
   function getFixed(sparsity: number) {
     const pointIdx = String(sparsity).indexOf('.')
@@ -109,10 +111,7 @@ const Ruler: FC<DefineProps> = function (props) {
     } while (index < h)
   }
 
-  function render() {
-    const canvas = canvasRef.value
-    if (!canvas) return
-
+  function getRenderOptions(canvas: HTMLCanvasElement) {
     const { width, height } = canvas.getBoundingClientRect()
     const dpi = 2
     canvas.width = width * dpi
@@ -133,14 +132,33 @@ const Ruler: FC<DefineProps> = function (props) {
     ctx.beginPath()
     const { offsetX, offsetY, scale } = props
     const offset = props.mode === 'horizontal' ? offsetX : offsetY
-
     const sparsity = getSparsity(scale)
-
     const part = 10
     const pixelPerUnit = scale * sparsity
     const gap = pixelPerUnit / part
-    let index = offset % gap > 0 ? gap - (offset % gap) : -offset % gap
+    const index = offset % gap > 0 ? gap - (offset % gap) : -offset % gap
 
+    return {
+      h,
+      w,
+      ctx,
+      gap,
+      part,
+      index,
+      offset,
+      sparsity,
+      pixelPerUnit
+    }
+  }
+
+  function render() {
+    const canvas = canvasRef.value
+
+    if (!canvas) {
+      return
+    }
+
+    const { ctx, offset, index, pixelPerUnit, sparsity, h, w, gap } = getRenderOptions(canvas);
 
     props.mode === 'vertical'
       ? vertical(ctx, offset, index, pixelPerUnit, sparsity, h, w, gap)
@@ -151,15 +169,7 @@ const Ruler: FC<DefineProps> = function (props) {
     ctx.restore()
   }
 
-  const handleSizeFn = useDebounceFn(render, 150);
-  watch(() => [props, isDark], render, { deep: true })
-
-  onMounted(() => {
-    render();
-    window.addEventListener('resize', handleSizeFn)
-  });
-
-  onUnmounted(() => window.removeEventListener('resize', handleSizeFn))
+  watch(() => [props.height, props.width, isDark], useDebounceFn(render, 50), { deep: true })
 
   return (
     <canvas
