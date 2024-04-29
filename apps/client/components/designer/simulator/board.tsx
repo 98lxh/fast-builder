@@ -8,6 +8,7 @@ function Board() {
     const dom = boardRef.value;
     if (!dom) { return }
 
+
     dom.onmousedown = function (evt: MouseEvent) {
       evt.preventDefault();
 
@@ -44,7 +45,6 @@ function Board() {
             translate.x -= Math.abs(deltaX);
           }
         }
-
 
         if(moveY) {
           if(Number(deltaY) > 0){

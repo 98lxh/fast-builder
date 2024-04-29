@@ -20,15 +20,8 @@ function Material(){
       class="flex  bg-base-100 shadow-custom m-[14px] w-[248px] main-height relative"
       style={styles.value}
     >
-
       <Categories v-model:category={category.value} />
-
-      
-      <div class={`flex m-2 gap-2 overflow-hidden w-[${isHidden.value ? 'auto' : '0px'}]`}>
-        <Components components={components.value} />
-      </div>
-
-
+      <Components components={components.value} isHidden={isHidden.value} />
       <ArrowButton v-model={isHidden.value} direction="left" />
     </div>
   )

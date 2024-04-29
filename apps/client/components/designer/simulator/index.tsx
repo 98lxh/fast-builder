@@ -1,5 +1,6 @@
 import Ruler from "./ruler"
 import Board from "./board"
+import Tools from "./tools"
 
 function Simulator() {
   const el = ref<HTMLDivElement | null>(null)
@@ -12,6 +13,8 @@ function Simulator() {
     >
 
       <Board />
+
+      <Tools />
 
       
       <Ruler
