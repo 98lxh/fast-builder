@@ -22,31 +22,35 @@ const Categories: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   }
 
   return (
-    <div role="tablist" class="tabs main-height tabs-bordered flex-col w-[60px] border-r-1 dark:border-neutral relative">
-      {
-        !props.isHidden && (
-          <div
-            class={`w-[2px] h-[${state.height}px] bg-primary absolute`}
-            style={{ top: (state.index * state.height) + 'px', transition: 'top .3s' }}
-          />
-        )
-      }
-
+    <div
+      class="tabs main-height tabs-bordered flex-col w-[60px] border-r-1 dark:border-neutral relative"
+      role="tablist"
+    >
       {
         MaterialCategories.map((item, index) => (
           <p
-            role="tab"
-            key={item.key}
             class={`tab flex flex-col p-[0] w-[62px] h-[68px] box-border`}
             onClick={() => onUpdate(item.key, index)}
+            role="tab"
+            key={item.key}
           >
-            <NuxtIcon name={item.icon} />
+            <div class="text-[18px]">
+              <NuxtIcon name={item.icon} />
+            </div>
 
             <span class={`${item.key === props.category ? 'text-primary' : ''}`}>
               {item.text}
             </span>
           </p>
         ))
+      }
+
+      {
+        !props.isHidden &&
+        (<div class={`w-[2px] h-[${state.height}px] bg-primary absolute`}
+          style={{ top: (state.index * state.height) + 'px', transition: 'top .3s' }}
+        />
+        )
       }
     </div>
   )

@@ -1,70 +1,29 @@
+import { bindMouseEvent } from "../util/board"
+
 function Board() {
   const boardRef = ref<HTMLDivElement | null>(null);
   const contentRef = ref<HTMLDivElement | null>(null);
   const translate = shallowReactive({ x: 0, y: 0 })
 
 
-  function setTranslate(deltaX: number, deltaY: number) {
+  function updateTranslate(deltaX: number, deltaY: number) {
     const moveX = deltaX !== 0;
     const moveY = deltaY !== 0;
 
     if (moveX) {
-      if (Number(deltaX) > 0) {
-        translate.x += deltaX;
-      } else {
-        translate.x -= Math.abs(deltaX);
-      }
+      Number(deltaX) > 0 ? translate.x += deltaX :  translate.x -= Math.abs(deltaX);
     }
 
     if (moveY) {
-      if (Number(deltaY) > 0) {
-        translate.y += deltaY;
-      } else {
-        translate.y -= Math.abs(deltaY);
-      }
+      Number(deltaY) > 0 ? translate.y += deltaY :  translate.y -= Math.abs(deltaY);
     }
   }
 
-
-  function bindUpdateBoardEvent() {
-    const dom = boardRef.value;
-    if (!dom) { return }
-
-    dom.onmousedown = function (evt: MouseEvent) {
-      evt.preventDefault();
-
-      if (contentRef.value?.contains(evt.target as HTMLElement)) {
-        return;
-      }
-
-      const startX = evt.pageX;
-      const startY = evt.pageY;
-
-      let lastX = startX;
-      let lastY = startY;
-
-      document.onmousemove = function (evt: MouseEvent) {
-        evt.preventDefault();
-        const currentX = evt.pageX;
-        const currentY = evt.pageY;
-
-        const deltaX = currentX - lastX;
-        const deltaY = currentY - lastY;
-
-        lastX = currentX;
-        lastY = currentY;
-
-        setTranslate(deltaX, deltaY);
-      };
-
-      document.onmouseup = function () {
-        document.onmousemove = null;
-        document.onmouseup = null;
-      };
-    };
-  }
-
-  onMounted(bindUpdateBoardEvent)
+  onMounted(() => bindMouseEvent(
+    boardRef.value,
+    contentRef.value,
+    updateTranslate
+  ))
 
   return (
     <div

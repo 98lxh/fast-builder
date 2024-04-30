@@ -9,7 +9,7 @@ function Tools() {
       </div>
 
       <div class="dropdown dropdown-hover border-1 w-full p-[5px] dropdown-left dark:border-gray">
-        <NuxtIcon tabindex={0} name="phone" />
+        <NuxtIcon tab-index={0} name="phone" />
         <div tabindex={0} class="dropdown-content z-[1] menu p-2 shadow bg-base-100 w-52">
           <div>111</div>
           <div>111</div>

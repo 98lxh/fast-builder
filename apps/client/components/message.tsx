@@ -39,7 +39,7 @@ const MessageBox: FC<DefineProps, DefineEmits> = function (componentProps, { emi
 
   return (
     <Teleport to="body">
-      <dialog open={props.value.visible} class="modal invisible">
+      <dialog open={props.value.visible} class="modal  mask">
         <div ref={dialogRef} class="modal-box  rounded-0">
           <h3 class="text-lg font-bold">{props.value.title}</h3>
           <p class="py-4">{props.value.content}</p>

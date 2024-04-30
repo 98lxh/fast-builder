@@ -2,8 +2,8 @@ function ThemeButton() {
   const { toggleDarkMode, darkMode } = useDarkMode();
 
   return (
-    < div class="login-out flex items-center" >
-      < button class="btn  btn-ghost rounded-md mx-1 w-8 h-8 p-0" onClick={toggleDarkMode}>
+    <div class="login-out flex items-center" >
+      <button class="btn  btn-ghost rounded-md mx-1 w-8 h-8 p-0" onClick={toggleDarkMode}>
         {
           darkMode.value === Theme.DARK ? (
             <svg

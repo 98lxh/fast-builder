@@ -14,7 +14,7 @@ function Home() {
         </div>
       </div>
 
-      <div class=" bg-base-100  shadow-custom m-[14px] mr-0 mb-0 flex-1">
+      <div class=" bg-base-100  shadow-custom flex-1 mt-[14px]">
         <TabMine />
         <TabTemplate />
       </div>

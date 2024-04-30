@@ -18,10 +18,13 @@ function HomeSidebarItems() {
     <>
       {
         SidebarItems.map((item) => (
-          item.divider ? <div class="my-2 border-b-1 dark:border-neutral" /> : (
-              <div class="flex justify-center">
+          item.divider
+             ? <div class="my-2 border-b-1 dark:border-neutral" /> 
+             : (<div class="flex justify-center">
                 <div class={`btn w-full ${item.class && item.class}`} onClick={() => patch(item.isFinished,item.patch)}>
-                    <NuxtIcon name={item.icon} size="18px" />
+                    <div class="text-[18px]">
+                      <NuxtIcon name={item.icon!} />
+                    </div>
                     <span>{item.text}</span>
                 </div>
               </div>

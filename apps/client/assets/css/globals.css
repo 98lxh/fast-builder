@@ -21,15 +21,6 @@ body {
   overflow: hidden;
 }
 
-.shadow-custom {
-  box-shadow: 0 10px 12px 0 rgba(0, 0, 0, .1) !important;
-}
-
-.dark {
-  .shadow-custom {
-    box-shadow: 0 10px 12px 0 rgba(0, 0, 0, .3) !important;
-  }
-}
 
 .nuxt-icon svg {
   width: 100% !important;
@@ -79,4 +70,19 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #cecacac7;
+}
+
+
+.shadow-custom {
+  box-shadow: 0 10px 12px 0 rgba(0, 0, 0, .1) !important;
+}
+
+.mask {
+  background-color: rgba(0, 0, 0, .4) !important;
+}
+
+.dark {
+  .shadow-custom {
+    box-shadow: 0 10px 12px 0 rgba(0, 0, 0, .3) !important;
+  }
 }
