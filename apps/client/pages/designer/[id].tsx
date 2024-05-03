@@ -1,11 +1,19 @@
 import {
   Simulator,
   Material,
-  Setting
+  Setting,
+  designerInjectionKey
 } from "~/components/designer"
 
 
 function Designer() {
+  const simulatorRef = ref<HTMLDivElement | null>(null)
+
+  provide(designerInjectionKey, {
+    setSimulatorRef: (simulator: HTMLDivElement) => { simulatorRef.value = simulator },
+    simulatorRef
+  })
+
   return (
     <div class="flex w-full">
       <Material />

@@ -1,6 +1,5 @@
 import { vitePluginVueact } from "vite-plugin-vueact"
 
-
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [

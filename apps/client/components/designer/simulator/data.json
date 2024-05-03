@@ -1,0 +1,22 @@
+{
+  "container": {
+    "width": 375,
+    "height": 667
+  },
+  "blocks": [
+    {
+      "component": "text",
+      "top": 100,
+      "left": 100,
+      "zIndex": 1,
+      "props": {}
+    },
+    {
+      "component": "button",
+      "top": 100,
+      "left": 200,
+      "zIndex": 1,
+      "props": {}
+    }
+  ]
+}

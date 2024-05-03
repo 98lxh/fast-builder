@@ -14,6 +14,8 @@ function Simulator() {
     scale: 1
   }))
 
+
+
   return (
     <div
       class="flex-1 relative overflow-hidden relative cursor-pointer main-height"
@@ -22,7 +24,7 @@ function Simulator() {
       <Ruler mode="horizontal" {...rulerProps.value} />
       <Ruler mode="vertical"  {...rulerProps.value} />
       <Board />
-      <Tools />
+      {/* <Tools /> */}
     </div>
   )
 }

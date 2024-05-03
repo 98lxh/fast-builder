@@ -1,5 +1,5 @@
 import type { FC } from "vite-plugin-vueact";
-import { MaterialCategories } from "~/constants/material";
+import { MaterialCategories } from "@h5-designer/material";
 
 interface DefineProps {
   category?: string;
