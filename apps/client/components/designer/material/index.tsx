@@ -1,4 +1,4 @@
-import { MaterialCategories, MATERIAL_KEY, material } from "@h5-designer/material"
+import { MaterialCategories, MaterialCategory, previewMaterialComponents } from "@h5-designer/material"
 import type { CSSProperties } from "vue"
 import Categories from "./categories"
 import Components from "./components"
@@ -8,7 +8,7 @@ function Material() {
   const isHidden = shallowRef(false);
   const category = shallowRef(MaterialCategories[0].key);
 
-  const components = computed(() => material[category.value] || []);
+  const components = computed(() => previewMaterialComponents[category.value] || []);
 
   const styles = computed<CSSProperties>(() => ({
     transition: 'width .3s',
@@ -16,7 +16,7 @@ function Material() {
   }))
 
 
-  function onUpdateCategory(value: MATERIAL_KEY) {
+  function onUpdateCategory(value: MaterialCategory) {
     category.value = value;
     isHidden.value === true && (isHidden.value = false);
   }

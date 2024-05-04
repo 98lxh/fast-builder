@@ -1,6 +1,7 @@
 import Ruler from "./ruler"
-import Board from "./board"
-import Tools from "./tools"
+import Board from "./block"
+
+import data from "@h5-designer/mock/data.json"
 
 function Simulator() {
   const el = ref<HTMLDivElement | null>(null)
@@ -14,8 +15,6 @@ function Simulator() {
     scale: 1
   }))
 
-
-
   return (
     <div
       class="flex-1 relative overflow-hidden relative cursor-pointer main-height"
@@ -24,7 +23,6 @@ function Simulator() {
       <Ruler mode="horizontal" {...rulerProps.value} />
       <Ruler mode="vertical"  {...rulerProps.value} />
       <Board />
-      {/* <Tools /> */}
     </div>
   )
 }

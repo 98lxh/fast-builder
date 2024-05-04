@@ -1,11 +1,11 @@
-export enum MATERIAL_KEY {
+export enum MaterialCategory {
   BASIS = 'BASIS',
   MEDIA = 'MEDIA'
 }
 
 export interface MaterialComponent {
-  component: any
   icon: string
   text: string
   key: string
+  component: any
 }

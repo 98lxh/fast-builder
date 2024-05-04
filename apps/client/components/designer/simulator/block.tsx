@@ -1,21 +1,26 @@
 import type { CSSProperties } from "vue";
 import { bindMouseEvent } from "../util/board"
 import { designerInjectionKey } from "../util/context"
-import dataSource from "./data.json"
+import { mapMaterialComponents } from "@h5-designer/material";
 
-function Board() {
+import simulatorData from "@h5-designer/mock/data.json"
+
+
+function Block() {
   const context = inject(designerInjectionKey);
-
   const containerRef = ref<HTMLDivElement | null>(null);
-  const boardRef = ref<HTMLDivElement | null>(null);
+  const blockRef = ref<HTMLDivElement | null>(null);
   const translate = shallowReactive({ x: 0, y: 0 })
 
+  const styles = computed<CSSProperties>(() => {
+    const { width, height } = context?.simulatorData.value?.container || {};
 
-  const styles = computed<CSSProperties>(() => ({
-    width: dataSource.container.width + 'px',
-    height: dataSource.container.height + 'px',
-    transform: `translate(${translate.x}px,${translate.y}px`
-  }))
+    return {
+      width: (width || 0) + 'px',
+      height: (height || 0) + 'px',
+      transform: `translate(${translate.x}px,${translate.y}px`
+    }
+  })
 
   function updateTranslate(deltaX: number, deltaY: number) {
     const moveX = deltaX !== 0;
@@ -31,8 +36,9 @@ function Board() {
   }
 
   onMounted(() => {
-    bindMouseEvent(containerRef.value, boardRef.value, updateTranslate)
-    context?.setSimulatorRef(boardRef.value);
+    bindMouseEvent(containerRef.value, blockRef.value, updateTranslate)
+    context?.setSimulatorRef(blockRef.value);
+    context?.setSimulatorData(simulatorData as unknown as SimulatorData);
   })
 
   return (
@@ -43,14 +49,14 @@ function Board() {
       <div
         class={`shadow-custom  top-[60px] left-[30%] bg-base-100 absolute cursor-auto`}
         style={styles.value}
-        ref={boardRef}
+        ref={blockRef}
       >
         {
-          dataSource.blocks.map(block => (
+          context?.simulatorData.value?.blocks.map(block => (
             <div
               class={`absolute`}
               style={{ top: block.top + 'px', left: block.left + 'px', zIndex: block.zIndex }}>
-              {block.component}
+              {mapMaterialComponents[block.key] && mapMaterialComponents[block.key](block.props)}
             </div>
           ))
         }
@@ -60,4 +66,4 @@ function Board() {
 }
 
 
-export default Board
+export default Block

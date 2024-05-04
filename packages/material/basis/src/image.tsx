@@ -5,15 +5,15 @@ interface DefineProps {
 
 }
 
-const _Text: FC<DefineProps> = function () {
+const _Image: FC<DefineProps> = function () {
   return (
-    <div>文本组件</div>
+    <div>图片组件</div>
   )
 }
 
 export default defineMaterialComponent({
-  icon: 'designer/text',
-  component: _Text,
-  text: '文本组件',
-  key: 'text'
+  icon: 'designer/image',
+  component: _Image,
+  text: '图片组件',
+  key: 'image'
 })

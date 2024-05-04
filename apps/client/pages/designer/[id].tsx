@@ -1,16 +1,18 @@
 import {
+  designerInjectionKey,
   Simulator,
   Material,
-  Setting,
-  designerInjectionKey
+  Setting
 } from "~/components/designer"
-
 
 function Designer() {
   const simulatorRef = ref<HTMLDivElement | null>(null)
+  const simulatorData = ref<SimulatorData>(defaultSimulatorData);
 
   provide(designerInjectionKey, {
     setSimulatorRef: (simulator: HTMLDivElement) => { simulatorRef.value = simulator },
+    setSimulatorData: (data: SimulatorData) => { simulatorData.value = data },
+    simulatorData,
     simulatorRef
   })
 
@@ -22,6 +24,5 @@ function Designer() {
     </div>
   )
 }
-
 
 export default Designer

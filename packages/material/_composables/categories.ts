@@ -1,14 +1,14 @@
-import { MATERIAL_KEY } from "./types";
+import { MaterialCategory } from "./types";
 
 export const MaterialCategories = [
   {
     text: '基础',
-    key: MATERIAL_KEY.BASIS,
+    key: MaterialCategory.BASIS,
     icon: 'computer'
   },
   {
     text: '媒体',
-    key: MATERIAL_KEY.MEDIA,
+    key: MaterialCategory.MEDIA,
     icon: 'image'
   }
 ]

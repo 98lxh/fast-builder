@@ -1,8 +1,11 @@
-import { generateMaterial } from "./../_composables/generator";
-import { MATERIAL_KEY } from "./../_composables/types";
+import { generateMaterialComponents } from "./../_util/generator";
+import { MaterialCategory } from "./../_composables/types";
 
-export default generateMaterial(
-  MATERIAL_KEY.BASIS,
-  []
+import text from "./src/text"
+import image from "./src/image";
+
+export default generateMaterialComponents(
+  MaterialCategory.BASIS,
+  [text, image]
 )
 

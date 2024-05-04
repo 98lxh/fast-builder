@@ -1,7 +1,7 @@
-import { generateMaterial } from "./../_composables/generator";
-import { MATERIAL_KEY } from "./../_composables/types";
+import { generateMaterialComponents } from "./../_util/generator";
+import { MaterialCategory } from "./../_composables/types";
 
-export default generateMaterial(
-  MATERIAL_KEY.MEDIA,
+export default generateMaterialComponents(
+  MaterialCategory.MEDIA,
   []
 )
