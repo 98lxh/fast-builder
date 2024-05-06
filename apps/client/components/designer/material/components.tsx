@@ -1,6 +1,5 @@
 import type { FC } from "vite-plugin-vueact";
 import type { MaterialComponent } from "@h5-designer/material";
-import { designerInjectionKey } from "../util/context";
 import { onDragstart } from "../util/material";
 
 interface DefineProps {

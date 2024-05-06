@@ -7,11 +7,12 @@ declare interface SimulatorBlock {
   props?: Record<string, any>;
 }
 
+declare interface SimulatorContainer {
+  width: number;
+  height: number;
+}
 
 declare interface SimulatorData {
-  container: {
-    width: number;
-    height: number;
-  },
+  container: SimulatorContainer,
   blocks: Array<SimulatorBlock>
 }

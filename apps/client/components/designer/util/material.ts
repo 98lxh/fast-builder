@@ -1,5 +1,4 @@
 import type { MaterialComponent } from "@h5-designer/material";
-import { type DesignerContext } from "./context";
 
 let currentComponent: null | MaterialComponent = null
 
@@ -16,24 +15,20 @@ function onDragleave(evt: DragEvent) {
 }
 
 function onDrop(evt: DragEvent, context: DesignerContext) {
-  if (!currentComponent) {
+  if (!currentComponent || !context) {
     return;
   }
 
-  const { setSimulatorData, simulatorData } = context;
-
-  const blockBasis = {
-    top: evt.offsetY,
-    left: evt.offsetX,
-    key: currentComponent!.key,
-    focus: false,
-    zIndex: 1
-  }
-
-  setSimulatorData({
-    ...simulatorData.value,
-    blocks: [...simulatorData.value.blocks, blockBasis]
-  })
+  context.setSimulatorBlocks([
+    ...context.simulatorData.value.blocks,
+    {
+      top: evt.offsetY,
+      left: evt.offsetX,
+      key: currentComponent!.key,
+      focus: false,
+      zIndex: 1
+    }
+  ])
 
   currentComponent = null;
 }

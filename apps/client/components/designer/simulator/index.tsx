@@ -1,5 +1,6 @@
-import Ruler from "./ruler"
 import BlockContainer from "./block-container"
+import Ruler from "./ruler"
+import Tools from "./tools"
 
 function Simulator() {
   const el = ref<HTMLDivElement | null>(null)
@@ -20,7 +21,10 @@ function Simulator() {
     >
       <Ruler mode="horizontal" {...props.value} />
       <Ruler mode="vertical"  {...props.value} />
+
       <BlockContainer />
+
+      <Tools />
     </div>
   )
 }

@@ -1,7 +1,5 @@
 import type { CSSProperties } from "vue";
 import type { FC } from "vite-plugin-vueact";
-import { designerInjectionKey } from "..";
-
 import { mapMaterialComponents } from "@h5-designer/material";
 
 interface DefineProps {
@@ -37,7 +35,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   }
 
   function onClickOutside(evt: MouseEvent) {
-    console.log(blocksRef.value)
+    // console.log(blocksRef.value)
     // clearBlockFocus();
   }
 

@@ -1,5 +1,4 @@
 import {
-  designerInjectionKey,
   Simulator,
   Material,
   Setting
@@ -11,6 +10,8 @@ function Designer() {
 
   provide(designerInjectionKey, {
     setSimulatorRef: (simulator: HTMLDivElement) => { simulatorRef.value = simulator },
+    setSimulatorContainer: (container: SimulatorContainer) => { simulatorData.value.container = container },
+    setSimulatorBlocks: (blocks: Array<SimulatorBlock>) => { simulatorData.value.blocks = blocks },
     setSimulatorData: (data: SimulatorData) => { simulatorData.value = data },
     simulatorData,
     simulatorRef

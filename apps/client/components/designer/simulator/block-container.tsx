@@ -1,4 +1,3 @@
-import { designerInjectionKey } from "../util/context"
 import { bindMouseEvent } from "../util/board"
 import Block from "./block"
 
