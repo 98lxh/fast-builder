@@ -2,7 +2,7 @@ import { MaterialCategory, MaterialComponent } from "./../_composables/types";
 
 export const mapMaterialComponents: Record<string, any> = {}
 
-export function generateMaterialComponents(category: MaterialCategory, components: MaterialComponent[]) {
+export function generateMaterialComponents(category: MaterialCategory, components: Omit<MaterialComponent,'component'>[]) {
   return { [category]: components } as { MaterialCategory: MaterialComponent[] }
 }
 

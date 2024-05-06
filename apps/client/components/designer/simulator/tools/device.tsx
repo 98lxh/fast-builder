@@ -38,9 +38,7 @@ function Device() {
 
       <div tab-index={0} class="dropdown-content z-[1]  shadow-custom bg-base-100 w-[300px]">
         <p class="p-2">设置画布尺寸</p>
-
         <div class="border-b-1 dark:border-neutral" />
-
         <div class="flex flex-wrap px-2">
           {
             devices.map(device => (
@@ -53,7 +51,6 @@ function Device() {
         </div>
 
         <div class="border-b-1 dark:border-neutral" />
-
         <div class="flex items-center justify-center p-2 flex-wrap">
           <div class="w-[50%] flex pr-2">
             <p class="pr-1">宽：</p>
@@ -65,17 +62,16 @@ function Device() {
               onInput={evt => onInput(evt, 'width')}
             />
           </div>
-
           <div class="w-[50%] flex">
             <p class="pr-1">高:</p>
             <input
               value={container.height}
-              type="text" placeholder="高度"
+              type="text" 
+              placeholder="高度"
               class="input input-bordered w-full input-xs"
               onInput={evt => onInput(evt, 'height')}
             />
           </div>
-
           <div class="flex justify-end w-full mt-2">
             <button class="btn btn-primary btn-sm" onClick={() => onUpdateContainer()}>更新</button>
           </div>

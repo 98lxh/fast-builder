@@ -13,7 +13,6 @@ interface DefineEmits {
 
 const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   const wrapperRef = ref<HTMLDivElement | null>(null);
-  const blocksRef = ref<Array<HTMLDivElement>>([])
   const context = inject(designerInjectionKey);
 
   const wrapperStyles = computed<CSSProperties>(() => {
@@ -68,7 +67,6 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
             class={`block absolute ${block.focus ? 'block-focus' : ''}`}
             onMousedown={evt => onMousedown(evt, block)}
             style={generateBlockStyles(block)}
-            ref={blocksRef}
             key={index}
           >
             {mapMaterialComponents[block.key] && mapMaterialComponents[block.key](block.props)}

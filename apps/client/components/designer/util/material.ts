@@ -1,6 +1,7 @@
 import type { MaterialComponent } from "@h5-designer/material";
 
 let currentComponent: null | MaterialComponent = null
+let currentDropEventListener: null | ((evt:DragEvent) => void) = null
 
 function onDragenter(evt: DragEvent) {
   evt.dataTransfer!.dropEffect = 'move';
@@ -14,26 +15,28 @@ function onDragleave(evt: DragEvent) {
   evt.dataTransfer!.dropEffect = 'none';
 }
 
-function onDrop(evt: DragEvent, context: DesignerContext) {
-  if (!currentComponent || !context) {
-    return;
-  }
-
-  context.setSimulatorBlocks([
-    ...context.simulatorData.value.blocks,
-    {
-      top: evt.offsetY,
-      left: evt.offsetX,
-      key: currentComponent!.key,
-      focus: false,
-      zIndex: 1
+function generateDropEventListener(context: DesignerContext) {
+  return function (evt: DragEvent) {
+    if (!currentComponent || !context) {
+      return;
     }
-  ])
 
-  currentComponent = null;
+    context.setSimulatorBlocks([
+      ...context.simulatorData.value.blocks,
+      {
+        top: evt.offsetY,
+        left: evt.offsetX,
+        key: currentComponent.key,
+        focus: false,
+        zIndex: 1
+      }
+    ])
+
+    currentComponent = null;
+  }
 }
 
-export function onDragstart(evt: DragEvent, context?: DesignerContext, component?: MaterialComponent) {
+export function onDragstart(_: DragEvent, context?: DesignerContext, component?: MaterialComponent) {
   const simulator = context?.simulatorRef.value;
 
   if (!simulator || !component || !context) {
@@ -43,21 +46,24 @@ export function onDragstart(evt: DragEvent, context?: DesignerContext, component
   simulator.addEventListener('dragenter', onDragenter);
   simulator.addEventListener('dragover', onDragover);
   simulator.addEventListener('dragleave', onDragleave);
-  simulator.addEventListener('drop', evt => onDrop(evt, context));
+
+  currentDropEventListener = generateDropEventListener(context);
+  simulator.addEventListener('drop', currentDropEventListener);
   currentComponent = component;
 }
 
 
-export function onDragend(evt: DragEvent, context?: DesignerContext) {
+export function onDragend(_: DragEvent, context?: DesignerContext) {
   const simulator = context?.simulatorRef.value;
 
-  if (!simulator) {
+  if (!simulator || !currentDropEventListener) {
     return
   }
 
   simulator.removeEventListener('dragenter', onDragenter);
   simulator.removeEventListener('dragover', onDragover);
   simulator.removeEventListener('dragleave', onDragleave);
-  // simulator.removeEventListener('drop', onDrop);
+  simulator.removeEventListener('drop', currentDropEventListener);
+  currentDropEventListener = null;
 }
 
