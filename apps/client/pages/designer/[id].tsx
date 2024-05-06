@@ -1,7 +1,7 @@
 import {
   Simulator,
-  Material,
-  Setting
+  MaterialPanel,
+  AttributePanel
 } from "~/components/designer"
 
 function Designer() {
@@ -9,9 +9,9 @@ function Designer() {
   const simulatorData = ref<SimulatorData>(defaultSimulatorData);
 
   provide(designerInjectionKey, {
-    setSimulatorRef: (simulator: HTMLDivElement) => { simulatorRef.value = simulator },
     setSimulatorContainer: (container: SimulatorContainer) => { simulatorData.value.container = container },
     setSimulatorBlocks: (blocks: Array<SimulatorBlock>) => { simulatorData.value.blocks = blocks },
+    setSimulatorRef: (simulator: HTMLDivElement) => { simulatorRef.value = simulator },
     setSimulatorData: (data: SimulatorData) => { simulatorData.value = data },
     simulatorData,
     simulatorRef
@@ -19,9 +19,9 @@ function Designer() {
 
   return (
     <div class="flex w-full">
-      <Material />
+      <MaterialPanel />
       <Simulator />
-      <Setting />
+      <AttributePanel />
     </div>
   )
 }

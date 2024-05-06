@@ -14,11 +14,12 @@ function Device() {
 
   function onUpdateContainer(device?: Device) {
     if (!context) { return }
+
     if (device) {
       container.height = device.height
       container.width = device.width
     }
-    context.setSimulatorContainer(container)
+    context.setSimulatorContainer({...container})
   }
 
   watch(() => context?.simulatorData.value.container, (value) => {
@@ -51,7 +52,8 @@ function Device() {
         </div>
 
         <div class="border-b-1 dark:border-neutral" />
-        <div class="flex items-center justify-center p-2 flex-wrap">
+
+        <div class="flex items-center justify-center p-2 pt-4 flex-wrap">
           <div class="w-[50%] flex pr-2">
             <p class="pr-1">宽：</p>
             <input

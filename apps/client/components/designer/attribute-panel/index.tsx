@@ -1,7 +1,7 @@
 import type { CSSProperties } from "vue";
 import ArrowButton from "../arrow";
 
-function Setting() {
+function AttributePanel() {
   const isHidden = shallowRef(false);
 
   const styles = computed<CSSProperties>(() => ({
@@ -22,4 +22,4 @@ function Setting() {
   )
 }
 
-export default Setting
+export default AttributePanel

@@ -7,6 +7,7 @@ interface DefineProps {
   translateY: number;
 }
 
+
 interface DefineEmits {
   (name: 'updateWrapperRef', wrapperRef: HTMLDivElement | null): void
 }
@@ -34,8 +35,11 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   }
 
   function onClickOutside(evt: MouseEvent) {
-    // console.log(blocksRef.value)
-    // clearBlockFocus();
+    if (!wrapperRef.value) { return  }
+    const child = [... wrapperRef.value.childNodes]
+    const isContains = child.some(children => children.contains(evt.target as HTMLElement))
+    if(isContains){ return }
+    clearBlockFocus();
   }
 
   function onMousedown(evt: MouseEvent, block: SimulatorBlock) {
@@ -69,7 +73,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
             style={generateBlockStyles(block)}
             key={index}
           >
-            {mapMaterialComponents[block.key] && mapMaterialComponents[block.key](block.props)}
+            {mapMaterialComponents[block.key] && mapMaterialComponents[block.key].setup(block.props)()}
           </div>
         ))
       }

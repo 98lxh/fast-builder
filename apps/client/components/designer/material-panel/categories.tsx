@@ -11,10 +11,7 @@ interface DefineEmits {
 }
 
 const Categories: FC<DefineProps, DefineEmits> = function (props, { emit }) {
-  const state = shallowReactive({
-    height: 68,
-    index: 0
-  })
+  const state = shallowReactive({ height: 68, index: 0 })
 
   function onUpdate(category: string, index: number) {
     emit('update:category', category)
@@ -34,9 +31,7 @@ const Categories: FC<DefineProps, DefineEmits> = function (props, { emit }) {
             role="tab"
             key={item.key}
           >
-            <div class="text-[18px]">
-              <NuxtIcon name={item.icon} />
-            </div>
+            <NuxtIcon size="18px" name={item.icon} />
 
             <span class={`${item.key === props.category ? 'text-primary' : ''}`}>
               {item.text}
@@ -47,9 +42,11 @@ const Categories: FC<DefineProps, DefineEmits> = function (props, { emit }) {
 
       {
         !props.isHidden &&
-        (<div class={`w-[2px] h-[${state.height}px] bg-primary absolute`}
-          style={{ top: (state.index * state.height) + 'px', transition: 'top .3s' }}
-        />
+        (
+          <div
+            class={`w-[2px] h-[${state.height}px] bg-primary absolute`}
+            style={{ top: (state.index * state.height) + 'px', transition: 'top .3s' }}
+          />
         )
       }
     </div>

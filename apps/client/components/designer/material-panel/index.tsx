@@ -4,7 +4,7 @@ import Categories from "./categories"
 import Components from "./components"
 import ArrowButton from "../arrow"
 
-function Material() {
+function MaterialPanel() {
   const isHidden = shallowRef(false);
   const category = shallowRef(MaterialCategories[0].key);
 
@@ -45,4 +45,4 @@ function Material() {
   )
 }
 
-export default Material;
+export default MaterialPanel;
