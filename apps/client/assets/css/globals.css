@@ -21,7 +21,6 @@ body {
   overflow: hidden;
 }
 
-
 .nuxt-icon svg {
   width: 100% !important;
   height: 100% !important;
@@ -32,6 +31,16 @@ body {
   height: calc(100vh - 60px) !important;
 }
 
+
+.block {
+  cursor: pointer;
+  position: absolute;
+}
+
+.block-focus {
+  border: 1px solid #1A5CFF;
+  border-style: dashed;
+}
 
 ::view-transition-new(root),
 ::view-transition-old(root) {
