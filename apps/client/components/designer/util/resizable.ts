@@ -1,5 +1,4 @@
 import type { CSSProperties } from "vue";
-import { registerDocumentMoveEvent } from "./event";
 
 export const placements = ['t', 'r', 'b', 'l', 'lt', 'rt', 'lb', 'rb'];
 
@@ -68,7 +67,7 @@ export function onMousedown(
   const top = Number(block.style.top)
   const left = Number(block.style.left)
 
-  registerDocumentMoveEvent(evt, ({ startX, startY,currentX, currentY }) => {
+  onMousemoveHandler(evt, function ({ startX, startY,currentX, currentY }) {
     const { hasTop, hasBottom, hasLeft, hasRight } = getHasPosition(placement)
     const disY = currentY - startY
     const disX = currentX - startX

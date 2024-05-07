@@ -1,9 +1,6 @@
 import type { CSSProperties } from "vue";
 import type { FC } from "vite-plugin-vueact";
 import { mapMaterialComponents } from "@h5-designer/material";
-
-import { registerDocumentMoveEvent } from "./../util/event"
-
 import Resizable from "./resizable";
 
 interface DefineProps {
@@ -42,11 +39,11 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     !evt.shiftKey && clearBlockFocus()
     block.focus = true
 
-    registerDocumentMoveEvent(evt, ({ startX, startY,currentX, currentY }) => {
+    onMousemoveHandler(evt, ({ startX, startY, currentX, currentY }) => {
       const style = {
         ...block.style,
-        top:currentY - startY + block.style.top,
-        left:currentX - startX + block.style.left
+        top: currentY - startY + block.style.top,
+        left: currentX - startX + block.style.left
       }
       context.setSimulatorDataById(block.id, { ...block, style })
     })
