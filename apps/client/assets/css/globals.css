@@ -38,8 +38,21 @@ body {
 }
 
 .block-focus {
-  border: 1px solid #1A5CFF;
-  border-style: dashed;
+  background:
+    linear-gradient(90deg, #1A5CFF 50%, transparent 0) repeat-x,
+    linear-gradient(90deg, #1A5CFF 50%, transparent 0) repeat-x,
+    linear-gradient(0deg, #1A5CFF 50%, transparent 0) repeat-y,
+    linear-gradient(0deg, #1A5CFF 50%, transparent 0) repeat-y;
+  background-size: 4px 2px, 4px 2px, 2px 4px, 2px 4px;
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+  animation: linearGradientMove .3s infinite linear;
+}
+
+
+@keyframes linearGradientMove {
+  100% {
+    background-position: 4px 0, -4px 100%, 0 -4px, 100% 4px;
+  }
 }
 
 ::view-transition-new(root),

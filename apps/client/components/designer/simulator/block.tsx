@@ -9,56 +9,35 @@ interface DefineProps {
 }
 
 interface DefineEmits {
-  (name: 'updateWrapperRef', wrapperRef: HTMLDivElement | null): void
+  (name: 'updateWrapperRef', wrapperRef: HTMLElement | null): void
 }
 
 const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
-  const context = useDesignerContext()
-  const wrapperRef = ref<HTMLDivElement | null>(null);
+  const { simulatorData, setSimulatorDataById } = useDesignerContext()
+  const clearBlockFocus = () => simulatorData.value.blocks.forEach(block => block.focus = false)
+  const wrapperRef = useEventOutside({ event: 'mousedown', isOnlyChildContains: true }, clearBlockFocus)
 
-  const data = computed(() => ({
-    container: context?.simulatorData.value.container || { height: 0, width: 0 },
-    blocks: context?.simulatorData.value.blocks || []
-  }))
+  function down(_: MouseEvent, block: SimulatorBlock) {
+    clearBlockFocus()
+    block.focus = true
+  }
+
+  function move({ currentY, startX, startY, currentX }: MoveListenerOptions, block: SimulatorBlock) {
+    const top = currentY - startY + block.style.top
+    const left = currentX - startX + block.style.left
+    const style = { ...block.style, left, top }
+    setSimulatorDataById(block.id, { ...block, style })
+  }
+
+  const onMousedown = useDocumentMouseEvent({ down, move })
 
   const styles = computed<CSSProperties>(() => ({
     transform: `translate(${props.translateX}px,${props.translateY}px`,
-    height: data.value.container?.height + 'px',
-    width: data.value.container?.width + 'px',
+    height: simulatorData.value.container?.height + 'px',
+    width: simulatorData.value.container?.width + 'px',
   }))
 
-  function onClickOutside(evt: MouseEvent) {
-    if (!wrapperRef.value) { return }
-    const child = [...wrapperRef.value.childNodes]
-    const isContains = child.some(children => children.contains(evt.target as HTMLElement))
-    if (isContains) { return }
-    clearBlockFocus();
-  }
-
-  function onMousedown(evt: MouseEvent, block: SimulatorBlock) {
-    !evt.shiftKey && clearBlockFocus()
-    block.focus = true
-
-    onMousemoveHandler(evt, ({ startX, startY, currentX, currentY }) => {
-      const style = {
-        ...block.style,
-        top: currentY - startY + block.style.top,
-        left: currentX - startX + block.style.left
-      }
-      context.setSimulatorDataById(block.id, { ...block, style })
-    })
-  }
-
-  function clearBlockFocus() {
-    context?.simulatorData.value.blocks.forEach(block => block.focus = false)
-  }
-
-  onMounted(() => {
-    emit('updateWrapperRef', wrapperRef.value)
-    document.documentElement.addEventListener('mousedown', onClickOutside)
-  })
-
-  onUnmounted(() => document.documentElement.removeEventListener('mousedown', onClickOutside))
+  onMounted(() => emit('updateWrapperRef', wrapperRef.value))
 
   return (
     <div
@@ -67,10 +46,11 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
       ref={wrapperRef}
     >
       {
-        data.value.blocks.map((block, index) => (
+        simulatorData.value.blocks.map(block => (
           <Resizable
             onMousedown={(evt: MouseEvent) => onMousedown(evt, block)}
             block={block}
+            key={block.id}
           >
             {
               mapMaterialComponents[block.key] &&
@@ -79,8 +59,6 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
           </Resizable>
         ))
       }
-
-
     </div>
   )
 }

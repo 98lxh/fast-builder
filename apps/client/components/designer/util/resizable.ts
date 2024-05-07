@@ -13,7 +13,7 @@ const mapPlacement2Cursor: Record<string, any> = {
   'rb': 'nwse-resize'
 }
 
-function getHasPosition(placement: string) {
+export function getHasPosition(placement: string) {
   return {
     hasTop: /t/.test(placement),
     hasBottom: /b/.test(placement),
@@ -50,34 +50,4 @@ export function generatePointStyles(placement: string, style: SimulatorBlockStyl
     left: left + 'px',
     top: top + 'px',
   }
-}
-
-export function onMousedown(
-  evt: MouseEvent,
-  placement: string,
-  block: SimulatorBlock,
-  context: DesignerContext
-) {
-  evt.stopPropagation()
-  evt.preventDefault()
-
-  let height = Number(block.style.height)
-  let width = Number(block.style.width)
-
-  const top = Number(block.style.top)
-  const left = Number(block.style.left)
-
-  onMousemoveHandler(evt, function ({ startX, startY,currentX, currentY }) {
-    const { hasTop, hasBottom, hasLeft, hasRight } = getHasPosition(placement)
-    const disY = currentY - startY
-    const disX = currentX - startX
-
-    const style = {
-      ...block.style,
-      height: height + (hasTop ? -disY : hasBottom ? disY : 0),
-      width: width + (hasLeft ? -disX : hasRight ? disX : 0)
-    }
-
-    context.setSimulatorDataById(block.id, { ...block, style })
-  })
 }

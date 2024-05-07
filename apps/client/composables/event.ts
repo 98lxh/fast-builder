@@ -1,4 +1,4 @@
-interface ListenerOptions {
+export interface MoveListenerOptions {
   startX: number
   startY: number
   currentX: number
@@ -7,29 +7,82 @@ interface ListenerOptions {
   lastY: number
 }
 
-export function onMousemoveHandler(
-  mouseDownEvt: MouseEvent,
-  listener: (opts: ListenerOptions) => void
-) {
-  const startX = mouseDownEvt.clientX
-  const startY = mouseDownEvt.clientY
+interface DocumentMouseEventListener {
+  down?(evt?: MouseEvent, ...args: any[]): void | boolean
+  move(options?: MoveListenerOptions, ...args: any[]): void
+  up?(evt?: MouseEvent): void
+}
 
-  let lastX = startX;
-  let lastY = startY;
+export function useDocumentMouseEvent(listener: DocumentMouseEventListener) {
+  let valve = true;
 
-  function onMousemove(moveEvt: MouseEvent) {
-    const currentX = moveEvt.clientX
-    const currentY = moveEvt.clientY
-    listener({ startX, startY, currentX, currentY, lastX, lastY })
-    lastX = currentX
-    lastY = currentY
+  function onMousedown(downEvent: MouseEvent, ...args: any[]) {
+    const result = (listener.down && listener.down(downEvent, ...args));
+    result === false ? (valve = false) : (valve = true)
+
+    const startX = downEvent.clientX
+    const startY = downEvent.clientY
+
+    let lastX = startX;
+    let lastY = startY;
+
+    function onMousemove(moveEvent: MouseEvent) {
+      if (valve === false) {
+        return
+      }
+
+      const currentX = moveEvent.clientX
+      const currentY = moveEvent.clientY
+      listener.move({ startX, startY, currentX, currentY, lastX, lastY }, ...args)
+      lastX = currentX
+      lastY = currentY
+    }
+
+    function onMouseup(upEvent: MouseEvent) {
+      listener.up && listener.up(upEvent)
+      document.removeEventListener('mousemove', onMousemove)
+      document.removeEventListener('mouseup', onMouseup)
+    }
+
+    document.addEventListener('mousemove', onMousemove)
+    document.addEventListener('mouseup', onMouseup)
+
   }
 
-  function onMouseup() {
-    document.removeEventListener('mousemove', onMousemove)
-    document.removeEventListener('mouseup', onMouseup)
+  return onMousedown
+}
+
+interface EventOutsideOptions {
+  event: 'click' | 'mousedown',
+  isOnlyChildContains: boolean
+}
+
+const defaultEventOutsideOptions: EventOutsideOptions = {
+  event: 'click',
+  isOnlyChildContains: false,
+}
+
+export function useEventOutside(options = defaultEventOutsideOptions, callback: () => void) {
+  const target = ref<HTMLElement | null>(null)
+  const { event, isOnlyChildContains } = options
+
+  function listener(evt: MouseEvent) {
+    if (!target.value) {
+      return
+    }
+
+    const isContains = isOnlyChildContains
+      ? ([...target.value.childNodes]).some(el => el.contains(evt.target as HTMLElement))
+      : target.value.contains(evt.target as HTMLElement)
+
+    if (isContains) {
+      return
+    }
+
+    callback()
   }
 
-  document.addEventListener('mousemove', onMousemove)
-  document.addEventListener('mouseup', onMouseup)
+  onMounted(() => nextTick(() => document.documentElement.addEventListener(event, listener)))
+  onUnmounted(() => document.documentElement.removeEventListener(event, listener))
+  return target
 }

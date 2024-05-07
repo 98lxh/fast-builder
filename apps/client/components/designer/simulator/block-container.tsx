@@ -1,7 +1,8 @@
-import { bindMouseEvent } from "../util/block"
+import { useDesignerContext } from "~/composables/designer";
 import Block from "./block"
 
 import simulatorData from "@h5-designer/mock/data.json"
+import type { MoveListenerOptions } from "~/composables/event";
 
 
 function BlockContainer() {
@@ -17,9 +18,19 @@ function BlockContainer() {
     moveY && Number(deltaY) > 0 ? translate.y += deltaY : translate.y -= Math.abs(deltaY);
   }
 
+  function move({ currentX, lastX, currentY, lastY }: MoveListenerOptions) {
+    const deltaX = currentX - lastX;
+    const deltaY = currentY - lastY;
+    updateTranslate(deltaX, deltaY);
+  }
+
+  const onMousedown = useDocumentMouseEvent({
+    down: evt => !(wrapperRef.value?.contains(evt?.target as HTMLElement)),
+    move
+  })
+
   watch(() => wrapperRef.value, (wrapper) => {
     if (!wrapper || !context) { return }
-    bindMouseEvent(containerRef.value, wrapperRef.value, updateTranslate)
     context.setSimulatorData(simulatorData as unknown as SimulatorData)
     context.setSimulatorRef(wrapperRef.value)
   }, {
@@ -30,6 +41,7 @@ function BlockContainer() {
     <div
       class="w-full h-full absolute top-[50%] left-[50%] translate-[-50%]"
       ref={containerRef}
+      onMousedown={onMousedown}
     >
       <Block
         translateX={translate.x}
