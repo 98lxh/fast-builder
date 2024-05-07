@@ -1,6 +1,6 @@
 function BasisImage(){
   return (
-    <div>图片组件</div>
+    <div>图片</div>
   )
 }
 

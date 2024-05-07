@@ -1,9 +1,16 @@
-declare interface SimulatorBlock {
-  key: string;
+declare interface SimulatorBlockStyle {
+  width: number;
+  height: number;
   top: number;
   left: number;
   zIndex: number;
+}
+
+declare interface SimulatorBlock {
+  id: number;
+  key: string;
   focus: boolean;
+  style: SimulatorBlockStyle;
   props?: Record<string, any>;
 }
 

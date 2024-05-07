@@ -1,6 +1,11 @@
 export enum MaterialCategory {
   BASIS = 'BASIS',
-  MEDIA = 'MEDIA'
+  MEDIA = 'MEDIA',
+}
+
+export interface MaterialComponentStyle {
+  width: number
+  height: number
 }
 
 export interface MaterialComponent {
@@ -8,4 +13,5 @@ export interface MaterialComponent {
   text: string
   key: string
   component: any
+  style: MaterialComponentStyle
 }

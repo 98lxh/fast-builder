@@ -5,7 +5,7 @@ import simulatorData from "@h5-designer/mock/data.json"
 
 
 function BlockContainer() {
-  const context = inject(designerInjectionKey)
+  const context = useDesignerContext();
   const containerRef = ref<HTMLDivElement | null>(null)
   const wrapperRef = ref<HTMLDivElement | null>(null)
   const translate = shallowReactive({ x: 0, y: 0 })
@@ -20,6 +20,8 @@ function BlockContainer() {
   watch(() => wrapperRef.value, (wrapper) => {
     if (!wrapper || !context) { return }
     bindMouseEvent(containerRef.value, wrapperRef.value, updateTranslate)
+
+    console.log('init', simulatorData)
     context.setSimulatorData(simulatorData as unknown as SimulatorData)
     context.setSimulatorRef(wrapperRef.value)
   }, {

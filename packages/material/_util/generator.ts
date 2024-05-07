@@ -7,11 +7,11 @@ export function generateMaterialComponents(category: MaterialCategory, component
 }
 
 export function defineMaterialComponent(materialComponent: MaterialComponent) {
-  const { key, component, icon, text } = materialComponent;
+  const { key, component, icon, text, style } = materialComponent;
 
   if (!mapMaterialComponents[key]) {
     mapMaterialComponents[key] = component;
   }
 
-  return { icon, text, key };
+  return { icon, text, key ,style };
 }

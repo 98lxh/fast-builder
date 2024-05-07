@@ -17,22 +17,22 @@ function onDragleave(evt: DragEvent) {
 
 function generateDropEventListener(context: DesignerContext) {
   return function (evt: DragEvent) {
-    if (!currentComponent || !context) {
-      return;
-    }
-
+    if (!currentComponent || !context) { return }
     context.setSimulatorBlocks([
       ...context.simulatorData.value.blocks,
       {
-        top: evt.offsetY,
-        left: evt.offsetX,
+        id: 1,
         key: currentComponent.key,
         focus: false,
-        zIndex: 1
+        style: {
+          ...currentComponent.style,
+          top: evt.offsetY,
+          left: evt.offsetX, 
+          zIndex: 1,
+        }
       }
     ])
-
-    currentComponent = null;
+    currentComponent = null
   }
 }
 

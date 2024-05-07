@@ -5,5 +5,9 @@ export default defineMaterialComponent({
   component: BasisImage,
   icon: 'designer/image',
   text: '图片组件',
-  key: 'image'
+  key: 'image',
+  style: {
+    width: 100,
+    height: 40
+  }
 })

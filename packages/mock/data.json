@@ -5,18 +5,28 @@
   },
   "blocks": [
     {
+      "id": 1,
       "key": "text",
-      "top": 100,
-      "left": 100,
-      "zIndex": 1,
-      "props": {}
+      "props": {},
+      "style": {
+        "width": 60,
+        "height": 25,
+        "top": 100,
+        "left": 100,
+        "zIndex": 1
+      }
     },
     {
+      "id": 2,
       "key": "image",
-      "top": 100,
-      "left": 200,
-      "zIndex": 1,
-      "props": {}
+      "props": {},
+      "style": {
+        "width": 60,
+        "height": 25,
+        "top": 100,
+        "left": 200,
+        "zIndex": 1
+      }
     }
   ]
 }

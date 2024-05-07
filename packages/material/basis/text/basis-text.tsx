@@ -1,6 +1,6 @@
 function BasisText(){
   return (
-    <div>文本组件</div>
+    <div class="text-center">文本</div>
   )
 }
 

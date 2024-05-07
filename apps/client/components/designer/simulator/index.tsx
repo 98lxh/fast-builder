@@ -23,7 +23,6 @@ function Simulator() {
       <Ruler mode="vertical"  {...props.value} />
 
       <BlockContainer />
-
       <Tools />
     </div>
   )

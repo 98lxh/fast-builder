@@ -8,7 +8,7 @@ interface DefineProps {
 }
 
 const Components: FC<DefineProps> = function (props) {
-  const context = inject(designerInjectionKey)
+  const context = useDesignerContext();
 
   return (
     <div class={`flex m-2 w-full justify-around overflow-hidden w-[${props.isHidden ? 'auto' : '0px'}]`}>

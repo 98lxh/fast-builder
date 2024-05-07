@@ -1,5 +1,5 @@
 function Device() {
-  const context = inject(designerInjectionKey);
+  const context = useDesignerContext()
   const container = shallowReactive({ width: 0, height: 0 })
 
   const vm = getCurrentInstance();
