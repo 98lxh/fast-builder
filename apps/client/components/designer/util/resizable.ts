@@ -1,4 +1,5 @@
 import type { CSSProperties } from "vue";
+import { registerDocumentMoveEvent } from "./event";
 
 export const placements = ['t', 'r', 'b', 'l', 'lt', 'rt', 'lb', 'rb'];
 
@@ -67,17 +68,10 @@ export function onMousedown(
   const top = Number(block.style.top)
   const left = Number(block.style.left)
 
-  const startX = evt.clientX
-  const startY = evt.clientY
-
-  function onMouseMove(moveEvt: MouseEvent) {
-    const currX = moveEvt.clientX
-    const currY = moveEvt.clientY
-
-    const disY = currY - startY
-    const disX = currX - startX
-
+  registerDocumentMoveEvent(evt, ({ startX, startY,currentX, currentY }) => {
     const { hasTop, hasBottom, hasLeft, hasRight } = getHasPosition(placement)
+    const disY = currentY - startY
+    const disX = currentX - startX
 
     const style = {
       ...block.style,
@@ -85,14 +79,6 @@ export function onMousedown(
       width: width + (hasLeft ? -disX : hasRight ? disX : 0)
     }
 
-    context.setSimulatorDataById( block.id, { ...block, style })
-  }
-
-  function onMouseUp() {
-    document.removeEventListener('mousemove', onMouseMove)
-    document.removeEventListener('mouseup', onMouseUp)
-  }
-
-  document.addEventListener('mousemove', onMouseMove)
-  document.addEventListener('mouseup', onMouseUp)
+    context.setSimulatorDataById(block.id, { ...block, style })
+  })
 }

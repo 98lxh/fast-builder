@@ -5,7 +5,7 @@
   },
   "blocks": [
     {
-      "id": 1,
+      "id": "1",
       "key": "text",
       "props": {},
       "style": {
@@ -17,7 +17,7 @@
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "key": "image",
       "props": {},
       "style": {

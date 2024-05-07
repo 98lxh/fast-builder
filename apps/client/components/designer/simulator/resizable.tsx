@@ -20,11 +20,12 @@ const Resizable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }
     transform: `translate(-50%, -50%)`,
     width: props.block.style.width + 'px',
     height: props.block.style.height + 'px',
+    cursor: props.block.focus ? 'move' : 'pointer'
   }))
 
   return (
     <div
-      class={`absolute hover:cursor-pointer`}
+      class="absolute"
       onMousedown={evt => emit('mousedown', evt)}
       style={styles.value}
     >

@@ -3,7 +3,7 @@ export interface DesignerContext {
   setSimulatorContainer(container: SimulatorContainer): void
   setSimulatorBlocks(blocks: Array<SimulatorBlock>): void
   setSimulatorData(data: SimulatorData): void
-  setSimulatorDataById(id: number, block: SimulatorBlock): void
+  setSimulatorDataById(id: string, block: SimulatorBlock): void
   simulatorRef: Ref<HTMLDivElement | null>
   simulatorData: Ref<SimulatorData>
 }
@@ -14,7 +14,6 @@ export const defaultSimulatorData: SimulatorData = {
   container: { width: 0, height: 0 },
   blocks: []
 }
-
 
 export function useDesigner(): DesignerContext {
   const simulatorRef = ref<HTMLDivElement | null>(null)
@@ -36,7 +35,7 @@ export function useDesigner(): DesignerContext {
     simulatorData.value = data
   }
 
-  function setSimulatorDataById(updateId: number, block: SimulatorBlock) {
+  function setSimulatorDataById(updateId: string, block: SimulatorBlock) {
     const index = simulatorData.value.blocks.findIndex(({ id }) => id === updateId)
     if (index < 0) { return }
     simulatorData.value.blocks[index] = {...block}

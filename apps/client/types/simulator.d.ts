@@ -7,7 +7,7 @@ declare interface SimulatorBlockStyle {
 }
 
 declare interface SimulatorBlock {
-  id: number;
+  id: string;
   key: string;
   focus: boolean;
   style: SimulatorBlockStyle;

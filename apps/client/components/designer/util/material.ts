@@ -1,4 +1,5 @@
 import type { MaterialComponent } from "@h5-designer/material";
+import { nanoid } from "nanoid"
 
 let currentComponent: null | MaterialComponent = null
 let currentDropEventListener: null | ((evt:DragEvent) => void) = null
@@ -18,20 +19,21 @@ function onDragleave(evt: DragEvent) {
 function generateDropEventListener(context: DesignerContext) {
   return function (evt: DragEvent) {
     if (!currentComponent || !context) { return }
-    context.setSimulatorBlocks([
-      ...context.simulatorData.value.blocks,
-      {
-        id: 1,
-        key: currentComponent.key,
-        focus: false,
-        style: {
-          ...currentComponent.style,
-          top: evt.offsetY,
-          left: evt.offsetX, 
-          zIndex: 1,
-        }
-      }
-    ])
+    const style = {
+      ...currentComponent.style,
+      top: evt.offsetY,
+      left: evt.offsetX, 
+      zIndex: 1,
+    }
+
+    const block = {
+      id: nanoid(),
+      key: currentComponent.key,
+      focus: false,
+      style
+    }
+
+    context.setSimulatorBlocks([  ...context.simulatorData.value.blocks, block])
     currentComponent = null
   }
 }

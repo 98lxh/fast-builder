@@ -16,10 +16,10 @@
     "@vueuse/core": "^10.9.0",
     "@vueuse/nuxt": "^10.9.0",
     "light-ruler": "^1.0.3",
+    "nanoid": "^5.0.7",
     "nuxt": "^3.11.2",
     "nuxt-icons": "^3.2.1",
     "pinia": "^2.1.7",
-    "uuid": "^9.0.1",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {

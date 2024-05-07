@@ -96,11 +96,11 @@ importers:
       '@vueuse/core': ^10.9.0
       '@vueuse/nuxt': ^10.9.0
       light-ruler: ^1.0.3
+      nanoid: ^5.0.7
       nuxt: ^3.11.2
       nuxt-icons: ^3.2.1
       pinia: ^2.1.7
       unplugin-auto-import: ^0.17.5
-      uuid: ^9.0.1
       vue-router: ^4.3.0
     dependencies:
       '@pinia/nuxt': 0.5.1
@@ -109,10 +109,10 @@ importers:
       '@vueuse/core': 10.9.0
       '@vueuse/nuxt': 10.9.0_nuxt@3.11.2
       light-ruler: 1.0.3
+      nanoid: 5.0.7
       nuxt: 3.11.2
       nuxt-icons: 3.2.1
       pinia: 2.1.7
-      uuid: 9.0.1
       vue-router: 4.3.2
     devDependencies:
       '@css-render/vue3-ssr': 0.15.12
@@ -3613,8 +3613,8 @@ packages:
       '@babel/core': 7.24.4
       '@babel/plugin-transform-typescript': 7.24.4_@babel+core@7.24.4
       '@vue/babel-plugin-jsx': 1.2.2_@babel+core@7.24.4
-      vite: 5.2.10_@types+node@20.12.7
-      vue: 3.4.25_typescript@5.4.5
+      vite: 5.2.10
+      vue: 3.4.25
     transitivePeerDependencies:
       - supports-color
 
@@ -3625,8 +3625,8 @@ packages:
       vite: ^5.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 5.2.10_@types+node@20.12.7
-      vue: 3.4.25_typescript@5.4.5
+      vite: 5.2.10
+      vue: 3.4.25
 
   /@volar/language-core/2.2.0:
     resolution: {integrity: sha512-a8WG9+4OdeNDW4ywABZIM6S6UN7em8uIlM/BZ2pWQUYrVmX+m8sj/X+QadvO+Li/t/LjAqbWJQtVgxdpEWLALQ==}
@@ -11370,11 +11370,6 @@ packages:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
 
-  /uuid/9.0.1:
-    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
-    hasBin: true
-    dev: false
-
   /v8-compile-cache-lib/3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
     dev: true
@@ -11568,7 +11563,6 @@ packages:
       rollup: 4.16.4
     optionalDependencies:
       fsevents: 2.3.3
-    dev: false
 
   /vite/5.2.10_@types+node@20.12.7:
     resolution: {integrity: sha512-PAzgUZbP7msvQvqdSD+ErD5qGnSFiGOoWmV5yAKUEI0kdhjbH6nMWVyZQC/hSc4aXwc0oJ9aEdIiF9Oje0JFCw==}
@@ -11604,6 +11598,7 @@ packages:
       rollup: 4.16.4
     optionalDependencies:
       fsevents: 2.3.3
+    dev: true
 
   /vscode-jsonrpc/6.0.0:
     resolution: {integrity: sha512-wnJA4BnEjOSyFMvjZdpiOwhSq9uDoK8e/kpRJDTaMYzwlkrhG1fwDIZI94CLsLzlCK5cIbMMtFlJlfR57Lavmg==}
