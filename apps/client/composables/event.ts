@@ -1,3 +1,5 @@
+import { isBoolean } from "~/utils/is"
+
 export interface MoveListenerOptions<T = any> {
   startX: number
   startY: number
@@ -14,10 +16,6 @@ interface DocumentMouseEventListener<T = any> {
   down?(evt?: MouseEvent, ...args: any[]): void | boolean | T
   move(options?: MoveListenerOptions<T>, ...args: any[]): void
   up?(evt?: MouseEvent): void
-}
-
-function isBoolean(value: unknown): value is boolean {
-  return toString.call(value) === '[object Boolean]'
 }
 
 export function useDocumentMouseEvent(listener: DocumentMouseEventListener) {

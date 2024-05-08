@@ -20,11 +20,11 @@ interface DefineEmits {
 }
 
 const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
-  const { simulatorData, setSimulatorDataById, clearBlockFocus } = useDesignerContext()
+  const { simulatorData, setSimulatorDataById, clearBlockFocus, record: up } = useDesignerContext()
   const wrapperRef = useEventOutside({ event: 'mousedown', isOnlyChildContains: true }, clearBlockFocus)
 
   const styles = computed<CSSProperties>(() => ({
-    transform: `translate(${props.translateX}px,${props.translateY}px`,
+    transform: `translate(${props.translateX}px,${props.translateY}px)`,
     height: simulatorData.value.container?.height + 'px',
     width: simulatorData.value.container?.width + 'px',
   }))
@@ -41,7 +41,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     setSimulatorDataById(block.id, { ...block, style })
   }
 
-  const onMousedown = useDocumentMouseEvent({ down, move })
+  const onMousedown = useDocumentMouseEvent({ down, move, up })
   onMounted(() => emit('updateWrapperRef', wrapperRef.value))
 
   return (

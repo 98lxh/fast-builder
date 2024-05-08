@@ -1,32 +1,41 @@
+import { cloneDeep } from "~/utils/clone-deep"
+import { devices } from "./device"
+
 export interface DesignerContext {
   setSimulatorRef(simulator: HTMLDivElement | null): void
-  setSimulatorContainer(container: SimulatorContainer): void
-  setSimulatorBlocks(blocks: Array<SimulatorBlock>): void
   setSimulatorData(data: SimulatorData): void
   setSimulatorDataById(id: string, block: SimulatorBlock): void
   clearBlockFocus(): void
+  undo(): void
+  redo(): void
+  record(): void
   simulatorRef: Ref<HTMLDivElement | null>
   simulatorData: Ref<SimulatorData>
 }
 
-export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
-
-export const defaultSimulatorData: SimulatorData = {
-  container: { width: 0, height: 0 },
-  blocks: []
+interface SimulatorSnapshot {
+  data: SimulatorData[],
+  index: number
 }
 
+export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
+
+export const genarateDefaultSimulator = (): SimulatorData => ({
+  container: { width: devices[0].width, height: devices[0].height },
+  blocks: []
+})
+
+const generateDefaultSnapshot = (): SimulatorSnapshot => ({
+  index: -1,
+  data: []
+})
+
 export function useDesigner(): DesignerContext {
+  const { simulatorData, ...undo } = useUndo()
+
   const simulatorRef = ref<HTMLDivElement | null>(null)
-  const simulatorData = ref<SimulatorData>(defaultSimulatorData);
+  const snapshot = ref<SimulatorSnapshot>(generateDefaultSnapshot())
 
-  function setSimulatorContainer(container: SimulatorContainer) {
-    simulatorData.value.container = { ...container }
-  }
-
-  function setSimulatorBlocks(blocks: SimulatorBlock[]) {
-    simulatorData.value.blocks = [...blocks]
-  }
 
   function setSimulatorRef(simulator: HTMLDivElement) {
     simulatorRef.value = simulator
@@ -47,14 +56,49 @@ export function useDesigner(): DesignerContext {
   }
 
   return {
+    ...undo,
     simulatorRef,
     simulatorData,
     clearBlockFocus,
-    setSimulatorDataById,
     setSimulatorRef,
     setSimulatorData,
-    setSimulatorBlocks,
-    setSimulatorContainer
+    setSimulatorDataById
+  }
+}
+
+
+function useUndo(){
+  const simulatorData = ref<SimulatorData>(genarateDefaultSimulator());
+  const snapshot = ref<SimulatorSnapshot>(generateDefaultSnapshot())
+
+  function undo() {
+    if (snapshot.value.index >= 0) {
+      snapshot.value.index--
+      simulatorData.value = cloneDeep(snapshot.value.data[snapshot.value.index]) || genarateDefaultSimulator()
+      console.log(cloneDeep(snapshot.value.data[snapshot.value.index]))
+    }
+  }
+
+  function redo() {
+    if (snapshot.value.index < snapshot.value.data.length - 1) {
+      const { index, data } = snapshot.value
+      snapshot.value.index++
+      simulatorData.value = cloneDeep(data[snapshot.value.index])
+    }
+  }
+
+  function record() {
+    snapshot.value.data[++snapshot.value.index] = cloneDeep(simulatorData.value)
+    if (snapshot.value.index < snapshot.value.data.length - 1) {
+      snapshot.value.data = snapshot.value.data.slice(0, snapshot.value.index + 1)
+    }
+  }
+
+  return {
+    simulatorData,
+    undo,
+    redo,
+    record
   }
 }
 

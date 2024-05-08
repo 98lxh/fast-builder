@@ -3,7 +3,7 @@ import type { DesignerContext } from "~/composables/designer";
 import { nanoid } from "nanoid"
 
 let currentComponent: null | MaterialComponent = null
-let currentDropEventListener: null | ((evt:DragEvent) => void) = null
+let currentDropEventListener: null | ((evt: DragEvent) => void) = null
 
 function onDragenter(evt: DragEvent) {
   evt.dataTransfer!.dropEffect = 'move';
@@ -17,13 +17,14 @@ function onDragleave(evt: DragEvent) {
   evt.dataTransfer!.dropEffect = 'none';
 }
 
-function generateDropEventListener(context: DesignerContext) {
+function generateDropEventListener({ setSimulatorData, simulatorData, record }: DesignerContext) {
   return function (evt: DragEvent) {
-    if (!currentComponent || !context) { return }
+    if (!currentComponent) { return }
+
     const style = {
       ...currentComponent.style,
       top: evt.offsetY,
-      left: evt.offsetX, 
+      left: evt.offsetX,
       zIndex: 1,
     }
 
@@ -34,7 +35,8 @@ function generateDropEventListener(context: DesignerContext) {
       style
     }
 
-    context.setSimulatorBlocks([  ...context.simulatorData.value.blocks, block])
+    setSimulatorData({...simulatorData.value, blocks: [...simulatorData.value.blocks, block] })
+    record()
     currentComponent = null
   }
 }

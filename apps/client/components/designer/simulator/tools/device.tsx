@@ -2,7 +2,7 @@ import { useDesignerContext } from "~/composables/designer";
 import { devices, type Device as DeviceType } from "~/composables/designer/device"
 
 function Device() {
-  const { simulatorData, setSimulatorContainer } = useDesignerContext()
+  const { simulatorData, setSimulatorData } = useDesignerContext()
   const container = shallowReactive({ width: 0, height: 0 })
 
   const vm = getCurrentInstance();
@@ -20,8 +20,7 @@ function Device() {
       container.height = device.height
       container.width = device.width
     }
-    
-    setSimulatorContainer(container)
+    setSimulatorData({ ...simulatorData.value, container: { ...container } })
   }
 
   watch(() => simulatorData.value.container, (value) => {
@@ -36,13 +35,13 @@ function Device() {
   return (
     <div class="dropdown dropdown-hover border-1 w-full p-[2px] dropdown-left dark:border-neutral rounded-sm">
       <div class="hover:text-primary">
-        <NuxtIcon  name="phone" />
+        <NuxtIcon name="phone" />
       </div>
 
       <div tab-index={0} class="dropdown-content z-[1] p-4 shadow-custom bg-base-100 w-[300px] border-1 dark:border-neutral">
         <p class="p-2">设置画布尺寸</p>
         <div class="border-b-1 dark:border-neutral" />
-       
+
         <div class="flex flex-wrap p-2">
           {
             devices.map(device => (

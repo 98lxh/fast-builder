@@ -13,7 +13,7 @@ interface DefineEmits {
 }
 
 const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
-  const { setSimulatorDataById } = useDesignerContext()
+  const { setSimulatorDataById , record: up} = useDesignerContext()
   const styles = computed<CSSProperties>(() => ({
     zIndex: props.block.style.zIndex,
     top: props.block.style.top + 'px',
@@ -23,7 +23,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     cursor: props.block.focus ? 'move' : 'pointer'
   }))
 
-  const onMousedown = useDocumentMouseEvent({ move, down })
+  const onMousedown = useDocumentMouseEvent({ move, down, up })
 
   function down(evt: MouseEvent) {
     evt.stopPropagation()
