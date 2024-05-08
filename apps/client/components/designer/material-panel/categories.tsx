@@ -31,7 +31,7 @@ const Categories: FC<DefineProps, DefineEmits> = function (props, { emit }) {
             role="tab"
             key={item.key}
           >
-            <NuxtIcon size="18px" name={item.icon} />
+            <NuxtIcon size="22px" name={item.icon} />
 
             <span class={`${item.key === props.category ? 'text-primary' : ''}`}>
               {item.text}

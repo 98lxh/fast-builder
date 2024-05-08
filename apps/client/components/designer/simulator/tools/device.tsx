@@ -1,5 +1,8 @@
+import { useDesignerContext } from "~/composables/designer";
+import { devices, type Device as DeviceType } from "~/composables/designer/device"
+
 function Device() {
-  const context = useDesignerContext()
+  const { simulatorData, setSimulatorContainer } = useDesignerContext()
   const container = shallowReactive({ width: 0, height: 0 })
 
   const vm = getCurrentInstance();
@@ -12,17 +15,16 @@ function Device() {
     container[key] = value;
   }
 
-  function onUpdateContainer(device?: Device) {
-    if (!context) { return }
-
+  function onUpdateContainer(device?: DeviceType) {
     if (device) {
       container.height = device.height
       container.width = device.width
     }
-    context.setSimulatorContainer({...container})
+    
+    setSimulatorContainer(container)
   }
 
-  watch(() => context?.simulatorData.value.container, (value) => {
+  watch(() => simulatorData.value.container, (value) => {
     const { height, width } = value || {};
     if (height === 0 && width === 0) { return }
     container.height = height || 0
@@ -34,13 +36,14 @@ function Device() {
   return (
     <div class="dropdown dropdown-hover border-1 w-full p-[2px] dropdown-left dark:border-neutral rounded-sm">
       <div class="hover:text-primary">
-        <NuxtIcon name="phone" />
+        <NuxtIcon  name="phone" />
       </div>
 
-      <div tab-index={0} class="dropdown-content z-[1]  shadow-custom bg-base-100 w-[300px]">
+      <div tab-index={0} class="dropdown-content z-[1] p-4 shadow-custom bg-base-100 w-[300px] border-1 dark:border-neutral">
         <p class="p-2">设置画布尺寸</p>
         <div class="border-b-1 dark:border-neutral" />
-        <div class="flex flex-wrap px-2">
+       
+        <div class="flex flex-wrap p-2">
           {
             devices.map(device => (
               <div class="flex flex-col items-center w-[33.33%] my-2" onClick={() => onUpdateContainer(device)}>
@@ -68,7 +71,7 @@ function Device() {
             <p class="pr-1">高:</p>
             <input
               value={container.height}
-              type="text" 
+              type="text"
               placeholder="高度"
               class="input input-bordered w-full input-xs"
               onInput={evt => onInput(evt, 'height')}

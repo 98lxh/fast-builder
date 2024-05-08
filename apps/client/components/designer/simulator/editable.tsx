@@ -1,7 +1,8 @@
 import type { CSSProperties } from "vue"
 import type { FC } from "vite-plugin-vueact"
 import { useDesignerContext } from "~/composables/designer"
-import { generatePointStyles, placements, getHasPosition } from "../util/resizable"
+import { generatePointStyles, placements, getHasPosition, calculateResizeStyle } from "../util/editable"
+import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
 
 interface DefineProps {
   block: SimulatorBlock
@@ -11,7 +12,7 @@ interface DefineEmits {
   (name: 'mousedown', evt: MouseEvent): void
 }
 
-const Resizable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
+const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
   const { setSimulatorDataById } = useDesignerContext()
   const styles = computed<CSSProperties>(() => ({
     zIndex: props.block.style.zIndex,
@@ -24,36 +25,22 @@ const Resizable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }
 
   const onMousedown = useDocumentMouseEvent({ move, down })
 
-  let blockStyle: Pick<SimulatorBlockStyle, 'height' | 'width' | 'top' | 'left'> | null = null
   function down(evt: MouseEvent) {
     evt.stopPropagation()
     evt.preventDefault()
-
-    const { height, width, top, left } = props.block.style
-    blockStyle = { height, width, top, left }
+    return props.block.style
   }
 
-  function move({ currentY, currentX, startY, startX }: MoveListenerOptions, placement: string) {
-    let { height, width, top, left } = blockStyle!
-    const { hasTop, hasBottom, hasLeft, hasRight } = getHasPosition(placement)
-    const disY = currentY - startY
-    const disX = currentX - startX
-    height = height + (hasTop ? -disY : hasBottom ? disY : 0)
-    width = width + (hasLeft ? -disX : hasRight ? disX : 0)
-    height = height > 0 ? height : 0
-    width = width > 0 ? width : 0
-    left = left + (hasLeft ? disX : 0)
-    top = top + (hasTop ? disY : 0)
-    const style = { ...props.block.style, height, width, left, top }
+  function move(options: MoveListenerOptions<SimulatorBlockStyle>, placement: string) {
+    const style = calculateResizeStyle(options, props.block, placement)
     setSimulatorDataById(props.block.id, { ...props.block, style })
   }
-
 
   return (
     <div
       class="absolute"
-      onMousedown={evt => emit('mousedown', evt)}
       style={styles.value}
+      onMousedown={evt => emit('mousedown', evt)}
     >
       {
         props.block.focus && placements.map(placement => (
@@ -67,11 +54,10 @@ const Resizable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }
       }
 
       {props.block.focus && <div class={`h-full w-full absolute block-focus`} />}
-
       {slots.default && slots.default()}
     </div>
   )
 }
 
 
-export default Resizable
+export default Editable

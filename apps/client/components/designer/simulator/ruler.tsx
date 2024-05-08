@@ -36,12 +36,9 @@ const Ruler: FC<DefineProps> = function (props) {
   }
 
   watch(() => [props.height, props.width, isDark], useDebounceFn(render, 50), { deep: true })
-
   onMounted(render)
 
-  return (
-    <canvas ref={canvasRef} style={{ ...styles.value }} />
-  )
+  return <canvas ref={canvasRef} style={{ ...styles.value }} />
 }
 
 export default Ruler;

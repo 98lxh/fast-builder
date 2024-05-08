@@ -1,8 +1,11 @@
+import { designerInjectionKey, useDesigner } from "~/composables/designer"
+
 import {
   Simulator,
   MaterialPanel,
   AttributePanel
 } from "~/components/designer"
+
 
 function Designer() {
   provide(designerInjectionKey, useDesigner())

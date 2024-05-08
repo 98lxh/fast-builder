@@ -1,4 +1,5 @@
 import type { MaterialComponent } from "@h5-designer/material";
+import type { DesignerContext } from "~/composables/designer";
 import { nanoid } from "nanoid"
 
 let currentComponent: null | MaterialComponent = null

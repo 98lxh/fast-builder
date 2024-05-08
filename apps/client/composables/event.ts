@@ -1,24 +1,34 @@
-export interface MoveListenerOptions {
+export interface MoveListenerOptions<T = any> {
   startX: number
   startY: number
   currentX: number
   currentY: number
   lastX: number
   lastY: number
+  deltaX: number
+  deltaY: number
+  result: T
 }
 
-interface DocumentMouseEventListener {
-  down?(evt?: MouseEvent, ...args: any[]): void | boolean
-  move(options?: MoveListenerOptions, ...args: any[]): void
+interface DocumentMouseEventListener<T = any> {
+  down?(evt?: MouseEvent, ...args: any[]): void | boolean | T
+  move(options?: MoveListenerOptions<T>, ...args: any[]): void
   up?(evt?: MouseEvent): void
+}
+
+function isBoolean(value: unknown): value is boolean {
+  return toString.call(value) === '[object Boolean]'
 }
 
 export function useDocumentMouseEvent(listener: DocumentMouseEventListener) {
   let valve = true;
 
   function onMousedown(downEvent: MouseEvent, ...args: any[]) {
-    const result = (listener.down && listener.down(downEvent, ...args));
-    result === false ? (valve = false) : (valve = true)
+    const result = (listener.down && listener.down(downEvent, ...args))
+
+    if (isBoolean(result)) {
+      result === false ? (valve = false) : (valve = true)
+    }
 
     const startX = downEvent.clientX
     const startY = downEvent.clientY
@@ -33,7 +43,10 @@ export function useDocumentMouseEvent(listener: DocumentMouseEventListener) {
 
       const currentX = moveEvent.clientX
       const currentY = moveEvent.clientY
-      listener.move({ startX, startY, currentX, currentY, lastX, lastY }, ...args)
+      const deltaX = currentX - lastX
+      const deltaY = currentY - lastY
+
+      listener.move({ startX, startY, currentX, currentY, deltaX, deltaY, lastX, lastY, result }, ...args,)
       lastX = currentX
       lastY = currentY
     }
