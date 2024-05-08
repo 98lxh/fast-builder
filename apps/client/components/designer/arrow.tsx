@@ -17,6 +17,15 @@ const ArrowButton: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     borderRadius: props.direction === 'right' ? '8px 0 0 8px' : '0 8px 8px 0'
   }))
 
+  function icon() {
+    const { modelValue, direction } = props
+    if (modelValue) {
+      return <NuxtIcon name={direction === 'right' ? 'left-arrow' : 'right-arrow'} />
+    } else {
+      return <NuxtIcon name={props.direction === 'right' ? 'right-arrow' : 'left-arrow'} />
+    }
+  }
+
 
   return (
     <div
@@ -29,12 +38,7 @@ const ArrowButton: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     >
 
       <div class="hover:text-primary">
-        {
-          (props.modelValue
-            ? <NuxtIcon name={props.direction === 'right' ? 'left-arrow' : 'right-arrow'} />
-            : <NuxtIcon name={props.direction === 'right' ? 'right-arrow' : 'left-arrow'} />
-          )
-        }
+        {icon()}
       </div>
     </div>
   )

@@ -1,14 +1,16 @@
-import { MaterialCategories, MaterialCategory, previewMaterialComponents } from "@h5-designer/material"
 import type { CSSProperties } from "vue"
 import Categories from "./categories"
 import Components from "./components"
 import ArrowButton from "../arrow"
 
+import { getCategories, getComponents, type MaterialCategory } from "@h5-designer/material"
+
+
 function MaterialPanel() {
   const isHidden = shallowRef(false);
-  const category = shallowRef(MaterialCategories[0].key);
+  const category = shallowRef(getCategories()[0].key);
 
-  const components = computed(() => previewMaterialComponents[category.value] || []);
+  const components = computed(() => getComponents(category.value));
 
   const styles = computed<CSSProperties>(() => ({
     transition: 'width .3s',

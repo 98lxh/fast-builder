@@ -1,7 +1,7 @@
 import type { CSSProperties } from "vue"
 import type { FC } from "vite-plugin-vueact"
 import { useDesignerContext } from "~/composables/designer"
-import { generatePointStyles, placements, getHasPosition, calculateResizeStyle } from "../util/editable"
+import { generatePointStyles, placements, calculateResizeStyle } from "../util/editable"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
 
 interface DefineProps {
@@ -13,7 +13,7 @@ interface DefineEmits {
 }
 
 const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
-  const { setSimulatorDataById , record: up} = useDesignerContext()
+  const { setSimulatorDataById, record: up } = useDesignerContext()
   const styles = computed<CSSProperties>(() => ({
     zIndex: props.block.style.zIndex,
     width: props.block.style.width + 'px',

@@ -1,14 +1,11 @@
-import { MaterialCategory } from "./types";
+import { MaterialCategory } from "_interface"
 
-export const MaterialCategories = [
-  {
-    text: '基础',
-    key: MaterialCategory.BASIS,
-    icon: 'designer/basis/basis'
-  },
-  {
-    text: '媒体',
-    key: MaterialCategory.MEDIA,
-    icon: 'designer/media/media'
+// 物料组件分类
+export const materialCategories: Map<Symbol, MaterialCategory> = new Map()
+
+export function defineMaterialCategory(category: MaterialCategory) {
+  if (materialCategories.has(category.key)) {
+    return
   }
-]
+  materialCategories.set(category.key, category)
+}

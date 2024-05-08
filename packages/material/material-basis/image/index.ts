@@ -1,10 +1,10 @@
-import { defineComponent } from "./../../_util/generator";
+import { defineMaterialComponent } from "../../_composables/define";
 import BasisImage from "./basis-image"
 
-export default defineComponent({
-  style: { width: 100,  height: 40 },
+export default defineMaterialComponent({
+  style: { width: 100, height: 40 },
   icon: 'designer/basis/image',
   component: BasisImage,
+  key: Symbol('image'),
   text: '图片组件',
-  key: 'image',
 })

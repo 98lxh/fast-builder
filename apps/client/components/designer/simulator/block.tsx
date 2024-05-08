@@ -1,8 +1,10 @@
 import type { CSSProperties } from "vue";
 import type { FC } from "vite-plugin-vueact";
-import { mapMaterialComponents } from "@h5-designer/material";
 import { useDesignerContext } from "~/composables/designer";
 import Editable from "./editable";
+
+import { render } from "@h5-designer/material";
+
 
 import {
   type MoveListenerOptions,
@@ -24,7 +26,9 @@ const defaultPreview = { show: false, left: 0, top: 0, height: 0, width: 0 }
 const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   const { simulatorData, setSimulatorDataById, clearBlockFocus, record } = useDesignerContext()
   const wrapperRef = useEventOutside({ event: 'mousedown', isOnlyChildContains: true }, clearBlockFocus)
-  const preview = ref({ ...defaultPreview })
+  const previewStyle = ref({ ...defaultPreview })
+
+  const onMousedown = useDocumentMouseEvent({ down, move, up })
 
   const styles = computed<CSSProperties>(() => ({
     transform: `translate(${props.translateX}px,${props.translateY}px)`,
@@ -35,7 +39,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   function down(_: MouseEvent, block: SimulatorBlock) {
     clearBlockFocus()
     const { width, height, left, top } = block.style
-    preview.value = { width, height, left, top, show: true }
+    previewStyle.value = { width, height, left, top, show: true }
     block.focus = true
   }
 
@@ -44,18 +48,48 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     const top = currentY - startY + block.style.top
     const left = currentX - startX + block.style.left
     const style = { ...block.style, left, top }
-    preview.value = { width, height, left, top, show: true }
+    previewStyle.value = { width, height, left, top, show: true }
     setSimulatorDataById(block.id, { ...block, style })
   }
 
-  function up(){
-    // 预览框重置
-    preview.value = { ...defaultPreview }
+  function preview() {
+    const { width, height, left, top, show } = previewStyle.value
+    if (!show) { return null }
+
+    const style = {
+      width: width + 'px',
+      height: height + 'px',
+      transform: `translate(${left}px,${top}px)`
+    }
+
+    return (
+      <div
+        class="absolute border-2 border-primary top-0 left-0 duration-200 border-dashed"
+        style={style}
+      />
+    )
+  }
+
+
+  function editable(block: SimulatorBlock) {
+    return (
+      <Editable
+        onMousedown={(evt: MouseEvent) => onMousedown(evt, block)}
+        block={block}
+        key={block.id}
+      >
+        {render(block.key, block.props)}
+      </Editable>
+    )
+  }
+
+  function up() {
+    // 预览框样式重置
+    previewStyle.value = { ...defaultPreview }
     // 记录当前更改到快照
     record()
   }
 
-  const onMousedown = useDocumentMouseEvent({ down, move, up })
   onMounted(() => emit('updateWrapperRef', wrapperRef.value))
 
   return (
@@ -64,27 +98,8 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
       style={styles.value}
       ref={wrapperRef}
     >
-      {
-        simulatorData.value.blocks.map(block => (
-          <Editable
-            onMousedown={(evt: MouseEvent) => onMousedown(evt, block)}
-            block={block}
-            key={block.id}
-          >
-            { mapMaterialComponents[block.key] && mapMaterialComponents[block.key].setup(block.props)() }
-          </Editable>
-        ))
-      }
-
-      {preview.value.show && (<div
-          class="absolute border-2 border-primary top-0 left-0 duration-150"
-          style={{ 
-            width: preview.value.width + 'px',  
-            height: preview.value.height + 'px',
-            transform: `translate(${preview.value.left}px,${preview.value.top}px)` 
-          }}
-        />
-      )}
+      {simulatorData.value.blocks.map(editable)}
+      {preview()}
     </div>
   )
 }
