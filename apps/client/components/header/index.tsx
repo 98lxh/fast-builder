@@ -5,8 +5,8 @@ function Header() {
   const router = useRouter();
 
   return (
-    <header class="navbar bg-base-100 shadow-custom">
-      < div class="flex-none lg:hidden block" >
+    <header class="navbar bg-base-100 shadow-custom ">
+      <div class="lg:hidden block static">
         <div class="dropdown">
           <div tabindex={0} role="button" class="btn  btn-square btn-ghost">
             <svg
@@ -17,7 +17,7 @@ function Header() {
             </svg>
           </div>
 
-          <ul tabindex={0} class="dropdown-content z-[1] menu p-2 shadow bg-base-100 w-52">
+          <ul tabindex={0} class="dropdown-content z-[1] menu p-2 shadow bg-base-100 w-52  border-1 dark:border-neutral">
             <SidebarItems />
           </ul>
         </div>
