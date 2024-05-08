@@ -4,11 +4,11 @@ export const MaterialCategories = [
   {
     text: '基础',
     key: MaterialCategory.BASIS,
-    icon: 'basis'
+    icon: 'designer/basis/basis'
   },
   {
     text: '媒体',
     key: MaterialCategory.MEDIA,
-    icon: 'media'
+    icon: 'designer/media/media'
   }
 ]

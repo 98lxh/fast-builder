@@ -16,11 +16,10 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
   const { setSimulatorDataById , record: up} = useDesignerContext()
   const styles = computed<CSSProperties>(() => ({
     zIndex: props.block.style.zIndex,
-    top: props.block.style.top + 'px',
-    left: props.block.style.left + 'px',
     width: props.block.style.width + 'px',
     height: props.block.style.height + 'px',
-    cursor: props.block.focus ? 'move' : 'pointer'
+    cursor: props.block.focus ? 'move' : 'pointer',
+    transform: `translate(${props.block.style.left}px,${props.block.style.top}px)`
   }))
 
   const onMousedown = useDocumentMouseEvent({ move, down, up })
@@ -38,7 +37,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
 
   return (
     <div
-      class="absolute"
+      class="absolute top-0 left-0"
       style={styles.value}
       onMousedown={evt => emit('mousedown', evt)}
     >
@@ -54,6 +53,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
       }
 
       {props.block.focus && <div class={`h-full w-full absolute block-focus`} />}
+
       {slots.default && slots.default()}
     </div>
   )

@@ -1,11 +1,9 @@
-import { useDesignerContext } from "~/composables/designer"
 import BlockContainer from "./block-container"
 import Ruler from "./ruler"
 import Tools from "./tools"
 
 
 function Simulator() {
-  const { simulatorData } = useDesignerContext()
   const el = ref<HTMLDivElement | null>(null)
   const size = reactive(useElementSize(el))
 
@@ -24,12 +22,10 @@ function Simulator() {
     >
       <Ruler mode="horizontal" {...props.value} />
       <Ruler mode="vertical"  {...props.value} />
-
       <BlockContainer />
-
       <Tools />
     </div>
   )
 }
 
-export default Simulator;
+export default Simulator

@@ -1,6 +1,6 @@
 import { MaterialCategory, MaterialComponent } from "_composables/types"
-import basis from "./basis"
-import media from "./media"
+import basis from "./material-basis"
+import media from "./material-media"
 
 export const previewMaterialComponents = ({
   ...basis,

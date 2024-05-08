@@ -35,19 +35,19 @@ function Device() {
   return (
     <div class="dropdown dropdown-hover border-1 w-full p-[2px] dropdown-left dark:border-neutral rounded-sm">
       <div class="hover:text-primary">
-        <NuxtIcon name="phone" />
+        <NuxtIcon name="designer/computer" />
       </div>
 
       <div tab-index={0} class="dropdown-content z-[1] p-4 shadow-custom bg-base-100 w-[300px] border-1 dark:border-neutral">
         <p class="p-2">设置画布尺寸</p>
         <div class="border-b-1 dark:border-neutral" />
 
-        <div class="flex flex-wrap p-2">
+        <div class="flex flex-wrap px-1 py-2">
           {
             devices.map(device => (
               <div class="flex flex-col items-center w-[33.33%] my-2" onClick={() => onUpdateContainer(device)}>
                 <div class="border-1 w-[30px] h-[45px] mb-1 hover:border-primary"></div>
-                <span class="text-nowrap text-sm">{device.name}</span>
+                <span class="text-nowrap text-xs">{device.name}</span>
               </div>
             ))
           }

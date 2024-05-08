@@ -1,3 +1,4 @@
+import type { CSSProperties } from "vue";
 import { useDesignerContext } from "~/composables/designer";
 import Block from "./block"
 
@@ -13,6 +14,7 @@ function BlockContainer() {
   const wrapperRef = ref<HTMLDivElement | null>(null)
   const translate = shallowReactive({ x: 0, y: 0 })
 
+  
   function updateTranslate(deltaX: number, deltaY: number) {
     const moveX = deltaX !== 0;
     const moveY = deltaY !== 0;

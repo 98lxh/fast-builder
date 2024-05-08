@@ -6,7 +6,7 @@ export function generateMaterialComponents(category: MaterialCategory, component
   return { [category]: components } as { MaterialCategory: MaterialComponent[] }
 }
 
-export function defineMaterialComponent(materialComponent: MaterialComponent) {
+export function defineComponent(materialComponent: MaterialComponent) {
   const { key, component, icon, text, style } = materialComponent;
 
   if (!mapMaterialComponents[key]) {

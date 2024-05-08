@@ -12,7 +12,8 @@ const Do: FC<DefineProps> = function (props) {
     const isUndo = props.type === 'undo'
     return {
       tip: isUndo ? '撤销' : '重做',
-      event: () => isUndo ? undo() : redo()
+      event: () => isUndo ? undo() : redo(),
+      icon: isUndo ? 'designer/undo' : 'designer/redo'
     }
   })
 
@@ -23,7 +24,7 @@ const Do: FC<DefineProps> = function (props) {
       onClick={state.value.event}
     >
       <div class="border-1 dark:border-neutral p-[2px]  w-full rounded-sm hover:text-primary box-border">
-        <NuxtIcon name={props.type} />
+        <NuxtIcon name={state.value.icon} />
       </div>
     </div>
   )

@@ -21,7 +21,7 @@ function Tools() {
         class="rotate-[90deg] p-[3px] cursor-move mb-2"
         onMousedown={onMousedown}
       >
-        <NuxtIcon name="holder" />
+        <NuxtIcon name="designer/holder" />
       </div>
 
       <Device />
