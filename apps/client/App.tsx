@@ -1,3 +1,5 @@
+import "@h5-designer/material"
+
 function App() {
   const { initDarkMode } = useDarkMode()
   onMounted(() => initDarkMode())

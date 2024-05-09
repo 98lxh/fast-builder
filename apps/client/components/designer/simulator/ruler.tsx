@@ -17,10 +17,9 @@ const Ruler: FC<DefineProps> = function (props) {
   const styles = computed(() => ({
     width: props.mode === 'horizontal' ? '100%' : '30px',
     height: props.mode === 'horizontal' ? '30px' : '100%',
-    cursor: props.mode === 'horizontal' ? 'row-resize' : 'col-resize',
-    backgroundColor: 'transparent',
+    // cursor: props.mode === 'horizontal' ? 'row-resize' : 'col-resize',
+    top: props.mode === 'horizontal' ? '0px' : '30px',
     display: 'block',
-    flex: 'none',
     zIndex: 1
   }))
 
@@ -38,7 +37,14 @@ const Ruler: FC<DefineProps> = function (props) {
   watch(() => [props.height, props.width, isDark], useDebounceFn(render, 50), { deep: true })
   onMounted(render)
 
-  return <canvas ref={canvasRef} style={{ ...styles.value }} />
+  return (
+    <canvas
+      class="absolute bg-transparent flex-none"
+      style={{ ...styles.value }}
+      ref={canvasRef}
+    />
+
+  )
 }
 
 export default Ruler;

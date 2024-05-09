@@ -15,27 +15,31 @@ export interface DesignerContext {
 
 interface SimulatorSnapshot {
   data: SimulatorData[],
-  index: number
+  index: number,
+  undoable: boolean
+  redoable: boolean
 }
 
 export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
 
 export const genarateDefaultSimulator = (): SimulatorData => ({
-  container: { width: devices[0].width, height: devices[0].height },
+  container: {
+    width: devices[0].width,
+    height: devices[0].height
+  },
   blocks: []
 })
 
 const generateDefaultSnapshot = (): SimulatorSnapshot => ({
-  index: -1,
-  data: []
+  data: [], // 快照集合
+  index: -1,  // 当前索引
+  undoable: false, // 可撤销
+  redoable: false // 可重做
 })
 
 export function useDesigner(): DesignerContext {
   const { simulatorData, ...undo } = useUndo()
-
   const simulatorRef = ref<HTMLDivElement | null>(null)
-  const snapshot = ref<SimulatorSnapshot>(generateDefaultSnapshot())
-
 
   function setSimulatorRef(simulator: HTMLDivElement) {
     simulatorRef.value = simulator
@@ -67,21 +71,20 @@ export function useDesigner(): DesignerContext {
 }
 
 
-function useUndo(){
-  const simulatorData = ref<SimulatorData>(genarateDefaultSimulator());
+function useUndo() {
   const snapshot = ref<SimulatorSnapshot>(generateDefaultSnapshot())
+  const simulatorData = ref<SimulatorData>(genarateDefaultSimulator());
 
   function undo() {
     if (snapshot.value.index >= 0) {
       snapshot.value.index--
       simulatorData.value = cloneDeep(snapshot.value.data[snapshot.value.index]) || genarateDefaultSimulator()
-      console.log(cloneDeep(snapshot.value.data[snapshot.value.index]))
     }
   }
 
   function redo() {
     if (snapshot.value.index < snapshot.value.data.length - 1) {
-      const { index, data } = snapshot.value
+      const { data } = snapshot.value
       snapshot.value.index++
       simulatorData.value = cloneDeep(data[snapshot.value.index])
     }
@@ -96,9 +99,9 @@ function useUndo(){
 
   return {
     simulatorData,
+    record,
     undo,
-    redo,
-    record
+    redo
   }
 }
 

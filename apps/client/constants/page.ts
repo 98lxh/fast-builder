@@ -31,3 +31,14 @@ export const SidebarItems = [
     icon: 'sidebar/doc'
   }
 ];
+
+export const HomeTabs = [
+  {
+    text: '我的页面',
+    key: 'mine'
+  },
+  {
+    text: '热门模板',
+    key: 'template'
+  }
+];

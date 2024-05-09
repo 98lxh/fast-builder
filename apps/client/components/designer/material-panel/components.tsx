@@ -1,10 +1,10 @@
 import type { FC } from "vite-plugin-vueact";
-import type { MaterialComponent } from "@h5-designer/material";
+import  { getComponents } from "@h5-designer/material";
 import { useDesignerContext } from "~/composables/designer";
 import { onDragstart } from "../util/material";
 
 interface DefineProps {
-  components: MaterialComponent[];
+  category: string;
   isHidden: boolean;
 }
 
@@ -14,7 +14,7 @@ const Components: FC<DefineProps> = function (props) {
   return (
     <div class={`flex m-2 w-full justify-around overflow-hidden w-[${props.isHidden ? 'auto' : '0px'}]`}>
       {
-        props.components.map(component => (
+        getComponents(props.category).map(component => (
           <div class="flex flex-col justify-around items-center h-[80px] w-[60px] cursor-move">
             <div
               class="text-primary border-2 border-dotted rounded-sm dark:border-[#8b8b8d] w-full p-3 hover:border-primary duration-300"

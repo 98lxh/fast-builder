@@ -1,29 +1,28 @@
 import type { CSSProperties } from "vue"
-import Categories from "./categories"
+import Tabs from "~/components/tabs"
 import Components from "./components"
 import ArrowButton from "../arrow"
 
 import {
-  getComponents,
+  getCategories,
   getDefaultCategoryKey,
   type MaterialCategory
 } from "@h5-designer/material"
 
 function MaterialPanel() {
-  const isHidden = shallowRef(false);
-  const category = shallowRef(getDefaultCategoryKey());
-
-  const components = computed(() => getComponents(category.value));
+  const state  = shallowReactive({
+    category: getDefaultCategoryKey(),
+    isHidden: false
+  })
 
   const styles = computed<CSSProperties>(() => ({
-    transition: 'width .3s',
-    width: isHidden.value ? '60px' : '248px',
+    width: state.isHidden ? '60px' : '248px',
+    transition: 'width .3s'
   }))
 
-
   function onUpdateCategory(value: MaterialCategory) {
-    category.value = value;
-    isHidden.value === true && (isHidden.value = false);
+    state.category = value;
+    state.isHidden === true && (state.isHidden = false);
   }
 
   return (
@@ -31,21 +30,22 @@ function MaterialPanel() {
       class="flex  bg-base-100 shadow-custom w-[248px] main-height relative"
       style={styles.value}
     >
-      <Categories
-        category={category.value}
-        isHidden={isHidden.value}
-        onUpdate:category={onUpdateCategory}
-      />
+      <ClientOnly>
+        <Tabs 
+          data={getCategories()}
+          v-model={state.category}
+        />
 
-      <Components
-        components={components.value}
-        isHidden={isHidden.value}
-      />
+        <Components
+          category={state.category}
+          isHidden={state.isHidden}
+        />
 
-      <ArrowButton
-        v-model={isHidden.value}
-        direction="left"
-      />
+        <ArrowButton
+          v-model={state.isHidden}
+          direction="left"
+        />
+      </ClientOnly>
     </div>
   )
 }

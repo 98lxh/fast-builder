@@ -8,5 +8,4 @@ async function autoImport() {
   entires.forEach(entry => import(entry))
   
 }
-
 autoImport()
