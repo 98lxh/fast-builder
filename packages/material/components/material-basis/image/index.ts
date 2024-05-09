@@ -1,10 +1,11 @@
-import { defineMaterialComponent } from "../../_composables/define";
+import { defineMaterialComponent, key } from "../../../_composables/define";
 import BasisImage from "./basis-image"
 
 export default defineMaterialComponent({
   style: { width: 100, height: 40 },
   icon: 'designer/basis/image',
   component: BasisImage,
-  key: Symbol('image'),
+  key: key('image'),
   text: '图片组件',
+  weight: 9999
 })

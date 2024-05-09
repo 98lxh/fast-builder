@@ -1,14 +1,14 @@
 declare interface SimulatorBlockStyle {
   width: number;
   height: number;
-  top: number;
-  left: number;
   zIndex: number;
+  left: number;
+  top: number;
 }
 
 declare interface SimulatorBlock {
   id: string;
-  key: Symbol;
+  key: string;
   focus: boolean;
   style: SimulatorBlockStyle;
   props?: Record<string, any>;

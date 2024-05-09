@@ -4,16 +4,18 @@ export interface MaterialComponentStyle {
 }
 
 export interface MaterialComponent {
-  key: Symbol
+  key: string
   icon: string
   text: string
   component: any
+  weight:number
   style: MaterialComponentStyle
 }
 
 
 export interface MaterialCategory {
-  key: Symbol
+  key: string
   text: string
   icon: string
+  weight: number
 }

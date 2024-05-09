@@ -5,7 +5,6 @@ import Editable from "./editable";
 
 import { render } from "@h5-designer/material";
 
-
 import {
   type MoveListenerOptions,
   useDocumentMouseEvent,
@@ -64,7 +63,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
 
     return (
       <div
-        class="absolute border-2 border-primary top-0 left-0 duration-200 border-dashed"
+        class="absolute border-2 border-primary top-0 left-0 duration-250 border-dashed"
         style={style}
       />
     )

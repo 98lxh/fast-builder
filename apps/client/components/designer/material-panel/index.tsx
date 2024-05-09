@@ -3,12 +3,15 @@ import Categories from "./categories"
 import Components from "./components"
 import ArrowButton from "../arrow"
 
-import { getCategories, getComponents, type MaterialCategory } from "@h5-designer/material"
-
+import {
+  getComponents,
+  getDefaultCategoryKey,
+  type MaterialCategory
+} from "@h5-designer/material"
 
 function MaterialPanel() {
   const isHidden = shallowRef(false);
-  const category = shallowRef(getCategories()[0].key);
+  const category = shallowRef(getDefaultCategoryKey());
 
   const components = computed(() => getComponents(category.value));
 

@@ -1,7 +1,7 @@
-import { MaterialComponent } from "../_interface";
+import { MaterialCategory, MaterialComponent } from "../_interface";
 import { mapMaterialComponents, previewMaterialComponents } from "./component";
 
-import { MaterialCategory, materialCategories } from "./categories";
+import { materialCategories } from "./categories";
 
 // 定义物料组件
 export function defineMaterialComponent(materialComponent: MaterialComponent) {
@@ -20,13 +20,24 @@ export function defineMaterialCategory(category: MaterialCategory) {
 
 // 定义物料组件集合
 export function defineMaterialComponents(
-  category: Symbol,
+  categoryKey: string,
   components: Omit<MaterialComponent, 'component'>[]
 ) {
 
-  if (previewMaterialComponents.has(category)) {
+  if (previewMaterialComponents.has(categoryKey)) {
     return
   }
 
-  previewMaterialComponents.set(category, components)
+  previewMaterialComponents.set(categoryKey, components)
+}
+
+export enum MaterialKey {
+  component,
+  category
+}
+
+// 生成key
+export function key(key: string, type = MaterialKey.component) {
+  const perfix = type === MaterialKey.category ? 'category' : 'component'
+  return `${perfix}-${key}`
 }
