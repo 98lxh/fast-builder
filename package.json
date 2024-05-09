@@ -17,22 +17,22 @@
     "vue": "^3.4.21"
   },
   "devDependencies": {
-    "vite": "^5.2.0",
-    "eslint": "^8.57.0",
-    "typescript": "^5.2.2",
+    "vite": "^5.1.6",
     "@h5-designer/material": "1.0.0",
     "@h5-designer/mock": "1.0.0",
-    "vite-plugin-vueact": "^0.0.7",
-    "@vitejs/plugin-vue": "^5.0.4",
-    "@vitejs/plugin-vue-jsx": "3.1.0",
     "@kirklin/eslint-config": "^2.2.0",
     "@types/node": "^20.11.30",
-    "eslint-plugin-format": "^0.1.0",
     "@unocss/eslint-config": "^0.58.6",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vitejs/plugin-vue-jsx": "3.1.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-format": "^0.1.0",
+    "typescript": "^5.2.2",
     "unocss": "^0.58.6",
     "unocss-preset-chinese": "^0.3.2",
     "unocss-preset-daisy": "^7.0.0",
     "unocss-preset-ease": "^0.0.3",
+    "vite-plugin-vueact": "^0.0.7",
     "vue-tsc": "^2.0.6"
   }
 }

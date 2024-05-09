@@ -8,7 +8,7 @@ export interface MaterialComponent {
   icon: string
   text: string
   component: any
-  weight:number
+  weight: number
   style: MaterialComponentStyle
 }
 

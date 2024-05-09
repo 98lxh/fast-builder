@@ -5,12 +5,12 @@ import { materialCategories } from "./categories"
 export function getCategories() {
   const values = materialCategories.values()
   const categories = values ? [...values] : []
-  categories.sort((a,b) => b.weight - a.weight)
+  categories.sort((a, b) => b.weight - a.weight)
   return categories
 }
 
 // 获取默认物料分类(基础分类)
-export function getDefaultCategoryKey(){
+export function getDefaultCategoryKey() {
   const categories = getCategories();
   return categories.length !== 0 ? categories[0].key : ''
 }
@@ -18,7 +18,7 @@ export function getDefaultCategoryKey(){
 // 获取物料组件(预览)
 export function getComponents(category: string) {
   const components = previewMaterialComponents.get(category) || []
-  components.sort((a,b) => b.weight - a.weight)
+  components.sort((a, b) => b.weight - a.weight)
   return components
 }
 

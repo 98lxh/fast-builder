@@ -58,7 +58,7 @@ importers:
         specifier: ^0.0.3
         version: 0.0.3(unocss@0.58.9)
       vite:
-        specifier: ^5.2.0
+        specifier: ^5.1.6
         version: 5.2.10(@types/node@20.12.7)
       vite-plugin-vueact:
         specifier: ^0.0.7
