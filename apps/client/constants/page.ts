@@ -32,7 +32,7 @@ export const SidebarItems = [
   }
 ];
 
-export const HomeTabs = [
+export const Tabs = [
   {
     text: '我的页面',
     key: 'mine'

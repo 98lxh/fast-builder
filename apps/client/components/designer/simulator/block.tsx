@@ -25,10 +25,8 @@ const defaultPreviewBorderStyles = { show: false, left: 0, top: 0, height: 0, wi
 
 const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   const designer = useDesignerContext()
-
   const wrapperRef = useEventOutside({ event: 'mousedown', isOnlyChildContains: true }, designer.clearBlockFocus)
   const previewBorderStyles = ref({ ...defaultPreviewBorderStyles })
-
   const onMousedown = useDocumentMouseEvent({ down, move, up })
 
   const styles = computed<CSSProperties>(() => {

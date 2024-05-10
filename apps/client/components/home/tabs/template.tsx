@@ -1,7 +1,6 @@
 function TabTemplate(){
-  
   return (
-    <div></div>
+    <div>Template</div>
   )
 }
 

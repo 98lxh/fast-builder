@@ -1,7 +1,6 @@
-function TabMine(){
-
+function TabMine() {
   return (
-    <div></div>
+    <div>Mine</div>
   )
 }
 

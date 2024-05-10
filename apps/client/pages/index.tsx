@@ -1,9 +1,5 @@
-import {
-  SidebarItems,
-  TabTemplate,
-  TabMine,
-} from "~/components/home";
-
+import SidebarItems from "~/components/sidebar";
+import Main from "~/components/home/main"
 
 function Home() {
   return (
@@ -14,10 +10,7 @@ function Home() {
         </div>
       </div>
 
-      <div class=" bg-base-100  shadow-custom flex-1 mt-[14px]">
-        <TabMine />
-        <TabTemplate />
-      </div>
+      <Main />
     </div>
   )
 }

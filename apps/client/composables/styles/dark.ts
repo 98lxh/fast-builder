@@ -11,8 +11,8 @@ const darkMode = ref(Theme.DARK);
 
 export function useDarkMode() {
   let isAppearanceTransition: undefined | boolean = undefined;
-  let isDarkMode: boolean | null = null;
   let cacheDarkMode: string | null = null;
+  let isDarkMode: boolean | null = null;
 
   onMounted(() => {
     isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -51,11 +51,9 @@ export function useDarkMode() {
       const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`];
       document.documentElement.animate(
         { clipPath: isDark ? clipPath : [...clipPath].reverse() },
-        {
-          duration: 300, easing: "ease-in", pseudoElement: isDark
+        {duration: 300, easing: "ease-in", pseudoElement: isDark
             ? "::view-transition-new(root)"
-            : "::view-transition-old(root)"
-        },
+            : "::view-transition-old(root)"}
       );
     });
   };

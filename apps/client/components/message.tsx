@@ -11,9 +11,9 @@ interface DefineProps {
 }
 
 interface DefineEmits {
+  (name: 'update:visible', visible: boolean): void;
   (name: 'confirm'): void;
   (name: 'cancel'): void;
-  (name: 'update:visible', visible: boolean): void;
 }
 
 const MessageBox: FC<DefineProps, DefineEmits> = function (componentProps, { emit }) {
