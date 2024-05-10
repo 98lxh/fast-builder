@@ -31,12 +31,11 @@ body {
   height: calc(100vh - 60px) !important;
 }
 
-
+/* 选中样式 */
 .block {
   cursor: pointer;
   position: absolute;
 }
-
 .block-focus {
   background:
     linear-gradient(90deg, #1A5CFF 50%, transparent 0) repeat-x,
@@ -47,12 +46,31 @@ body {
   background-position: 0 0, 0 100%, 0 0, 100% 0;
   animation: linearGradientMove .3s infinite linear;
 }
-
-
 @keyframes linearGradientMove {
   100% {
     background-position: 4px 0, -4px 100%, 0 -4px, 100% 4px;
   }
+}
+
+/* 箭头样式 */
+.arrow {
+  cursor:pointer;
+  position: absolute;
+  top: 50%;
+  height: 70px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+}
+.arrow-right {
+  border-radius: '8px 0 0 8px';
+  left: -20px;
+}
+.arrow-left {
+  border-radius:'0 8px 8px 0';
+  right: 0;
 }
 
 ::view-transition-new(root),
@@ -101,10 +119,4 @@ body {
 
 .mask {
   background-color: rgba(0, 0, 0, .4) !important;
-}
-
-.dark {
-  .shadow-custom {
-    box-shadow: 0 10px 12px 0 rgba(0, 0, 0, .3) !important;
-  }
 }

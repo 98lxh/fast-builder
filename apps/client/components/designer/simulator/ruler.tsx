@@ -1,5 +1,7 @@
+import type { CSSProperties } from "vue";
 import type { FC } from "vite-plugin-vueact";
 import { getRenderOptions, horizontal, vertical } from "../util/ruler";
+import { useDarkMode } from "~/composables/styles/dark";
 
 interface DefineProps {
   mode?: string | 'vertical' | 'horizontal';
@@ -14,14 +16,13 @@ const Ruler: FC<DefineProps> = function (props) {
   const canvasRef = ref<HTMLCanvasElement | null>(null);
   const { isDark } = useDarkMode();
 
-  const styles = computed(() => ({
-    width: props.mode === 'horizontal' ? '100%' : '30px',
-    height: props.mode === 'horizontal' ? '30px' : '100%',
-    // cursor: props.mode === 'horizontal' ? 'row-resize' : 'col-resize',
-    top: props.mode === 'horizontal' ? '0px' : '30px',
-    display: 'block',
-    zIndex: 1
-  }))
+  const styles = computed(() => {
+    const styles:CSSProperties = {}
+    styles.width = props.mode === 'horizontal' ? '100%' : '30px'
+    styles.height = props.mode === 'horizontal' ? '30px' : '100%'
+    styles.top =  props.mode === 'horizontal' ? '0px' : '30px'
+    return styles
+  })
 
   function render() {
     const canvas = canvasRef.value
@@ -39,7 +40,7 @@ const Ruler: FC<DefineProps> = function (props) {
 
   return (
     <canvas
-      class="absolute bg-transparent flex-none"
+      class="absolute bg-transparent flex-none block z-1"
       style={{ ...styles.value }}
       ref={canvasRef}
     />

@@ -14,15 +14,20 @@ interface DefineEmits {
 
 const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
   const { setSimulatorDataById, record: up } = useDesignerContext()
-  const styles = computed<CSSProperties>(() => ({
-    zIndex: props.block.style.zIndex,
-    width: props.block.style.width + 'px',
-    height: props.block.style.height + 'px',
-    cursor: props.block.focus ? 'move' : 'pointer',
-    transform: `translate(${props.block.style.left}px,${props.block.style.top}px)`
-  }))
 
   const onMousedown = useDocumentMouseEvent({ move, down, up })
+
+  const styles = computed<CSSProperties>(() => {
+    const styles: CSSProperties = {}
+    const { zIndex ,width, height, left, top } = props.block.style
+    styles.zIndex = zIndex
+    styles.width = width + 'px'
+    styles.height = height + 'px'
+    styles.cursor = props.block.focus ? 'move' : 'pointer'
+    styles.transform = `translate(${left}px,${top}px)`
+    return styles
+  })
+
 
   function down(evt: MouseEvent) {
     evt.stopPropagation()
@@ -38,13 +43,13 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
   return (
     <div
       class="absolute top-0 left-0"
-      style={styles.value}
       onMousedown={evt => emit('mousedown', evt)}
+      style={styles.value}
     >
       {
         props.block.focus && placements.map(placement => (
           <div
-            class="absolute bg-primary border-1 border-primary  bg-white rounded-[50%] z-1 h-[8px] w-[8px]"
+            class="h-[8px] w-[8px] absolute bg-primary border-1 border-primary  bg-white rounded-[50%] z-1"
             style={generatePointStyles(placement, props.block.style)}
             onMousedown={evt => onMousedown(evt, placement)}
             key={placement}

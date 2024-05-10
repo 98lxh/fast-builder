@@ -1,3 +1,5 @@
+import { Theme, useDarkMode } from "~/composables/styles/dark";
+
 function ThemeButton() {
   const { toggleDarkMode, darkMode } = useDarkMode();
 

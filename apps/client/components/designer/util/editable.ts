@@ -2,7 +2,9 @@ import type { CSSProperties } from "vue";
 import type { MoveListenerOptions } from "~/composables/event";
 
 export const placements = ['t', 'r', 'b', 'l', 'lt', 'rt', 'lb', 'rb'];
-const mapPlacement2Cursor: Record<string, any> = {
+
+
+const mapPlacement2Cursor: Record<string, string> = {
   't': 'ns-resize',
   'r': 'ew-resize',
   'b': 'ns-resize',
@@ -24,7 +26,9 @@ export function getHasPosition(placement: string) {
 
 // 生成点样式
 export function generatePointStyles(placement: string, style: SimulatorBlockStyle): CSSProperties {
-  const { width, height } = style || {};
+  const pointStyles: CSSProperties = {}
+  const { width, height } = style || {}
+
   const { hasBottom, hasTop, hasLeft, hasRight } = getHasPosition(placement);
   let left = 0;
   let top = 0;
@@ -43,13 +47,14 @@ export function generatePointStyles(placement: string, style: SimulatorBlockStyl
     }
   }
 
-  return {
-    marginTop: hasBottom ? '-4px' : '-3px',
-    marginLeft: hasRight ? '-4px' : '-3px',
-    cursor: mapPlacement2Cursor[placement],
-    left: left + 'px',
-    top: top + 'px',
-  }
+  pointStyles.marginTop = hasBottom ? '-4px' : '-3px'
+  pointStyles.marginLeft =  hasRight ? '-4px' : '-3px'
+  pointStyles.cursor = mapPlacement2Cursor[placement]
+  pointStyles.left = left + 'px'
+  pointStyles.top = top + 'px'
+
+
+  return pointStyles
 }
 
 

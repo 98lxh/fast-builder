@@ -3,14 +3,13 @@ import MessageBox from "~/components/message"
 
 function HomeSidebarItems() {
   const visible = shallowRef(false)
-  const router = useRouter();
+  const router = useRouter()
 
   function patch(isFinished?: boolean, path?: string){
     if(!isFinished || !path){
       visible.value = true;
       return;
     }
-
     router.push(path)
   }
 

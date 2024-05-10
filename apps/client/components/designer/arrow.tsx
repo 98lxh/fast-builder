@@ -1,5 +1,4 @@
 import type { FC } from "vite-plugin-vueact";
-import type { CSSProperties } from "vue";
 
 interface DefineProps {
   direction: 'right' | 'left' | string;
@@ -11,34 +10,18 @@ interface DefineEmits {
 }
 
 const ArrowButton: FC<DefineProps, DefineEmits> = function (props, { emit }) {
-
-  const styles = computed<CSSProperties>(() => ({
-    transform: 'translateY(-50%)',
-    borderRadius: props.direction === 'right' ? '8px 0 0 8px' : '0 8px 8px 0'
-  }))
-
-  function icon() {
-    const { modelValue, direction } = props
-    if (modelValue) {
-      return <NuxtIcon name={direction === 'right' ? 'left-arrow' : 'right-arrow'} />
-    } else {
-      return <NuxtIcon name={props.direction === 'right' ? 'right-arrow' : 'left-arrow'} />
-    }
-  }
-
-
   return (
     <div
-      style={styles.value}
+      class={`arrow bg-base-100 ${props.direction === 'right' ? 'arrow-right' : 'arrow-left'}`}
       onClick={() => emit('update:modelValue', !props.modelValue)}
-      class={`
-        cursor-pointer absolute h-[70px] bg-base-100  w-[20px] top-[50%] flex items-center justify-center
-        ${props.direction === 'right' ? 'left-[-20px]' : 'right-[0px]'}
-      `}
     >
-
       <div class="hover:text-primary">
-        {icon()}
+        {
+          <NuxtIcon name={props.direction === 'right'
+            ? props.modelValue ? 'left-arrow' : 'right-arrow'
+            : props.modelValue ? 'right-arrow' : 'left-arrow'}
+          />
+        }
       </div>
     </div>
   )

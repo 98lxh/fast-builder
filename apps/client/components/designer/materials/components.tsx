@@ -12,7 +12,7 @@ const Components: FC<DefineProps> = function (props) {
   const context = useDesignerContext();
 
   return (
-    <div class={`flex m-2 w-full justify-around overflow-hidden w-[${props.isHidden ? 'auto' : '0px'}]`}>
+    <div class={`flex m-2 flex-1 justify-around overflow-hidden`}>
       {
         getComponents(props.category).map(component => (
           <div class="flex flex-col justify-around items-center h-[80px] w-[60px] cursor-move">

@@ -1,4 +1,3 @@
-import type { CSSProperties } from "vue"
 import Categories from "./categories"
 import Components from "./components"
 import ArrowButton from "../arrow"
@@ -9,26 +8,18 @@ function MaterialPanel() {
   const category = shallowRef(getDefaultCategoryKey())
   const isHidden = shallowRef(false)
 
-  const styles = computed<CSSProperties>(() => ({
-    width: isHidden.value ? '60px' : '248px',
-    transition: 'width .3s'
-  }))
-
-  function onUpdateCategory(value: string) {
+  function onCategoryChange(value: string) {
     category.value = value
     isHidden.value === true && (isHidden.value = false)
   }
 
   return (
-    <div
-      class="flex  bg-base-100 shadow-custom w-[248px] main-height relative"
-      style={styles.value}
-    >
+    <div class={`flex relative bg-base-100 shadow-custom main-height transition-width duration-300 w-[${isHidden.value ? '60px' : '248px'}]`}>
       <ClientOnly>
         <Categories
           category={category.value}
           isHidden={isHidden.value}
-          onChange={onUpdateCategory}
+          onChange={onCategoryChange}
         />
 
         <Components
@@ -45,4 +36,4 @@ function MaterialPanel() {
   )
 }
 
-export default MaterialPanel;
+export default MaterialPanel

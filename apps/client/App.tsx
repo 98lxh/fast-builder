@@ -1,4 +1,5 @@
 import "@h5-designer/material"
+import { useDarkMode } from "./composables/styles/dark";
 
 function App() {
   const { initDarkMode } = useDarkMode()

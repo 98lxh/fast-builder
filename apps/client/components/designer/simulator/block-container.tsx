@@ -1,4 +1,3 @@
-import type { CSSProperties } from "vue";
 import { useDesignerContext } from "~/composables/designer";
 import Block from "./block"
 
@@ -10,6 +9,7 @@ import {
 
 function BlockContainer() {
   const { setSimulatorRef } = useDesignerContext();
+
   const containerRef = ref<HTMLDivElement | null>(null)
   const wrapperRef = ref<HTMLDivElement | null>(null)
   const translate = shallowReactive({ x: 0, y: 0 })
@@ -27,9 +27,7 @@ function BlockContainer() {
     move: ({ deltaX, deltaY }: MoveListenerOptions) => updateTranslate(deltaX, deltaY)
   })
 
-  watch(() => wrapperRef.value, () => wrapperRef.value && setSimulatorRef(wrapperRef.value), {
-    deep: true
-  })
+  watch(() => wrapperRef.value, () => wrapperRef.value && setSimulatorRef(wrapperRef.value), { deep: true })
 
   return (
     <div
