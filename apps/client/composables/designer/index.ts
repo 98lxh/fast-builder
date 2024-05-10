@@ -5,19 +5,20 @@ export interface DesignerContext {
   setSimulatorRef(simulator: HTMLDivElement | null): void
   setSimulatorData(data: SimulatorData): void
   setSimulatorDataById(id: string, block: SimulatorBlock): void
-  clearBlockFocus(): void
-  undo(): void
-  redo(): void
-  record(): void
   simulatorRef: Ref<HTMLDivElement | null>
   simulatorData: Ref<SimulatorData>
+  snapshot: Ref<SimulatorSnapshot>
+  clearBlockFocus(): void
+  record(): void
+  undo(): void
+  redo(): void
 }
 
 interface SimulatorSnapshot {
-  data: SimulatorData[],
-  index: number,
-  undoable: boolean
-  redoable: boolean
+  data: SimulatorData[], // 快照集合
+  index: number, // 当前索引
+  undoable: boolean // 可撤销
+  redoable: boolean // 可重做
 }
 
 export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
@@ -31,14 +32,14 @@ export const genarateDefaultSimulator = (): SimulatorData => ({
 })
 
 const generateDefaultSnapshot = (): SimulatorSnapshot => ({
-  data: [], // 快照集合
-  index: -1,  // 当前索引
-  undoable: false, // 可撤销
-  redoable: false // 可重做
+  data: [],
+  index: -1,
+  undoable: false,
+  redoable: false
 })
 
 export function useDesigner(): DesignerContext {
-  const { simulatorData, ...undo } = useUndo()
+  const { simulatorData, ...doable } = useUndo()
   const simulatorRef = ref<HTMLDivElement | null>(null)
 
   function setSimulatorRef(simulator: HTMLDivElement) {
@@ -60,7 +61,7 @@ export function useDesigner(): DesignerContext {
   }
 
   return {
-    ...undo,
+    ...doable,
     simulatorRef,
     simulatorData,
     clearBlockFocus,
@@ -75,19 +76,26 @@ function useUndo() {
   const snapshot = ref<SimulatorSnapshot>(generateDefaultSnapshot())
   const simulatorData = ref<SimulatorData>(genarateDefaultSimulator());
 
+  function setDoable() {
+    snapshot.value.undoable = snapshot.value.index >= 0
+    snapshot.value.redoable = snapshot.value.index < snapshot.value.data.length - 1
+  }
+
   function undo() {
-    if (snapshot.value.index >= 0) {
+    if (snapshot.value.undoable) {
       snapshot.value.index--
       simulatorData.value = cloneDeep(snapshot.value.data[snapshot.value.index]) || genarateDefaultSimulator()
     }
+    setDoable()
   }
 
   function redo() {
-    if (snapshot.value.index < snapshot.value.data.length - 1) {
+    if (snapshot.value.redoable) {
       const { data } = snapshot.value
       snapshot.value.index++
       simulatorData.value = cloneDeep(data[snapshot.value.index])
     }
+    setDoable()
   }
 
   function record() {
@@ -95,10 +103,12 @@ function useUndo() {
     if (snapshot.value.index < snapshot.value.data.length - 1) {
       snapshot.value.data = snapshot.value.data.slice(0, snapshot.value.index + 1)
     }
+    setDoable()
   }
 
   return {
     simulatorData,
+    snapshot,
     record,
     undo,
     redo

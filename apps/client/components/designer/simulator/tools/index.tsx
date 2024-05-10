@@ -1,6 +1,6 @@
 import ExportJSON from "./export-json"
 import Device from "./device"
-import Do from "./do"
+import Doable from "./doable"
 
 function Tools() {
   const translate = shallowReactive({ x: 0, y: 0 })
@@ -26,8 +26,8 @@ function Tools() {
 
       <Device />
       <ExportJSON />
-      <Do type="undo" />
-      <Do type="redo" />
+      <Doable type="undo" />
+      <Doable type="redo" />
     </div>
   )
 }
