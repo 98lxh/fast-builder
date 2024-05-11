@@ -1,19 +1,18 @@
 import type { FC } from "vite-plugin-vueact"
-import { useDesignerContext } from "~/composables/designer"
+import { useHistoryContext } from "~/composables/designer/history"
 
 interface DefineProps {
   type: 'undo' | 'redo' | string
 }
 
 const Doable: FC<DefineProps> = function (props) {
-  const context = useDesignerContext()
+  const history = useHistoryContext()
 
   const state = computed(() => {
-    const { snapshot, undo, redo } = context
+    const { snapshot, undo, redo } = history
     const { redoable, undoable } = snapshot.value
     const isUndo = props.type === 'undo'
 
-    
     return {
       tip: isUndo ? '撤销' : '重做',
       event: () => isUndo ? undo() : redo(),
@@ -31,7 +30,7 @@ const Doable: FC<DefineProps> = function (props) {
   })
 
   return (
-    <div {...attrs.value}>
+    <div {...attrs.value} onClick={() => console.log(history)}>
       <div
         class={`border-1 dark:border-neutral p-[2px]  w-full rounded-sm hover:text-primary box-border ${state.value.disabled && 'do-disabled'}`}
         onClick={state.value.event}

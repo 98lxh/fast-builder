@@ -17,7 +17,7 @@ function onDragleave(evt: DragEvent) {
   evt.dataTransfer!.dropEffect = 'none';
 }
 
-function generateDropEventListener({ setSimulatorData, simulatorData, record }: DesignerContext) {
+function generateDropEventListener({ setSimulatorData, simulatorData }: DesignerContext, record?: () => void) {
   return function (evt: DragEvent) {
     if (!currentComponent) { return }
 
@@ -35,13 +35,13 @@ function generateDropEventListener({ setSimulatorData, simulatorData, record }: 
       style
     }
 
-    setSimulatorData({...simulatorData.value, blocks: [...simulatorData.value.blocks, block] })
-    record()
+    setSimulatorData({ ...simulatorData.value, blocks: [...simulatorData.value.blocks, block] })
+    record && record()
     currentComponent = null
   }
 }
 
-export function onDragstart(_: DragEvent, context?: DesignerContext, component?: MaterialComponent) {
+export function onDragstart(_: DragEvent, record: () => void, context?: DesignerContext, component?: MaterialComponent) {
   const simulator = context?.simulatorRef.value;
 
   if (!simulator || !component || !context) {
@@ -52,7 +52,7 @@ export function onDragstart(_: DragEvent, context?: DesignerContext, component?:
   simulator.addEventListener('dragover', onDragover);
   simulator.addEventListener('dragleave', onDragleave);
 
-  currentDropEventListener = generateDropEventListener(context);
+  currentDropEventListener = generateDropEventListener(context, record);
   simulator.addEventListener('drop', currentDropEventListener);
   currentComponent = component;
 }

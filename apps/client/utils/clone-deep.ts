@@ -15,7 +15,7 @@ export function cloneDeep(source: any, map = new WeakMap()): any {
     return source
   }
 
-  if (map.has(source)) { 
+  if (map.has(source)) {
     return map.get(source)
   }
 

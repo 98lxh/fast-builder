@@ -3,6 +3,7 @@ import type { FC } from "vite-plugin-vueact"
 import { useDesignerContext } from "~/composables/designer"
 import { generatePointStyles, placements, calculateResizeStyle } from "../util/editable"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
+import { useHistoryContext } from "~/composables/designer/history"
 
 interface DefineProps {
   block: SimulatorBlock
@@ -13,9 +14,10 @@ interface DefineEmits {
 }
 
 const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
-  const context = useDesignerContext()
+  const designer = useDesignerContext()
+  const history = useHistoryContext()
 
-  const onMousedown = useDocumentMouseEvent({ move, down, up: context.record })
+  const onMousedown = useDocumentMouseEvent({ move, down, up: history.record })
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}
@@ -37,7 +39,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
 
   function move(options: MoveListenerOptions<SimulatorBlockStyle>, placement: string) {
     const style = calculateResizeStyle(options, props.block, placement)
-    context.setSimulatorDataById(props.block.id, { ...props.block, style })
+    designer.setSimulatorDataById(props.block.id, { ...props.block, style })
   }
 
   return (

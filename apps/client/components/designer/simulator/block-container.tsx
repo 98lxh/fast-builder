@@ -1,10 +1,7 @@
 import { useDesignerContext } from "~/composables/designer";
 import Block from "./block"
 
-import {
-  useDocumentMouseEvent,
-  type MoveListenerOptions
-} from "~/composables/event";
+import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event";
 
 
 function BlockContainer() {
@@ -12,7 +9,7 @@ function BlockContainer() {
   const containerRef = ref<HTMLDivElement | null>(null)
   const wrapperRef = ref<HTMLDivElement | null>(null)
   const translate = shallowReactive({ x: 0, y: 0 })
-  
+
   function move({ deltaX, deltaY }: MoveListenerOptions) {
     deltaX !== 0 && Number(deltaX) > 0 ? translate.x += deltaX : translate.x -= Math.abs(deltaX);
     deltaY !== 0 && Number(deltaY) > 0 ? translate.y += deltaY : translate.y -= Math.abs(deltaY);

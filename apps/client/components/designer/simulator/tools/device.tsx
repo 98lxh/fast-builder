@@ -2,7 +2,7 @@ import { useDesignerContext } from "~/composables/designer";
 import { devices, type Device as DeviceType } from "~/composables/designer/device"
 
 function Device() {
-  const { simulatorData, setSimulatorData } = useDesignerContext()
+  const context = useDesignerContext()
   const container = shallowReactive({ width: 0, height: 0 })
 
   const vm = getCurrentInstance();
@@ -20,10 +20,10 @@ function Device() {
       container.height = device.height
       container.width = device.width
     }
-    setSimulatorData({ ...simulatorData.value, container: { ...container } })
+    context.setSimulatorContainer(container, true)
   }
 
-  watch(() => simulatorData.value.container, (value) => {
+  watch(() => context.simulatorData.value.container, (value) => {
     const { height, width } = value || {};
     if (height === 0 && width === 0) { return }
     container.height = height || 0

@@ -1,4 +1,5 @@
 import { designerInjectionKey, useDesigner } from "~/composables/designer"
+import { historyInjectionKey, useHistory } from "~/composables/designer/history"
 
 import {
   Simulator,
@@ -6,9 +7,10 @@ import {
   AttributePanel
 } from "~/components/designer"
 
-
 function Designer() {
-  provide(designerInjectionKey, useDesigner())
+  const designer = useDesigner()
+  provide(designerInjectionKey, designer)
+  provide(historyInjectionKey, useHistory(designer))
 
   return (
     <div class="flex w-full">

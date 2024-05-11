@@ -1,24 +1,15 @@
-import { cloneDeep } from "~/utils/clone-deep"
 import { devices } from "./device"
 
 export interface DesignerContext {
   setSimulatorRef(simulator: HTMLDivElement | null): void
-  setSimulatorData(data: SimulatorData): void
   setSimulatorDataById(id: string, block: SimulatorBlock): void
+  setSimulatorStyleById(id: string, style: SimulatorBlockStyle): void
+  setSimulatorContainer(container: SimulatorContainer, isUpdateOriginal?: boolean): void
+  setSimulatorData(data: SimulatorData): void
+  originalContainer: SimulatorContainer
   simulatorRef: Ref<HTMLDivElement | null>
   simulatorData: Ref<SimulatorData>
-  snapshot: Ref<SimulatorSnapshot>
   clearBlockFocus(): void
-  record(): void
-  undo(): void
-  redo(): void
-}
-
-interface SimulatorSnapshot {
-  data: SimulatorData[], // 快照集合
-  index: number, // 当前索引
-  undoable: boolean // 可撤销
-  redoable: boolean // 可重做
 }
 
 export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
@@ -31,16 +22,12 @@ export const genarateDefaultSimulator = (): SimulatorData => ({
   blocks: []
 })
 
-const generateDefaultSnapshot = (): SimulatorSnapshot => ({
-  data: [],
-  index: -1,
-  undoable: false,
-  redoable: false
-})
-
 export function useDesigner(): DesignerContext {
-  const { simulatorData, ...doable } = useUndo()
+  const simulatorData = ref(genarateDefaultSimulator())
   const simulatorRef = ref<HTMLDivElement | null>(null)
+
+  // 原始容器信息
+  let originalContainer: SimulatorContainer = genarateDefaultSimulator().container
 
   function setSimulatorRef(simulator: HTMLDivElement) {
     simulatorRef.value = simulator
@@ -48,6 +35,11 @@ export function useDesigner(): DesignerContext {
 
   function setSimulatorData(data: SimulatorData) {
     simulatorData.value = data
+  }
+
+  function setSimulatorContainer(container: SimulatorContainer, isUpdateOriginal = false) {
+    simulatorData.value.container = { ...container }
+    isUpdateOriginal && (originalContainer = { ...container })
   }
 
   function clearBlockFocus() {
@@ -60,58 +52,23 @@ export function useDesigner(): DesignerContext {
     simulatorData.value.blocks[index] = { ...block }
   }
 
+  function setSimulatorStyleById(updateId: string, style: SimulatorBlockStyle) {
+    const index = simulatorData.value.blocks.findIndex(({ id }) => id === updateId)
+    if (index < 0) { return }
+    const block = simulatorData.value.blocks[index]
+    simulatorData.value.blocks[index] = { ...block, style }
+  }
+
   return {
-    ...doable,
     simulatorRef,
     simulatorData,
     clearBlockFocus,
     setSimulatorRef,
     setSimulatorData,
-    setSimulatorDataById
-  }
-}
-
-
-function useUndo() {
-  const snapshot = ref<SimulatorSnapshot>(generateDefaultSnapshot())
-  const simulatorData = ref<SimulatorData>(genarateDefaultSimulator());
-
-  function setDoable() {
-    snapshot.value.undoable = snapshot.value.index >= 0
-    snapshot.value.redoable = snapshot.value.index < snapshot.value.data.length - 1
-  }
-
-  function undo() {
-    if (snapshot.value.undoable) {
-      snapshot.value.index--
-      simulatorData.value = cloneDeep(snapshot.value.data[snapshot.value.index]) || genarateDefaultSimulator()
-    }
-    setDoable()
-  }
-
-  function redo() {
-    if (snapshot.value.redoable) {
-      const { data } = snapshot.value
-      snapshot.value.index++
-      simulatorData.value = cloneDeep(data[snapshot.value.index])
-    }
-    setDoable()
-  }
-
-  function record() {
-    snapshot.value.data[++snapshot.value.index] = cloneDeep(simulatorData.value)
-    if (snapshot.value.index < snapshot.value.data.length - 1) {
-      snapshot.value.data = snapshot.value.data.slice(0, snapshot.value.index + 1)
-    }
-    setDoable()
-  }
-
-  return {
-    simulatorData,
-    snapshot,
-    record,
-    undo,
-    redo
+    setSimulatorDataById,
+    setSimulatorStyleById,
+    setSimulatorContainer,
+    originalContainer
   }
 }
 
