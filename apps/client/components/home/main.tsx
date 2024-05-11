@@ -1,4 +1,4 @@
-import { Tabs } from "~/constants/page";
+import { Tabs } from "~/constants/page"
 import Template from "./tabs/template"
 import Mine from "./tabs/mine"
 

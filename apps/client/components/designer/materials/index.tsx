@@ -5,32 +5,22 @@ import ArrowButton from "../arrow"
 import { getDefaultCategoryKey } from "@h5-designer/material"
 
 function MaterialPanel() {
-  const category = shallowRef(getDefaultCategoryKey())
-  const isHidden = shallowRef(false)
+  const state = shallowReactive({
+    category: getDefaultCategoryKey(),
+    isHidden: false
+  })
 
-  function onCategoryChange(value: string) {
-    category.value = value
-    isHidden.value === true && (isHidden.value = false)
+  function onUpdateCategory(category: string) {
+    state.category = category
+    state.isHidden === true && (state.isHidden = false)
   }
 
   return (
-    <div class={`flex relative bg-base-100 shadow-custom main-height transition-width duration-300 w-[${isHidden.value ? '60px' : '248px'}]`}>
+    <div class={`flex relative bg-base-100 shadow-custom main-height transition-width duration-300 w-[${state.isHidden ? '60px' : '248px'}]`}>
       <ClientOnly>
-        <Categories
-          category={category.value}
-          isHidden={isHidden.value}
-          onChange={onCategoryChange}
-        />
-
-        <Components
-          category={category.value}
-          isHidden={isHidden.value}
-        />
-
-        <ArrowButton
-          v-model={isHidden.value}
-          direction="left"
-        />
+        <Categories onChange={onUpdateCategory} {...state} />
+        <ArrowButton v-model={state.isHidden} direction="left" />
+        <Components {...state} />
       </ClientOnly>
     </div>
   )
