@@ -121,8 +121,8 @@ body {
   background-color: rgba(0, 0, 0, .4) !important;
 }
 
-
 .do-disabled {
   pointer-events: none !important;
   cursor: not-allowed;
+  opacity: 0.4;
 }

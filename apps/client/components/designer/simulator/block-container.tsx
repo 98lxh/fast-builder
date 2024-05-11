@@ -8,26 +8,22 @@ import {
 
 
 function BlockContainer() {
-  const { setSimulatorRef } = useDesignerContext();
-
+  const context = useDesignerContext();
   const containerRef = ref<HTMLDivElement | null>(null)
   const wrapperRef = ref<HTMLDivElement | null>(null)
   const translate = shallowReactive({ x: 0, y: 0 })
-
   
-  function updateTranslate(deltaX: number, deltaY: number) {
-    const moveX = deltaX !== 0;
-    const moveY = deltaY !== 0;
-    moveX && Number(deltaX) > 0 ? translate.x += deltaX : translate.x -= Math.abs(deltaX);
-    moveY && Number(deltaY) > 0 ? translate.y += deltaY : translate.y -= Math.abs(deltaY);
+  function move({ deltaX, deltaY }: MoveListenerOptions) {
+    deltaX !== 0 && Number(deltaX) > 0 ? translate.x += deltaX : translate.x -= Math.abs(deltaX);
+    deltaY !== 0 && Number(deltaY) > 0 ? translate.y += deltaY : translate.y -= Math.abs(deltaY);
   }
 
   const onMousedown = useDocumentMouseEvent({
     down: evt => !(wrapperRef.value?.contains(evt?.target as HTMLElement)),
-    move: ({ deltaX, deltaY }: MoveListenerOptions) => updateTranslate(deltaX, deltaY)
+    move
   })
 
-  watch(() => wrapperRef.value, () => wrapperRef.value && setSimulatorRef(wrapperRef.value), { deep: true })
+  watch(() => wrapperRef.value, () => wrapperRef.value && context.setSimulatorRef(wrapperRef.value), { deep: true })
 
   return (
     <div

@@ -16,12 +16,13 @@ const ArrowButton: FC<DefineProps, DefineEmits> = function (props, { emit }) {
       onClick={() => emit('update:modelValue', !props.modelValue)}
     >
       <div class="hover:text-primary">
-        {
-          <NuxtIcon name={props.direction === 'right'
-            ? props.modelValue ? 'left-arrow' : 'right-arrow'
-            : props.modelValue ? 'right-arrow' : 'left-arrow'}
-          />
-        }
+        {(() => {
+          const { direction, modelValue } = props
+          const name = direction === 'right'
+            ? modelValue ? 'left' : 'right'
+            : modelValue ? 'right' : 'left'
+         /*EXCLUDE*/ return <NuxtIcon name={name} />
+        })()}
       </div>
     </div>
   )

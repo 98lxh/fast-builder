@@ -13,13 +13,13 @@ interface DefineEmits {
 }
 
 const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
-  const { setSimulatorDataById, record: up } = useDesignerContext()
+  const context = useDesignerContext()
 
-  const onMousedown = useDocumentMouseEvent({ move, down, up })
+  const onMousedown = useDocumentMouseEvent({ move, down, up: context.record })
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}
-    const { zIndex ,width, height, left, top } = props.block.style
+    const { zIndex, width, height, left, top } = props.block.style
     styles.zIndex = zIndex
     styles.width = width + 'px'
     styles.height = height + 'px'
@@ -37,7 +37,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
 
   function move(options: MoveListenerOptions<SimulatorBlockStyle>, placement: string) {
     const style = calculateResizeStyle(options, props.block, placement)
-    setSimulatorDataById(props.block.id, { ...props.block, style })
+    context.setSimulatorDataById(props.block.id, { ...props.block, style })
   }
 
   return (

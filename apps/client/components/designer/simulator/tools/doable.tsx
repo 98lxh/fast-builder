@@ -6,12 +6,14 @@ interface DefineProps {
 }
 
 const Doable: FC<DefineProps> = function (props) {
-  const { undo, redo, snapshot } = useDesignerContext()
+  const context = useDesignerContext()
 
   const state = computed(() => {
-    const isUndo = props.type === 'undo'
+    const { snapshot, undo, redo } = context
     const { redoable, undoable } = snapshot.value
+    const isUndo = props.type === 'undo'
 
+    
     return {
       tip: isUndo ? '撤销' : '重做',
       event: () => isUndo ? undo() : redo(),
