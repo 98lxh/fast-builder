@@ -1,14 +1,17 @@
 import "@h5-designer/material"
-import { useDarkMode } from "./composables/styles/dark";
+import { useDarkMode } from "./composables/styles/dark"
+import { NConfigProvider, darkTheme } from "naive-ui"
 
 function App() {
-  const { initDarkMode } = useDarkMode()
+  const { initDarkMode, isDark } = useDarkMode()
   onMounted(() => initDarkMode())
 
   return (
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <NConfigProvider theme={isDark.value ? darkTheme : null}>
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </NConfigProvider>
   )
 }
 

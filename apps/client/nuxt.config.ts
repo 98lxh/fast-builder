@@ -5,18 +5,8 @@ export default defineNuxtConfig({
   modules: [
     '@unocss/nuxt',
     '@vueuse/nuxt',
-    'nuxt-icons',
-    [
-      '@pinia/nuxt',
-      {
-        autoImports: [
-          // 自动引入 `defineStore()`
-          'defineStore',
-          // 自动引入 `defineStore()` 并重命名为 `definePiniaStore()`
-          ['defineStore', 'definePiniaStore'],
-        ],
-      },
-    ]
+    'nuxtjs-naive-ui',
+    'nuxt-icons'
   ],
   devServer: {
     port: 8888

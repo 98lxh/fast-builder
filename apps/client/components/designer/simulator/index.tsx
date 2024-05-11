@@ -1,3 +1,4 @@
+import { NButton, NInput } from "naive-ui"
 import BlockContainer from "./block-container"
 import Ruler from "./ruler"
 import Tools from "./tools"
@@ -20,10 +21,12 @@ function Simulator() {
       class="flex-1 relative overflow-hidden relative cursor-pointer main-height"
       ref={el}
     >
-      <Ruler mode="horizontal" {...props.value} />
-      <Ruler mode="vertical"  {...props.value} />
-      <BlockContainer />
-      <Tools />
+      <ClientOnly>
+        <Ruler mode="horizontal" {...props.value} />
+        <Ruler mode="vertical"  {...props.value} />
+        <BlockContainer />
+        <Tools />
+      </ClientOnly>
     </div>
   )
 }
