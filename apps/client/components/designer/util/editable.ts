@@ -1,7 +1,7 @@
 import type { CSSProperties } from "vue";
 import type { MoveListenerOptions } from "~/composables/event";
 
-export const placements = ['t', 'r', 'b', 'l', 'lt', 'rt', 'lb', 'rb'];
+export const placements = ['r', 'b', 'rb'];
 
 
 const mapPlacement2Cursor: Record<string, string> = {
@@ -48,12 +48,10 @@ export function generatePointStyles(placement: string, style: SimulatorBlockStyl
   }
 
   pointStyles.marginTop = hasBottom ? '-4px' : '-3px'
-  pointStyles.marginLeft =  hasRight ? '-4px' : '-3px'
+  pointStyles.marginLeft = hasRight ? '-4px' : '-3px'
   pointStyles.cursor = mapPlacement2Cursor[placement]
   pointStyles.left = left + 'px'
   pointStyles.top = top + 'px'
-
-
   return pointStyles
 }
 

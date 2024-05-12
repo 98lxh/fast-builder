@@ -4,6 +4,7 @@ import { useDesignerContext } from "~/composables/designer"
 import { generatePointStyles, placements, calculateResizeStyle } from "../util/editable"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
 import { useHistoryContext } from "~/composables/designer/history"
+import { useBlockResizeOverflow } from "../util/overflow"
 
 interface DefineProps {
   block: SimulatorBlock
@@ -18,6 +19,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
   const history = useHistoryContext()
 
   const onMousedown = useDocumentMouseEvent({ move, down, up: history.record })
+  const overflow = useBlockResizeOverflow(designer)
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}
@@ -34,17 +36,21 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
   function down(evt: MouseEvent) {
     evt.stopPropagation()
     evt.preventDefault()
+    overflow.setCurrent(props.block)
     return props.block.style
   }
 
   function move(options: MoveListenerOptions<SimulatorBlockStyle>, placement: string) {
     const style = calculateResizeStyle(options, props.block, placement)
-    designer.setSimulatorDataById(props.block.id, { ...props.block, style })
+    const updatedBlock = { ...props.block, style: { ...style } }
+    designer.setSimulatorDataById(props.block.id, updatedBlock)
+    overflow.setCurrent(updatedBlock)
+    overflow.check()
   }
 
   return (
     <div
-      class="absolute top-0 left-0"
+      class="absolute top-0 left-0 transition-transform duration-50 select-none"
       onMousedown={evt => emit('mousedown', evt)}
       style={styles.value}
     >
@@ -60,7 +66,6 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
       }
 
       {props.block.focus && <div class={`h-full w-full absolute block-focus`} />}
-
       {slots.default && slots.default()}
     </div>
   )

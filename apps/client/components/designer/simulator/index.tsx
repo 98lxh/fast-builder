@@ -20,12 +20,10 @@ function Simulator() {
       class="flex-1 relative overflow-hidden relative cursor-pointer main-height"
       ref={el}
     >
-      <ClientOnly>
-        <Ruler mode="horizontal" {...attrs.value} />
-        <Ruler mode="vertical"  {...attrs.value} />
-        <BlockContainer />
-        <Tools />
-      </ClientOnly>
+      <Ruler mode="horizontal" {...attrs.value} />
+      <Ruler mode="vertical"  {...attrs.value} />
+      <BlockContainer />
+      <Tools />
     </div>
   )
 }
