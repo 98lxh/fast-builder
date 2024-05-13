@@ -30,7 +30,7 @@ const Doable: FC<DefineProps> = function (props) {
   })
 
   return (
-    <div {...attrs.value} onClick={() => console.log(history)}>
+    <div {...attrs.value}>
       <div
         class={`border-1 dark:border-neutral p-[2px]  w-full rounded-sm hover:text-primary box-border ${state.value.disabled && 'do-disabled'}`}
         onClick={state.value.event}

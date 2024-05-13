@@ -56,7 +56,6 @@ export function useDesigner(): DesignerContext {
     const index = simulatorData.value.blocks.findIndex(({ id }) => id === updateId)
     if (index < 0) { return }
     const block = simulatorData.value.blocks[index]
-    console.log(style)
     simulatorData.value.blocks[index] = { ...block, style }
   }
 

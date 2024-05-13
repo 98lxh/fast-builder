@@ -1,7 +1,7 @@
 import type { FC } from "vite-plugin-vueact";
 
 import type { CSSProperties } from "vue"
-import { useBlockMoveOverflow } from "../util/overflow";
+import { useMoveOverflow } from "../util/overflow";
 import { useDesignerContext } from "~/composables/designer"
 import { useHistoryContext } from "~/composables/designer/history";
 import { type MoveListenerOptions, useDocumentMouseEvent, useEventOutside } from "~/composables/event"
@@ -19,12 +19,12 @@ interface DefineEmits {
 }
 
 const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
-  const designer = useDesignerContext()
   const history = useHistoryContext()
+  const designer = useDesignerContext()
+  const overflow = useMoveOverflow(designer)
 
   const wrapperRef = useEventOutside({ event: 'mousedown', isOnlyChildContains: true }, designer.clearBlockFocus)
   const onMousedown = useDocumentMouseEvent({ down, move, up })
-  const overflow = useBlockMoveOverflow(designer)
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}

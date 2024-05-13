@@ -10,8 +10,6 @@ export interface RulerRenderOptions {
   pixelPerUnit: number
 }
 
-
-
 export function getRenderOptions(canvas: HTMLCanvasElement, isDark: boolean, props: any): RulerRenderOptions {
   const { width, height } = canvas.getBoundingClientRect()
   const dpi = 2
@@ -29,7 +27,7 @@ export function getRenderOptions(canvas: HTMLCanvasElement, isDark: boolean, pro
   ctx.lineWidth = 1
   ctx.strokeStyle = isDark ? '#8b8b8d' : '#8F949B'
   ctx.fillStyle = isDark ? '#8b8b8d' : '#8F949B'
-  ctx.font = '14px serif'
+  ctx.font = '12px serif'
   ctx.beginPath()
   const { offsetX, offsetY, scale } = props
   const offset = props.mode === 'horizontal' ? offsetX : offsetY
@@ -70,7 +68,7 @@ export function horizontal({
     const num = ((offset + index) / pixelPerUnit) * sparsity
     if (isCloseToInteger(num / sparsity)) {
       ctx.moveTo(index, 0)
-      ctx.lineTo(index, num === 0 ? h : h - 15)
+      ctx.lineTo(index, h - 15)
       const text = num.toFixed(fixed)
       const textWidth = ctx.measureText(text).width
       num !== 0 && ctx.fillText(text, index - textWidth / 2, h)
@@ -83,29 +81,20 @@ export function horizontal({
 }
 
 
-export function vertical({
-  ctx,
-  offset,
-  index,
-  pixelPerUnit,
-  sparsity,
-  h,
-  w,
-  gap
-}: RulerRenderOptions) {
+export function vertical(options: RulerRenderOptions) {
+  let { ctx, offset, index, pixelPerUnit, sparsity, h, w, gap } = options
   ctx.translate(0, -0.5)
   const fixed = getFixed(sparsity)
-
   do {
     const num = ((offset + index) / pixelPerUnit) * sparsity
     if (isCloseToInteger(num / sparsity)) {
       ctx.moveTo(0, num === 0 ? index + 1 : index)
-      ctx.lineTo(num === 0 ? w : w - 15, num === 0 ? index + 1 : index)
+      ctx.lineTo(w - 15, num === 0 ? index + 1 : index)
       const text = num.toFixed(fixed)
       ctx.save()
       ctx.rotate((-90 * Math.PI) / 180)
       const textWidth = ctx.measureText(text).width
-      num !== 0 && ctx.fillText(text, -((index) + textWidth / 2), w)
+      num !== 0 && ctx.fillText(text, - ((index) + textWidth / 2), w)
       ctx.rotate((0 * Math.PI) / 180)
       ctx.restore()
     } else {

@@ -4,7 +4,7 @@ import { useDesignerContext } from "~/composables/designer"
 import { generatePointStyles, placements, calculateResizeStyle } from "../util/editable"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
 import { useHistoryContext } from "~/composables/designer/history"
-import { useBlockResizeOverflow } from "../util/overflow"
+import { useResizeOverflow } from "../util/overflow"
 
 interface DefineProps {
   block: SimulatorBlock
@@ -17,9 +17,9 @@ interface DefineEmits {
 const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
   const designer = useDesignerContext()
   const history = useHistoryContext()
+  const overflow = useResizeOverflow(designer)
 
   const onMousedown = useDocumentMouseEvent({ move, down, up: history.record })
-  const overflow = useBlockResizeOverflow(designer)
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}
@@ -50,7 +50,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
 
   return (
     <div
-      class="absolute top-0 left-0 transition-transform duration-50 select-none"
+      class="absolute top-0 left-0 select-none"
       onMousedown={evt => emit('mousedown', evt)}
       style={styles.value}
     >

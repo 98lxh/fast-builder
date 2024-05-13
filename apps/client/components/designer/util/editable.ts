@@ -1,8 +1,6 @@
 import type { CSSProperties } from "vue";
 import type { MoveListenerOptions } from "~/composables/event";
 
-export const placements = ['r', 'b', 'rb'];
-
 
 const mapPlacement2Cursor: Record<string, string> = {
   't': 'ns-resize',
@@ -14,6 +12,8 @@ const mapPlacement2Cursor: Record<string, string> = {
   'lt': 'nwse-resize',
   'rb': 'nwse-resize'
 }
+
+export const placements = Object.keys(mapPlacement2Cursor)
 
 export function getHasPosition(placement: string) {
   return {
