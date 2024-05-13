@@ -25,9 +25,8 @@ function Simulator() {
       <Ruler mode="horizontal" {...attrs.value} />
       <Ruler mode="vertical"  {...attrs.value} />
       <BlockContainer />
-
-      <Vertical />
       <Horizontal />
+      <Vertical />
     </div>
   )
 }

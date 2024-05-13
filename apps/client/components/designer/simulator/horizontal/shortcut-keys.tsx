@@ -1,4 +1,6 @@
-function Device() {
+import { NTag } from "naive-ui"
+
+function ShortcutKeys() {
   return (
     <div class="dropdown dropdown-hover w-[32px] h-full dropdown-top rounded-sm flex items-center justify-center text-[20px]">
       <div class="hover:text-primary">
@@ -15,11 +17,11 @@ function Device() {
             <p class="px-[10px]"> +</p>
             <kbd class="kbd">z</kbd>
           </div>
-          <p>撤销</p>
+          <NTag type="info">撤销</NTag>
         </div>
       </div>
     </div>
   )
 }
 
-export default Device
+export default ShortcutKeys

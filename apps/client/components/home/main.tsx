@@ -18,7 +18,7 @@ function Main() {
         ))}
       </div>
 
-      <div>
+      <div style={{ height: `calc(100vh - 125px)` }}>
         {isTemplate.value ? <Template /> : <Mine />}
       </div>
     </div>

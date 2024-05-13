@@ -18,7 +18,6 @@ function VerticalTools() {
       <div class="rotate-[90deg] p-[3px] cursor-move mb-2" onMousedown={onMousedown}>
         <NuxtIcon name="designer/holder" />
       </div>
-
       <Device />
       <ExportJSON />
       <Doable type="undo" />
