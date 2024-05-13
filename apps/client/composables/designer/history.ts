@@ -1,4 +1,11 @@
-import { genarateDefaultSimulator, useDesignerContext, type DesignerContext } from ".";
+import { genarateDefaultSimulator, type DesignerContext } from "./index";
+
+interface SimulatorSnapshot {
+  data: SimulatorData[], // 快照集合
+  index: number, // 当前索引
+  undoable: boolean // 可撤销
+  redoable: boolean // 可重做
+}
 
 export interface HistoryContext {
   snapshot: Ref<SimulatorSnapshot>
@@ -16,14 +23,6 @@ const generateDefaultSnapshot = (): SimulatorSnapshot => ({
   redoable: false
 })
 
-interface SimulatorSnapshot {
-  data: SimulatorData[], // 快照集合
-  index: number, // 当前索引
-  undoable: boolean // 可撤销
-  redoable: boolean // 可重做
-}
-
-
 let designer: DesignerContext | null = null
 export function useHistory(context?: DesignerContext): HistoryContext {
   context && (designer = context)
@@ -36,8 +35,9 @@ export function useHistory(context?: DesignerContext): HistoryContext {
 
   function undo() {
     if (!designer || !snapshot.value.undoable) { return }
+    const { data } = snapshot.value
     snapshot.value.index--
-    designer.setSimulatorData && designer.setSimulatorData(cloneDeep(snapshot.value.data[snapshot.value.index]) || genarateDefaultSimulator())
+    designer.setSimulatorData && designer.setSimulatorData(cloneDeep(data[snapshot.value.index]) || genarateDefaultSimulator())
     setDoable()
   }
 

@@ -6,7 +6,7 @@ export const generateCurrentBlock = (): ICurrentBlockStyles => ({ style: null, i
 
 // 移动组件时是否溢出
 export function useMoveOverflow(designer: DesignerContext) {
-  const { setCurrent, current, resetCurrent } = useCurrent()
+  const { setCurrent, current, reset } = useCurrent()
 
   function check() {
     const style = current.value.style!
@@ -39,7 +39,7 @@ export function useMoveOverflow(designer: DesignerContext) {
     }
   }
 
-  return { current, check, setCurrent, resetCurrent }
+  return { current, check, setCurrent, reset }
 }
 
 // resize组件时是否溢出
@@ -84,7 +84,7 @@ export function useResizeOverflow(designer: DesignerContext) {
       const { container } = designer.simulatorData.value
       const originalHeight = designer.originalContainer.height
       const updatedHeight = height - overflow.bottom
-      if(updatedHeight <= originalHeight && container.height !== originalHeight){
+      if (updatedHeight <= originalHeight && container.height !== originalHeight) {
         designer.setSimulatorContainer({ width, height: originalHeight })
       }
     }
@@ -96,15 +96,12 @@ export function useResizeOverflow(designer: DesignerContext) {
 
 function useCurrent() {
   const current = ref(generateCurrentBlock())
-
-  function setCurrent(block: SimulatorBlock) {
-    const { style, id } = block
-    current.value = { style: cloneDeep(style), id }
-  }
-
   return {
-    current,
-    setCurrent,
-    resetCurrent: () => { current.value = generateCurrentBlock() }
+    reset: () => { current.value = generateCurrentBlock() },
+    setCurrent(block: SimulatorBlock) {
+      const { style, id } = block
+      current.value = { style: cloneDeep(style), id }
+    },
+    current
   }
 }

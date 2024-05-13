@@ -57,7 +57,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     // 重新设置组件样式 保证组件不出现越界
     designer.setSimulatorStyleById(overflow.current.value.id, overflow.current.value.style!)
     // 重置预览位置元素的状态
-    overflow.resetCurrent()
+    overflow.reset()
     // 记录当前更改到快照
     history.record()
   }

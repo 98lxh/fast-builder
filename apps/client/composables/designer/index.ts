@@ -1,15 +1,15 @@
 import { devices } from "./device"
 
 export interface DesignerContext {
-  setSimulatorRef(simulator: HTMLDivElement | null): void
-  setSimulatorDataById(id: string, block: SimulatorBlock): void
-  setSimulatorStyleById(id: string, style: SimulatorBlockStyle): void
-  setSimulatorContainer(container: SimulatorContainer, isUpdateOriginal?: boolean): void
-  setSimulatorData(data: SimulatorData): void
-  originalContainer: SimulatorContainer
-  simulatorRef: Ref<HTMLDivElement | null>
-  simulatorData: Ref<SimulatorData>
-  clearBlockFocus(): void
+  setSimulatorRef(simulator: HTMLDivElement | null): void // 设置元素
+  setSimulatorDataById(id: string, block: SimulatorBlock): void // 根据block id设置block
+  setSimulatorStyleById(id: string, style: SimulatorBlockStyle): void // 根据block id 设置 block style
+  setSimulatorContainer(container: SimulatorContainer, isUpdateOriginal?: boolean): void // 设置容器
+  setSimulatorData(data: SimulatorData): void // 设置数据
+  originalContainer: SimulatorContainer // 原容器
+  simulatorRef: Ref<HTMLDivElement | null> // 元素
+  simulatorData: Ref<SimulatorData> // 数据
+  clearBlockFocus(): void // 清除所有block的focus状态
 }
 
 export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')

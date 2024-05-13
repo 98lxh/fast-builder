@@ -1,6 +1,8 @@
 import BlockContainer from "./block-container"
+import Vertical from "./vertical"
+import Horizontal from "./horizontal"
+
 import Ruler from "./ruler"
-import Tools from "./tools"
 
 
 function Simulator() {
@@ -23,7 +25,9 @@ function Simulator() {
       <Ruler mode="horizontal" {...attrs.value} />
       <Ruler mode="vertical"  {...attrs.value} />
       <BlockContainer />
-      <Tools />
+
+      <Vertical />
+      <Horizontal />
     </div>
   )
 }

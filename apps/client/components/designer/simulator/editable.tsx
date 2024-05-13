@@ -54,17 +54,14 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
       onMousedown={evt => emit('mousedown', evt)}
       style={styles.value}
     >
-      {
-        props.block.focus && placements.map(placement => (
-          <div
-            class="h-[8px] w-[8px] absolute bg-primary border-1 border-primary  bg-white rounded-[50%] z-1"
-            style={generatePointStyles(placement, props.block.style)}
-            onMousedown={evt => onMousedown(evt, placement)}
-            key={placement}
-          />
-        ))
-      }
-
+      {props.block.focus && placements.map(placement => (
+        <div
+          class="h-[8px] w-[8px] absolute bg-primary border-1 border-primary  bg-white rounded-[50%] z-1"
+          style={generatePointStyles(placement, props.block.style)}
+          onMousedown={evt => onMousedown(evt, placement)}
+          key={placement}
+        />
+      ))}
       {props.block.focus && <div class={`h-full w-full absolute block-focus`} />}
       {slots.default && slots.default()}
     </div>
