@@ -19,13 +19,8 @@ export function defineMaterialCategory(category: MaterialCategory) {
 }
 
 // 定义物料组件集合
-export function defineMaterialComponents(
-  categoryKey: string,
-  components: any[]
-) {
-  if (previewMaterialComponents.has(categoryKey)) {
-    return
-  }
+export function defineMaterialComponents(categoryKey: string, components: any[]) {
+  if (previewMaterialComponents.has(categoryKey)) { return }
   previewMaterialComponents.set(categoryKey, components)
 }
 

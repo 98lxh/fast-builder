@@ -1,9 +1,9 @@
 declare interface SimulatorBlockStyle {
+  top: number;
+  left: number;
   width: number;
   height: number;
   zIndex: number;
-  left: number;
-  top: number;
 }
 
 declare interface SimulatorBlock {

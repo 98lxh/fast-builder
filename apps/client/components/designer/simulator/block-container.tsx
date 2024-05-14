@@ -24,9 +24,9 @@ function BlockContainer() {
 
   return (
     <div
-      ref={containerRef}
       class="w-full h-full absolute top-[50%] left-[50%] translate-[-50%]"
       onMousedown={onMousedown}
+      ref={containerRef}
     >
       <Block
         translateX={translate.x}

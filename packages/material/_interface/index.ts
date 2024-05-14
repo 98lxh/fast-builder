@@ -12,7 +12,6 @@ export interface MaterialComponent {
   style: MaterialComponentStyle
 }
 
-
 export interface MaterialCategory {
   key: string
   text: string

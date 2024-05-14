@@ -1,5 +1,5 @@
 import type { CSSProperties } from "vue";
-import Empty from "~/components/empty";
+import { Empty } from "~/components/common";
 import ArrowButton from "../arrow";
 
 function AttributePanel() {

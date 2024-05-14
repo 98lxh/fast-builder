@@ -1,4 +1,4 @@
-export const SidebarItems = [
+export const HOME_SIDEBAR_ITEMS = [
   {
     patch: '/designer/start',
     class: 'btn-primary',
@@ -29,16 +29,5 @@ export const SidebarItems = [
     text: '接口文档',
     isFinished: false,
     icon: 'sidebar/doc'
-  }
-];
-
-export const Tabs = [
-  {
-    text: '我的页面',
-    key: 'mine'
-  },
-  {
-    text: '热门模板',
-    key: 'template'
   }
 ];

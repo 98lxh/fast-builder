@@ -1,5 +1,5 @@
-import { SidebarItems as sidebarItems } from "~/constants/page"
-import MessageBox from "~/components/message"
+import { HOME_SIDEBAR_ITEMS } from "~/constants/sidebar"
+import { MessageBox } from "~/components/common"
 
 function SidebarItems() {
   const visible = shallowRef(false)
@@ -16,7 +16,7 @@ function SidebarItems() {
 
   return (
     <>
-      {sidebarItems.map((item) => (
+      {HOME_SIDEBAR_ITEMS.map((item) => (
         item.divider
            ? <div class="my-2 border-b-1 dark:border-neutral" /> 
            : (<div class="flex justify-center">

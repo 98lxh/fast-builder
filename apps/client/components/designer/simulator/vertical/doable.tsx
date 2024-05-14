@@ -2,7 +2,7 @@ import type { FC } from "vite-plugin-vueact"
 import { useHistoryContext } from "~/composables/designer/history"
 
 interface DefineProps {
-  type: 'undo' | 'redo' | string
+  type: 'undo' | 'redo'
 }
 
 const Doable: FC<DefineProps> = function (props) {

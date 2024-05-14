@@ -1,2 +1,2 @@
-import "./components/material-basis"
-import "./components/material-media"
+import "./material-basis"
+import "./material-media"

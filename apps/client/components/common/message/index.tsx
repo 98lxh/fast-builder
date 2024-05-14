@@ -63,5 +63,4 @@ const MessageBox: FC<DefineProps, DefineEmits> = function (componentProps, { emi
   )
 }
 
-
 export default MessageBox;

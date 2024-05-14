@@ -27,8 +27,8 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     styles.zIndex = zIndex
     styles.width = width + 'px'
     styles.height = height + 'px'
-    styles.cursor = props.block.focus ? 'move' : 'pointer'
     styles.transform = `translate(${left}px,${top}px)`
+    styles.cursor = props.block.focus ? 'move' : 'pointer'
     return styles
   })
 

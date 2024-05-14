@@ -1,4 +1,4 @@
-import Empty from "~/components/empty"
+import { Empty } from "~/components/common"
 
 function TabMine() {
   const router = useRouter()

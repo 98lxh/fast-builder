@@ -8,7 +8,6 @@ import Ruler from "./ruler"
 function Simulator() {
   const el = ref<HTMLDivElement | null>(null)
   const size = reactive(useElementSize(el))
-
   const attrs = computed(() => ({
     height: size.height,
     width: size.width,
