@@ -22,10 +22,14 @@ export function getComponents(category: string) {
   return components
 }
 
+
+const is = (value: unknown, type: string): boolean => toString.call(value) === `[object ${type}]`
+export const isFunction = (value: unknown): value is Function => is(value, 'Function')
 // 渲染物料组件
 export function render(key: string, props: any) {
   if (!mapMaterialComponents.has(key)) return null
-  return mapMaterialComponents.get(key).setup(props)()
+  const component = mapMaterialComponents.get(key)
+  return isFunction(component) ? component(props) : component.setup(props)
 }
 
 

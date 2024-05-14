@@ -1,11 +1,4 @@
-import { FC } from "vite-plugin-vueact"
-
-interface DefineProps {
-  editable: boolean
-}
-
-const BasisText:FC<DefineProps> = function(props){
-  
+const BasisText = function () {
   return (
     <div class="text-center">文本</div>
   )

@@ -1,4 +1,4 @@
-import { defineMaterialComponent, key } from "../../../_composables/define";
+import { defineMaterialComponent, key } from "../../_composables/define";
 import BasisText from "./basis-text"
 
 export default defineMaterialComponent({

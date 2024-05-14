@@ -15,19 +15,6 @@ export interface FormItem {
 
 export interface GroupFormItem {
   name: string
+  padding?: string | number
   formItems: FormItem[]
-}
-
-export interface DefineProps {
-  formItems?: FormItem[];
-  groupFormItems?: GroupFormItem[];
-  labelWidth?: number;
-  colLayout?: string;
-  title?: string;
-  formData: any
-}
-
-
-export interface DefineEmits {
-  (name: 'update:formData', formData: any): void
 }

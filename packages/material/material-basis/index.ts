@@ -1,4 +1,4 @@
-import { defineMaterialCategory, defineMaterialComponents, key, MaterialKey } from "./../../_composables/define";
+import { defineMaterialCategory, defineMaterialComponents, key, MaterialKey } from "../_composables/define";
 
 import text from "./text"
 import image from "./image"

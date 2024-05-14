@@ -11,7 +11,7 @@ function ShortcutKeys() {
       <div tab-index={0} class="dropdown-content z-[1] p-4 shadow-custom bg-base-100 w-[300px] border-1 dark:border-neutral text-[14px]">
         <p class="p-2 text-center">快捷键</p>
         <div class="border-b-1 dark:border-neutral mb-[10px]" />
-        {SHORTCUT_KEYS.map(item => (<div class="flex justify-between">
+        {SHORTCUT_KEYS.map(item => (<div class="flex justify-between mt-[10px]">
           <div class="flex items-center">
             {item.keys.map((key, index) => (<>
               <kbd class="kbd kbd-sm">{key}</kbd>

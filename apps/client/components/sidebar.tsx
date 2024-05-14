@@ -15,8 +15,7 @@ function SidebarItems() {
   }
 
   return (
-    <>
-      {HOME_SIDEBAR_ITEMS.map((item) => (
+    <>{HOME_SIDEBAR_ITEMS.map((item) => (
         item.divider
            ? <div class="my-2 border-b-1 dark:border-neutral" /> 
            : (<div class="flex justify-center">

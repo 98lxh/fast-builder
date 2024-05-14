@@ -9,7 +9,7 @@ const Empty: FC<DefineProps> = function (componentProps, { slots }) {
   const props = useMergeProps(componentProps, { description: 'nodata' })
   return (
     <div class="flex flex-col justify-center items-center select-none" >
-      <NuxtIcon class="w-[54px] h-[54px]" name="empty" />
+      <img src="/empty.png" class="w-[140px] h-[140px]" />
       {slots.description ? slots.description() : <p class="mt-[15px]"> {props.value.description} </p>}
       {slots.default && slots.default()}
     </div>
