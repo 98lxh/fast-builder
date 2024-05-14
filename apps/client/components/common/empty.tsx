@@ -2,14 +2,15 @@ import type { FC } from "vite-plugin-vueact"
 import useMergeProps from "~/composables/props"
 
 interface DefineProps {
-  description?: string
+  description?: string;
+  imgUrl?: string;
 }
 
 const Empty: FC<DefineProps> = function (componentProps, { slots }) {
-  const props = useMergeProps(componentProps, { description: 'nodata' })
+  const props = useMergeProps(componentProps, { description: 'nodata', imgUrl: '/figure/empty.png' })
   return (
     <div class="flex flex-col justify-center items-center select-none" >
-      <img src="/empty.png" class="w-[140px] h-[140px]" />
+      <img src={props.value.imgUrl} class="w-[140px] h-[140px]" />
       {slots.description ? slots.description() : <p class="mt-[15px]"> {props.value.description} </p>}
       {slots.default && slots.default()}
     </div>

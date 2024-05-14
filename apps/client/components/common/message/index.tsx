@@ -49,13 +49,10 @@ const MessageBox: FC<DefineProps, DefineEmits> = function (componentProps, { emi
                 {props.value.cancelBtnText}
               </button>
             </form>
-            {
-              props.value.confirmBtnText && (
-                <button class="confirm btn  btn-sm btn-primary" onClick={handleConfirm}>
-                  {props.value.confirmBtnText}
-                </button>
-              )
-            }
+            {props.value.confirmBtnText && (
+              <button class="confirm btn  btn-sm btn-primary" onClick={handleConfirm}>
+                {props.value.confirmBtnText}
+              </button>)}
           </div >
         </div >
       </dialog>

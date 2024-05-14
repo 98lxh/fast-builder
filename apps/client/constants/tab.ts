@@ -1,10 +1,12 @@
 export const HOME_TABS = [
   {
-    text: '我的页面',
+    text: '我的应用',
+    icon: 'tabs/app',
     key: 'mine'
   },
   {
     text: '热门模板',
-    key: 'template'
+    key: 'template',
+    icon: 'tabs/star'
   }
 ];

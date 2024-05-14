@@ -1,6 +1,6 @@
 import type { CSSProperties } from "vue";
 import { Empty } from "~/components/common";
-import AttrForm from "./attr-form";
+import AttributeForm from "./attribute-form";
 import ArrowButton from "../arrow";
 
 function AttributePanel() {
@@ -11,20 +11,23 @@ function AttributePanel() {
     transition: 'transform .3s'
   }))
 
+  function description() {
+    return (
+      <div class="text-center mt-[5px]">
+        <p>选中组件后</p>
+        <p>在此处设置组件属性</p>
+      </div>
+    )
+  }
+
   return (
     <div
       class="flex flex-col bg-base-100 shadow-custom w-[248px] absolute z-[2] main-height right-[0px]"
       style={styles.value}
     >
-      <AttrForm />
-
+      {/* <AttributeForm /> */}
       <ArrowButton v-model={isHidden.value} direction="right" />
-      {/* <Empty class="flex-1" v-slots={{
-        description: () => (<div class="text-center mt-[5px]">
-            <p>选中组件后</p>
-            <p>在此处设置组件属性</p>
-        </div>)
-      }} /> */}
+      <Empty class="flex-1" imgUrl="/figure/inform.png" v-slots={{ description }} />
     </div>
   )
 }

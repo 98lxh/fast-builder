@@ -40,9 +40,7 @@ const BasicForm: FC<DefineProps, DefineEmits> = function (props, { emit }) {
       <NCollapse displayDirective="show" defaultExpandedNames={defaultExpandedNames}>
         {groupFormItems.map((group, index) => (
           <NCollapseItem title={group.name} name={String(index)}>
-            <div style={{ padding: group.padding || '0  10px  0 10px' }}>
-              {renderFormItems(group.formItems)}
-            </div>
+            {renderFormItems(group.formItems)}
           </NCollapseItem>))}
       </NCollapse>
     )
@@ -78,7 +76,7 @@ const BasicForm: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   return (
     <div class="mb-[20px]">
       <NForm model={props.formData}>
-          {(() => {
+        {(() => {
           const { groupFormItems, formItems } = props
           if (formItems)  /*EXCLUDE*/ return renderFormItems(formItems)
           if (groupFormItems) /*EXCLUDE*/ return renderGroupFormItems(groupFormItems)

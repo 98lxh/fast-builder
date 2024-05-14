@@ -2,7 +2,7 @@ import { BasicForm, type GroupFormItem } from "@h5-designer/material"
 import { NTag } from "naive-ui"
 
 
-function AttrForm() {
+function AttributeForm() {
   const groupFormItems: GroupFormItem[] = [
     {
       name: '基础属性',
@@ -30,14 +30,14 @@ function AttrForm() {
 
   return (
     <ClientOnly>
-      <div class="flex flex-col">
-        <div class="flex items-center py-[10px] border-b-1 dark:border-neutral">
-          <h5 class="text-xl mr-2 ml-2">属性设置</h5>
-          <NTag type="info">文本组件</NTag>
+      <div class="flex flex-col px-[15px]">
+        <div class="flex items-center justify-between py-[8px] border-b-1 dark:border-neutral">
+          <h5 class="text-lg mr-2 ml-2">属性设置</h5>
+          <NTag type="info" size="small">文本组件</NTag>
         </div>
 
         <BasicForm
-          class="mt-2"
+          class="mt-5"
           formData={formData}
           groupFormItems={groupFormItems}
         />
@@ -47,4 +47,4 @@ function AttrForm() {
 }
 
 
-export default AttrForm
+export default AttributeForm
