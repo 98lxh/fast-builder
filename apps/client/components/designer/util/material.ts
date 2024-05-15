@@ -17,14 +17,16 @@ function onDragleave(evt: DragEvent) {
   evt.dataTransfer!.dropEffect = 'none';
 }
 
-function generateDropEventListener({ setSimulatorData, simulatorData }: DesignerContext, record?: () => void) {
+function generateDropEventListener({ setSimulatorData, simulatorData, simulatorRef }: DesignerContext, record?: () => void) {
   return function (evt: DragEvent) {
-    if (!currentComponent) { return }
+    if (!currentComponent || !simulatorRef.value) { return }
+
+    const rect = simulatorRef.value.getBoundingClientRect()
 
     const style = {
       ...currentComponent.style,
-      top: evt.offsetY,
-      left: evt.offsetX,
+      top: evt.clientY - rect.y,
+      left: evt.clientX - rect.x,
       zIndex: 1,
     }
 
