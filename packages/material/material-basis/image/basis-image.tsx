@@ -1,4 +1,4 @@
-function BasisImage(){
+function BasisImage() {
   return (
     <div>图片</div>
   )

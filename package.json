@@ -19,8 +19,8 @@
     "vue": "^3.4.21"
   },
   "devDependencies": {
+    "@h5-designer/shared": "1.0.0",
     "@h5-designer/material": "1.0.0",
-    "@h5-designer/mock": "1.0.0",
     "@kirklin/eslint-config": "^2.2.0",
     "@types/node": "^20.11.30",
     "@unocss/eslint-config": "^0.58.6",

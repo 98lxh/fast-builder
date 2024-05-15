@@ -1,4 +1,6 @@
-function useMergeProps<PropsType>(
+import { computed } from "vue"
+
+export function useMergeProps<PropsType>(
   componentProps: PropsType,
   defaultProps: Partial<PropsType>
 ) {
@@ -30,5 +32,3 @@ function useMergeProps<PropsType>(
 
   return props
 }
-
-export default useMergeProps

@@ -24,9 +24,9 @@ importers:
       '@h5-designer/material':
         specifier: 1.0.0
         version: link:packages/material
-      '@h5-designer/mock':
+      '@h5-designer/shared':
         specifier: 1.0.0
-        version: link:packages/mock
+        version: link:packages/shared
       '@kirklin/eslint-config':
         specifier: ^2.2.0
         version: 2.3.1(@vue/compiler-sfc@3.4.25)(eslint-plugin-format@0.1.1)(eslint@8.57.0)(typescript@5.4.5)
@@ -182,7 +182,7 @@ importers:
 
   packages/material: {}
 
-  packages/mock: {}
+  packages/shared: {}
 
 packages:
 

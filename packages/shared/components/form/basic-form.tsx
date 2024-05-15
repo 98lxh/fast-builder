@@ -11,7 +11,6 @@ import {
   NForm
 } from "naive-ui";
 
-
 interface DefineProps {
   formItems?: FormItem[];
   groupFormItems?: GroupFormItem[];

@@ -1,4 +1,4 @@
-import { MaterialCategory, MaterialComponent } from "../_interface";
+import { MaterialCategory, MaterialComponent } from "./interface";
 import { mapMaterialComponents, previewMaterialComponents } from "./component";
 
 import { materialCategories } from "./categories";

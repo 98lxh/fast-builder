@@ -1,4 +1,5 @@
 import { type DesignerContext } from "~/composables/designer"
+import { cloneDeep } from "@h5-designer/shared"
 
 
 export type ICurrentBlockStyles = { style: SimulatorBlockStyle | null, id: string }
@@ -11,14 +12,12 @@ export function useMoveOverflow(designer: DesignerContext) {
   function check() {
     const style = current.value.style!
     const { width, height } = designer.simulatorData.value.container
-
     const overflow = {
       right: width - (style.width + style.left),
       bottom: height - (style.top + style.height),
       left: style.left,
       top: style.top
     }
-
     // 左越界
     if (overflow.left < 0) { style.left = 0 }
     // 右越界
@@ -44,7 +43,7 @@ export function useMoveOverflow(designer: DesignerContext) {
 
 // resize组件时是否溢出
 export function useResizeOverflow(designer: DesignerContext) {
-  const { current, ...rest } = useCurrent()
+  const { current, reset, setCurrent } = useCurrent()
 
   function check() {
     const { width, height } = designer.simulatorData.value.container
@@ -90,18 +89,20 @@ export function useResizeOverflow(designer: DesignerContext) {
     }
   }
 
-  return { current, check, ...rest }
+  return { current, check, reset, setCurrent }
 }
 
 
-function useCurrent() {
+
+
+const useCurrent = () => {
   const current = ref(generateCurrentBlock())
   return {
+    current,
     reset: () => { current.value = generateCurrentBlock() },
     setCurrent(block: SimulatorBlock) {
       const { style, id } = block
       current.value = { style: cloneDeep(style), id }
-    },
-    current
+    }
   }
 }

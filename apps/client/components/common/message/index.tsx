@@ -1,6 +1,6 @@
 import { Teleport } from "vue";
 import { type FC } from "vite-plugin-vueact"
-import useMergeProps from "~/composables/props";
+import { useMergeProps } from "@h5-designer/shared"
 
 interface DefineProps {
   visible?: boolean;

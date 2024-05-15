@@ -1,4 +1,5 @@
 import { genarateDefaultSimulator, type DesignerContext } from "./index";
+import { cloneDeep } from "@h5-designer/shared"
 
 interface SimulatorSnapshot {
   data: SimulatorData[], // 快照集合

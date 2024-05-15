@@ -1,4 +1,4 @@
-import { isBoolean } from "~/utils/is"
+import { isBoolean } from "@h5-designer/shared"
 
 export interface MoveListenerOptions<T = any> {
   startX: number

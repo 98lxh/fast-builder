@@ -1,4 +1,4 @@
-import { BasicForm, type GroupFormItem } from "@h5-designer/material"
+import { BasicForm, type GroupFormItem } from "@h5-designer/shared"
 import { NTag } from "naive-ui"
 
 

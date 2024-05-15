@@ -1,4 +1,4 @@
-import { MaterialCategory } from "_interface"
+import { MaterialCategory } from "./interface"
 
 // 物料组件分类
 export const materialCategories: Map<string, MaterialCategory> = new Map()
