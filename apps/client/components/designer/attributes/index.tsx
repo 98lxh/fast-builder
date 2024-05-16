@@ -6,10 +6,12 @@ import ArrowButton from "../arrow";
 function AttributePanel() {
   const isHidden = shallowRef(false);
 
-  const styles = computed<CSSProperties>(() => ({
-    transform: `translate(${isHidden.value ? '100%' : '0px'},0px)`,
-    transition: 'transform .3s'
-  }))
+  const styles = computed<CSSProperties>(() => {
+    const styles: CSSProperties = {}
+    styles.transform = `translate(${isHidden.value ? '100%' : '0px'},0px)`
+    styles.transition = 'transform .3s'
+    return styles
+  })
 
   function description() {
     return (

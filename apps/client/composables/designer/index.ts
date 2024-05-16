@@ -62,10 +62,10 @@ export function useDesigner(): DesignerContext {
   return {
     simulatorRef,
     simulatorData,
-    originalContainer,
     clearBlockFocus,
     setSimulatorRef,
     setSimulatorData,
+    originalContainer,
     setSimulatorDataById,
     setSimulatorStyleById,
     setSimulatorContainer,

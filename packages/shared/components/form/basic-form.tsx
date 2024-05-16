@@ -34,7 +34,6 @@ const BasicForm: FC<DefineProps, DefineEmits> = function (props, { emit }) {
 
   function renderGroupFormItems(groupFormItems: GroupFormItem[]) {
     const defaultExpandedNames = groupFormItems.map((_, index) => String(index))
-
     return (
       <NCollapse displayDirective="show" defaultExpandedNames={defaultExpandedNames}>
         {groupFormItems.map((group, index) => (

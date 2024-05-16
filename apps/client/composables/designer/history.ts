@@ -16,7 +16,6 @@ export interface HistoryContext {
 }
 
 export const historyInjectionKey: InjectionKey<HistoryContext> = Symbol('HISTORY_INJECTION_KEY')
-
 const generateDefaultSnapshot = (): SimulatorSnapshot => ({
   data: [],
   index: -1,

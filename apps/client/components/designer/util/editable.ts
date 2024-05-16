@@ -14,7 +14,6 @@ const mapPlacement2Cursor: Record<string, string> = {
 }
 
 export const placements = Object.keys(mapPlacement2Cursor)
-
 export function getHasPosition(placement: string) {
   return {
     hasTop: /t/.test(placement),
@@ -54,7 +53,6 @@ export function generatePointStyles(placement: string, style: SimulatorBlockStyl
   pointStyles.top = top + 'px'
   return pointStyles
 }
-
 
 export function calculateResizeStyle(
   { currentY, currentX, startY, startX, result }: MoveListenerOptions<SimulatorBlockStyle>,

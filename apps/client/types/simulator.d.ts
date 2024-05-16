@@ -9,6 +9,7 @@ declare interface SimulatorBlockStyle {
 declare interface SimulatorBlock {
   id: string;
   key: string;
+  label: string;
   focus: boolean;
   style: SimulatorBlockStyle;
   props?: Record<string, any>;

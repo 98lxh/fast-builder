@@ -1,3 +1,4 @@
+import { NPopover } from "naive-ui";
 import { useDesignerContext } from "~/composables/designer";
 import { devices, type Device as DeviceType } from "~/composables/designer/device"
 
@@ -33,11 +34,16 @@ function Device() {
   })
 
   return (
-    <div class="dropdown dropdown-hover border-1 w-full p-[2px] dropdown-left dark:border-neutral rounded-sm">
-      <div class="hover:text-primary">
-        <NuxtIcon name="designer/computer" />
-      </div>
-      <div tab-index={0} class="dropdown-content z-[1] p-4 shadow-custom bg-base-100 w-[300px] border-1 dark:border-neutral">
+    <NPopover placement="left-start" v-slots={{
+      trigger: () => (
+        <div class="dropdown dropdown-hover border-1 w-full p-[2px] dropdown-left dark:border-neutral rounded-sm">
+          <div class="hover:text-primary">
+            <NuxtIcon name="designer/computer" />
+          </div>
+        </div>
+      )
+    }}>
+      <div class="w-[268px]">
         <p class="p-2">设置画布尺寸</p>
         <div class="border-b-1 dark:border-neutral" />
         <div class="flex flex-wrap px-1 py-2">
@@ -51,7 +57,7 @@ function Device() {
         <div class="border-b-1 dark:border-neutral" />
         <div class="flex items-center justify-center p-2 pt-4 flex-wrap">
           <div class="w-[50%] flex pr-2">
-            <p class="pr-1">宽：</p>
+            <p class="pr-1 text-nowrap">宽：</p>
             <input
               value={container.width}
               type="text"
@@ -61,7 +67,7 @@ function Device() {
             />
           </div>
           <div class="w-[50%] flex">
-            <p class="pr-1">高:</p>
+            <p class="pr-1 text-nowrap">高:</p>
             <input
               value={container.height}
               type="text"
@@ -75,7 +81,7 @@ function Device() {
           </div>
         </div>
       </div>
-    </div>
+    </NPopover>
   )
 }
 

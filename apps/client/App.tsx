@@ -1,14 +1,19 @@
-import "@h5-designer/material"
 import { useDarkMode } from "./composables/styles/dark"
+import { lightThemeOverrides, darkThemeOverrides } from "./constants/overrides"
 import { NConfigProvider, darkTheme } from "naive-ui"
-import { themeOverrides } from "./constants/overrides"
+import "@h5-designer/material"
 
 function App() {
   const { initDarkMode, isDark } = useDarkMode()
   onMounted(() => initDarkMode())
 
+  const style = computed(() => ({
+    theme: isDark.value ? darkTheme : null,
+    themeOverride: isDark.value ? darkThemeOverrides : lightThemeOverrides,
+  }))
+
   return (
-    <NConfigProvider theme={isDark.value ? darkTheme : null} themeOverrides={themeOverrides}>
+    <NConfigProvider theme={style.value.theme} themeOverrides={style.value.themeOverride}>
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>

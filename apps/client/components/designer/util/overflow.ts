@@ -12,18 +12,29 @@ export function useMoveOverflow(designer: DesignerContext) {
   function check() {
     const style = current.value.style!
     const { width, height } = designer.simulatorData.value.container
+
     const overflow = {
       right: width - (style.width + style.left),
       bottom: height - (style.top + style.height),
       left: style.left,
       top: style.top
     }
+
     // 左越界
-    if (overflow.left < 0) { style.left = 0 }
+    if (overflow.left < 0) {
+      style.left = 0
+    }
+
     // 右越界
-    if (overflow.right < 0) { style.left = width - style.width }
+    if (overflow.right < 0) {
+      style.left = width - style.width
+    }
+
     // 顶部越界
-    if (overflow.top < 0) { style.top = 0 }
+    if (overflow.top < 0) {
+      style.top = 0
+    }
+
     // 底部越界
     if (overflow.bottom < 0) {
       // 更新容器高度

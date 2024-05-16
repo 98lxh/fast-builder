@@ -28,8 +28,8 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}
-    const { height, width } = designer.simulatorData.value.container
     const { translateX, translateY } = props
+    const { height, width } = designer.simulatorData.value.container
     styles.transform = `translate(${translateX}px,${translateY}px)`
     styles.height = height + 'px'
     styles.width = width + 'px'
