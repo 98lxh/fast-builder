@@ -1,16 +1,15 @@
-import { NPopover } from "naive-ui"
-import { NTag } from "naive-ui"
+import { NPopover, NTag } from "naive-ui"
 import { SHORTCUT_KEYS } from "~/constants/shortcutKeys"
 
 function ShortcutKeys() {
+  const trigger = () => (
+    <div class="hover:text-primary w-[22px] h-[22px] ml-2">
+      <NuxtIcon name="designer/keyboard" />
+    </div>
+  )
+
   return (
-    <NPopover trigger="hover" v-slots={{
-      trigger: () => (
-        <div class="hover:text-primary w-[22px] h-[22px] ml-2">
-          <NuxtIcon name="designer/keyboard" />
-        </div>
-      )
-    }}>
+    <NPopover trigger="hover" v-slots={{ trigger }}>
       <div class="w-[248px]">
         <p class="p-2 text-center">快捷键</p>
         <div class="border-b-1 dark:border-neutral mb-[10px]"></div>

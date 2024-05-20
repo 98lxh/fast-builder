@@ -1,12 +1,12 @@
-import { Teleport } from "vue";
+import { Teleport } from "vue"
 import type { FC } from "vite-plugin-vueact"
-import type { DefineProps, DefineEmits } from "./interface";
+import type { DefineProps, DefineEmits } from "./interface"
 import { useMergeProps } from "@h5-designer/shared"
 
 const MessageBox: FC<DefineProps, DefineEmits> = function (componentProps, { emit }) {
   const props = useMergeProps(componentProps, {
-    visible: false,
     title: '提示',
+    visible: false,
     content: '你确定吗?',
     cancelBtnText: '取消',
     confirmBtnText: '确定'
@@ -36,10 +36,14 @@ const MessageBox: FC<DefineProps, DefineEmits> = function (componentProps, { emi
                 {props.value.cancelBtnText}
               </button>
             </form>
-            {props.value.confirmBtnText && (
-              <button class="confirm btn  btn-sm btn-primary" onClick={handleConfirm}>
-                {props.value.confirmBtnText}
-              </button>)}
+            {((() => {
+              const { confirmBtnText } = props.value
+              if (!confirmBtnText) /*EXCLUDE*/ return null
+              /*EXCLUDE*/ return (
+                <button class="confirm btn  btn-sm btn-primary" onClick={handleConfirm}>
+                  {props.value.confirmBtnText}
+                </button>)
+            }))()}
           </div >
         </div >
       </dialog>

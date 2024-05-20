@@ -9,9 +9,9 @@ const Doable: FC<DefineProps> = function (props) {
   const history = useHistoryContext()
 
   const state = computed(() => {
+    const isUndo = props.type === 'undo'
     const { snapshot, undo, redo } = history
     const { redoable, undoable } = snapshot.value
-    const isUndo = props.type === 'undo'
 
     return {
       tip: isUndo ? '撤销' : '重做',

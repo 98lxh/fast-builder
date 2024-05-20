@@ -1,7 +1,6 @@
 import { BasicForm, type GroupFormItem } from "@h5-designer/shared"
 import { NTag } from "naive-ui"
 
-
 function AttributeForm() {
   const groupFormItems: GroupFormItem[] = [
     {

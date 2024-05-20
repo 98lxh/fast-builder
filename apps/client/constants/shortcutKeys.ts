@@ -1,5 +1,5 @@
 export const SHORTCUT_KEYS = [
-  {
+  { 
     text: '撤销操作',
     keys: ['ctrl/command', 'z']
   },

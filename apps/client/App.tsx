@@ -7,13 +7,14 @@ function App() {
   const { initDarkMode, isDark } = useDarkMode()
   onMounted(() => initDarkMode())
 
-  const style = computed(() => ({
-    theme: isDark.value ? darkTheme : null,
-    themeOverride: isDark.value ? darkThemeOverrides : lightThemeOverrides,
-  }))
+  const state = computed(() => {
+    const theme =  isDark.value ? darkTheme : null
+    const themeOverride = isDark.value ? darkThemeOverrides : lightThemeOverrides
+    return { theme, themeOverride }
+  })
 
   return (
-    <NConfigProvider theme={style.value.theme} themeOverrides={style.value.themeOverride}>
+    <NConfigProvider theme={state.value.theme} themeOverrides={state.value.themeOverride}>
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>

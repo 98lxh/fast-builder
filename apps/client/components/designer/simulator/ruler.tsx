@@ -4,7 +4,7 @@ import { getRenderOptions, horizontal, vertical } from "../util/ruler";
 import { useDarkMode } from "~/composables/styles/dark";
 
 interface DefineProps {
-  mode?: string | 'vertical' | 'horizontal';
+  mode?: 'vertical' | 'horizontal';
   offsetX: number;
   offsetY: number;
   height: number;
@@ -18,8 +18,8 @@ const Ruler: FC<DefineProps> = function (props) {
 
   const styles = computed(() => {
     const styles:CSSProperties = {}
-    styles.width = props.mode === 'horizontal' ? '100%' : '30px'
     styles.height = props.mode === 'horizontal' ? '30px' : '100%'
+    styles.width = props.mode === 'horizontal' ? '100%' : '30px'
     styles.top =  props.mode === 'horizontal' ? '0px' : '30px'
     return styles
   })

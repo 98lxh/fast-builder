@@ -33,16 +33,16 @@ function Device() {
     immediate: true
   })
 
+  const trigger = () => (
+    <div class="dropdown dropdown-hover border-1 w-full p-[2px] dropdown-left dark:border-neutral rounded-sm">
+      <div class="hover:text-primary">
+        <NuxtIcon name="designer/computer" />
+      </div>
+    </div>
+  )
+
   return (
-    <NPopover placement="left-start" v-slots={{
-      trigger: () => (
-        <div class="dropdown dropdown-hover border-1 w-full p-[2px] dropdown-left dark:border-neutral rounded-sm">
-          <div class="hover:text-primary">
-            <NuxtIcon name="designer/computer" />
-          </div>
-        </div>
-      )
-    }}>
+    <NPopover placement="left-start" v-slots={{ trigger }}>
       <div class="w-[268px]">
         <p class="p-2">设置画布尺寸</p>
         <div class="border-b-1 dark:border-neutral" />

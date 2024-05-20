@@ -2,7 +2,6 @@ import { Empty } from "~/components/common"
 
 function TabTemplate() {
   const router = useRouter()
-
   return (
     <div class="w-full h-full relative">
       <Empty

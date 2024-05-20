@@ -7,7 +7,11 @@ interface DefineProps {
 }
 
 const Empty: FC<DefineProps> = function (componentProps, { slots }) {
-  const props = useMergeProps(componentProps, { description: 'nodata', imgUrl: '/figure/empty.png' })
+  const props = useMergeProps(componentProps, {
+    description: 'no data',
+    imgUrl: '/figure/empty.png'
+  })
+
   return (
     <div class="flex flex-col justify-center items-center select-none" >
       <img src={props.value.imgUrl} class="w-[140px] h-[140px]" />

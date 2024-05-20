@@ -2,7 +2,7 @@ import Categories from "./categories"
 import Components from "./components"
 import ArrowButton from "../arrow"
 
-import { getDefaultCategoryKey, type MaterialCategory } from "@h5-designer/material"
+import { getDefaultCategoryKey } from "@h5-designer/material"
 
 function MaterialPanel() {
   const state = shallowReactive({
@@ -10,7 +10,7 @@ function MaterialPanel() {
     isHidden: false
   })
 
-  function onUpdateCategory(value: MaterialCategory) {
+  function onUpdateCategory(value: string) {
     state.category = value;
     state.isHidden === true && (state.isHidden = false);
   }

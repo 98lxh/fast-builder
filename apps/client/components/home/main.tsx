@@ -11,7 +11,8 @@ function Main() {
   return (
     <div class="shadow-custom flex-1 mt-[14px]">
       <div class="flex">
-        {HOME_TABS.map(tab => (<button
+        {HOME_TABS.map(tab => (
+        <button
           class={`btn border-0 ${currentTab.value === tab.key ? activeClass : 'bg-transparent'}`}
           onClick={() => currentTab.value = tab.key}
         >

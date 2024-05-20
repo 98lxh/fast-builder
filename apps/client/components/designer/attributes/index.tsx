@@ -1,26 +1,25 @@
-import type { CSSProperties } from "vue";
-import { Empty } from "~/components/common";
-import AttributeForm from "./attribute-form";
-import ArrowButton from "../arrow";
+import type { CSSProperties } from "vue"
+import { Empty } from "~/components/common"
+import ArrowButton from "../arrow"
+
+// import AttributeForm from "./attribute-form"
 
 function AttributePanel() {
   const isHidden = shallowRef(false);
-
-  const styles = computed<CSSProperties>(() => {
+  const styles = computed(() => {
     const styles: CSSProperties = {}
     styles.transform = `translate(${isHidden.value ? '100%' : '0px'},0px)`
     styles.transition = 'transform .3s'
     return styles
   })
 
-  function description() {
-    return (
-      <div class="text-center mt-[5px]">
-        <p>选中组件后</p>
-        <p>在此处设置组件属性</p>
-      </div>
-    )
-  }
+
+  const description = () => (
+    <div class="text-center mt-[5px]">
+      <p>选中组件后</p>
+      <p>在此处设置组件属性</p>
+    </div>
+  )
 
   return (
     <div

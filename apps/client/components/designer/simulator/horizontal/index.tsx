@@ -18,6 +18,7 @@ function VerticalTools() {
       <div class="w-[1px] h-[20px] ml-[4px] bg-base-300 dark:bg-neutral" />
       <ShortcutKeys />
       <div class="w-[1px] h-[20px] ml-[4px] bg-base-300 dark:bg-neutral" />
+
       <div class="p-[8px] cursor-move w-[34px] h-full" onMousedown={onMousedown}>
         <NuxtIcon name="designer/holder" />
       </div>

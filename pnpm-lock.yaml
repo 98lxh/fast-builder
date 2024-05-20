@@ -107,6 +107,7 @@ importers:
       pinia: ^2.1.7
       unplugin-auto-import: ^0.17.5
       vue-router: ^4.3.0
+      vuedraggable: ^2.24.3
     dependencies:
       '@pinia/nuxt': 0.5.1
       '@types/uuid': 9.0.8
@@ -120,6 +121,7 @@ importers:
       nuxt-icons: 3.2.1
       pinia: 2.1.7
       vue-router: 4.3.2
+      vuedraggable: 2.24.3
     devDependencies:
       '@css-render/vue3-ssr': 0.15.12
       '@unocss/eslint-config': 0.58.9
@@ -3670,8 +3672,8 @@ packages:
       '@babel/core': 7.24.4
       '@babel/plugin-transform-typescript': 7.24.4_@babel+core@7.24.4
       '@vue/babel-plugin-jsx': 1.2.2_@babel+core@7.24.4
-      vite: 5.2.10_@types+node@20.12.7
-      vue: 3.4.25_typescript@5.4.5
+      vite: 5.2.10
+      vue: 3.4.25
     transitivePeerDependencies:
       - supports-color
 
@@ -3682,8 +3684,8 @@ packages:
       vite: ^5.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 5.2.10_@types+node@20.12.7
-      vue: 3.4.25_typescript@5.4.5
+      vite: 5.2.10
+      vue: 3.4.25
 
   /@volar/language-core/2.2.0:
     resolution: {integrity: sha512-a8WG9+4OdeNDW4ywABZIM6S6UN7em8uIlM/BZ2pWQUYrVmX+m8sj/X+QadvO+Li/t/LjAqbWJQtVgxdpEWLALQ==}
@@ -10373,6 +10375,10 @@ packages:
       smart-buffer: 4.2.0
     dev: false
 
+  /sortablejs/1.10.2:
+    resolution: {integrity: sha512-YkPGufevysvfwn5rfdlGyrGjt7/CRHwvRPogD/lC+TnvcN29jDpCifKP+rBqf+LRldfXSTh+0CGLcSg0VIxq3A==}
+    dev: false
+
   /source-map-js/1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
@@ -11752,7 +11758,6 @@ packages:
       rollup: 4.16.4
     optionalDependencies:
       fsevents: 2.3.3
-    dev: false
 
   /vite/5.2.10_@types+node@20.12.7:
     resolution: {integrity: sha512-PAzgUZbP7msvQvqdSD+ErD5qGnSFiGOoWmV5yAKUEI0kdhjbH6nMWVyZQC/hSc4aXwc0oJ9aEdIiF9Oje0JFCw==}
@@ -11788,6 +11793,7 @@ packages:
       rollup: 4.16.4
     optionalDependencies:
       fsevents: 2.3.3
+    dev: true
 
   /vooks/0.2.12:
     resolution: {integrity: sha512-iox0I3RZzxtKlcgYaStQYKEzWWGAduMmq+jS7OrNdQo1FgGfPMubGL3uGHOU9n97NIvfFDBGnpSvkWyb/NSn/Q==}
@@ -11992,6 +11998,12 @@ packages:
       '@vue/server-renderer': 3.4.25_vue@3.4.25
       '@vue/shared': 3.4.25
       typescript: 5.4.5
+
+  /vuedraggable/2.24.3:
+    resolution: {integrity: sha512-6/HDXi92GzB+Hcs9fC6PAAozK1RLt1ewPTLjK0anTYguXLAeySDmcnqE8IC0xa7shvSzRjQXq3/+dsZ7ETGF3g==}
+    dependencies:
+      sortablejs: 1.10.2
+    dev: false
 
   /vueuc/0.4.58:
     resolution: {integrity: sha512-Wnj/N8WbPRSxSt+9ji1jtDHPzda5h2OH/0sFBhvdxDRuyCZbjGg3/cKMaKqEoe+dErTexG2R+i6Q8S/Toq1MYg==}
