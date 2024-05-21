@@ -13,15 +13,9 @@ function Layers() {
   const designer = useDesignerContext()
   const drag = shallowRef(false)
 
-  const layers = computed(() => {
-    const { blocks } = designer.simulatorData.value
-    const _layers = blocks.map(({ id, style, label }) => ({ id, label, zIndex: style.zIndex }))
-    _layers.sort((a, b) => b.zIndex - a.zIndex)
-    return _layers
-  })
-
   function handleChange(evt: any) {
     const { moved } = evt;
+    const { layers } = designer
     const { oldIndex, newIndex } = moved
     const sourceId = layers.value[oldIndex].id
     const targetId = layers.value[newIndex].id
@@ -31,9 +25,12 @@ function Layers() {
   return (
     <div class="flex flex-col">
       {(() => {
+        const { layers } = designer
+
         if (layers.value.length === 0) {
           /*EXCLUDE*/ return <Empty class="mt-[300px]" imgUrl="/figure/inform.png" description="暂无图层" />
         }
+
          /*EXCLUDE*/ return (
           <Draggable
             tag="div"

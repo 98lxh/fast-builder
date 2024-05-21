@@ -65,7 +65,7 @@ export function useDocumentMouseEvent(listener: DocumentMouseEventListener) {
 
 interface EventOutsideOptions {
   event: 'click' | 'mousedown',
-  isOnlyChildContains: boolean
+  isOnlyChildContains?: boolean
 }
 
 const defaultEventOutsideOptions: EventOutsideOptions = {

@@ -8,6 +8,7 @@ import { type MoveListenerOptions, useDocumentMouseEvent, useEventOutside } from
 import Editable from "./editable"
 
 import { render } from "@h5-designer/material"
+import ContextMenu from "./context-menu";
 
 interface DefineProps {
   translateX: number;
@@ -25,6 +26,9 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
 
   const wrapperRef = useEventOutside({ event: 'mousedown', isOnlyChildContains: true }, designer.clearBlockFocus)
   const onMousedown = useDocumentMouseEvent({ down, move, up })
+
+  const contextMenuAttrs = shallowReactive({ show: false, left: 0, top: 0, blockId: '' })
+
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}
@@ -62,6 +66,15 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     history.record()
   }
 
+  function handleContextMenu(evt: MouseEvent, blockId: string) {
+    evt.preventDefault()
+    const { pageX, pageY } = evt
+    contextMenuAttrs.blockId = blockId
+    contextMenuAttrs.left = pageX
+    contextMenuAttrs.top = pageY
+    contextMenuAttrs.show = true
+  }
+
   onMounted(() => emit('updateWrapperRef', wrapperRef.value))
 
   return (
@@ -73,8 +86,9 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
       {designer.simulatorData.value.blocks.map((block) => (
         <Editable
           onMousedown={(evt: MouseEvent) => onMousedown(evt, block)}
-          block={block}
+          onContextmenu={handleContextMenu}
           key={block.id}
+          block={block}
         >
           {render(block.key, block.props)}
         </Editable>
@@ -92,6 +106,8 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
         };
         /*EXCLUDE*/ return <div class={classes} style={styles} />
       })()}
+
+      <ContextMenu {...contextMenuAttrs} {...{ 'onUpdate:show': (value: boolean) => contextMenuAttrs.show = value }} />
     </div>
   )
 }

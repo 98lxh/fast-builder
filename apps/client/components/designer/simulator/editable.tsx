@@ -5,6 +5,7 @@ import { generatePointStyles, placements, calculateResizeStyle } from "../util/e
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
 import { useHistoryContext } from "~/composables/designer/history"
 import { useResizeOverflow } from "../util/overflow"
+import ContextMenu from "./context-menu"
 
 interface DefineProps {
   block: SimulatorBlock
@@ -12,13 +13,13 @@ interface DefineProps {
 
 interface DefineEmits {
   (name: 'mousedown', evt: MouseEvent): void
+  (name: 'contextmenu', evt: MouseEvent, blockId: string): void
 }
 
 const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
-  const designer = useDesignerContext()
   const history = useHistoryContext()
+  const designer = useDesignerContext()
   const overflow = useResizeOverflow(designer)
-
   const onMousedown = useDocumentMouseEvent({ move, down, up: history.record })
 
   const styles = computed<CSSProperties>(() => {
@@ -52,6 +53,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     <div
       class="absolute top-0 left-0 select-none"
       onMousedown={evt => emit('mousedown', evt)}
+      onContextmenu={evt => emit('contextmenu', evt, props.block.id)}
       style={styles.value}
     >
       {props.block.focus && placements.map(placement => (
@@ -62,6 +64,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
           key={placement}
         />
       ))}
+
       {props.block.focus && <div class={`h-full w-full absolute block-focus`} />}
       {slots.default && slots.default()}
     </div>

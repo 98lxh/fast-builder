@@ -1,4 +1,11 @@
+import type { ComputedGetter } from "vue";
 import { devices } from "./device"
+
+interface simulatorLayer {
+  id: string;
+  label: string;
+  zIndex: number;
+}
 
 export interface DesignerContext {
   setSimulatorRef(simulator: HTMLDivElement | null): void // 设置元素
@@ -11,6 +18,8 @@ export interface DesignerContext {
   simulatorData: Ref<SimulatorData> // 数据
   clearBlockFocus(): void // 清除所有block的focus状态
   swapTwoComponentIndex(sourceId: string, targetId: string): void
+  deleteBlockById(deleteId: string): void
+  layers: ComputedRef<simulatorLayer[]>
 }
 
 export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
@@ -26,6 +35,13 @@ export const genarateDefaultSimulator = (): SimulatorData => ({
 export function useDesigner(): DesignerContext {
   const simulatorData = ref(genarateDefaultSimulator())
   const simulatorRef = ref<HTMLDivElement | null>(null)
+
+  const layers = computed(() => {
+    const { blocks } = simulatorData.value
+    const _layers: simulatorLayer[] = blocks.map(({ id, style, label }) => ({ id, label, zIndex: style.zIndex }))
+    _layers.sort((a, b) => b.zIndex - a.zIndex)
+    return _layers
+  })
 
   // 原始容器信息
   let originalContainer: SimulatorContainer = genarateDefaultSimulator().container
@@ -65,14 +81,18 @@ export function useDesigner(): DesignerContext {
     const sourceIndex = blocks.findIndex(({ id }) => id === sourceId)
     const targetIndex = blocks.findIndex(({ id }) => id === targetId)
 
-    if (sourceIndex === -1 || targetIndex === -1) {
-      return
-    }
+    if (sourceIndex === -1 || targetIndex === -1) { return }
 
     const source = blocks[sourceIndex].style.zIndex
     const target = blocks[targetIndex].style.zIndex
     setSimulatorStyleById(sourceId, { ...blocks[sourceIndex].style, zIndex: target })
     setSimulatorStyleById(targetId, { ...blocks[targetIndex].style, zIndex: source })
+  }
+
+  function deleteBlockById(deleteId: string) {
+    const index = simulatorData.value.blocks.findIndex(({ id }) => id === deleteId)
+    if (index === -1) { return }
+    simulatorData.value.blocks.splice(index, 1)
   }
 
   return {
@@ -85,7 +105,9 @@ export function useDesigner(): DesignerContext {
     setSimulatorDataById,
     setSimulatorStyleById,
     setSimulatorContainer,
-    swapTwoComponentIndex
+    swapTwoComponentIndex,
+    deleteBlockById,
+    layers
   }
 }
 
