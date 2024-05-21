@@ -41,13 +41,11 @@ function AttributeForm() {
   return (
     <div class="flex flex-col px-[15px]">
       {(() => {
-        if (true) /*EXCLUDE*/ return <Empty class="mt-[300px]" imgUrl="/figure/inform.png" v-slots={{ description }} />
-        
+        // if (true) /*EXCLUDE*/ return <Empty class="mt-[300px]" imgUrl="/figure/inform.png" v-slots={{ description }} />
         /*EXCLUDE*/ return (
           <>
             <BasicForm
               tag="文本组件"
-              class="mt-5"
               formData={formData}
               groupFormItems={groupFormItems}
             />

@@ -99,10 +99,12 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
         if (!style || !id) /*EXCLUDE*/ return null
         const classes = "absolute border-1 border-primary top-0 left-0 duration-150 border-dashed"
         const { left, top, width, height } = style
+        const { layers } = designer
         const styles: CSSProperties = {
           transform: `translate(${left}px,${top}px)`,
           height: height + 'px',
           width: width + 'px',
+          zIndex: layers.value[layers.value.length - 1].zIndex + 1
         };
         /*EXCLUDE*/ return <div class={classes} style={styles} />
       })()}
