@@ -128,3 +128,8 @@ body {
   cursor: not-allowed;
   opacity: 0.4;
 }
+
+
+.flip-list-move {
+  transition: transform 0.5s;
+}

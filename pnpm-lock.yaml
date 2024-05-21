@@ -106,8 +106,8 @@ importers:
       nuxt-icons: ^3.2.1
       pinia: ^2.1.7
       unplugin-auto-import: ^0.17.5
+      vue-draggable-next: ^2.2.1
       vue-router: ^4.3.0
-      vuedraggable: ^2.24.3
     dependencies:
       '@pinia/nuxt': 0.5.1
       '@types/uuid': 9.0.8
@@ -120,8 +120,8 @@ importers:
       nuxt: 3.11.2
       nuxt-icons: 3.2.1
       pinia: 2.1.7
+      vue-draggable-next: 2.2.1
       vue-router: 4.3.2
-      vuedraggable: 2.24.3
     devDependencies:
       '@css-render/vue3-ssr': 0.15.12
       '@unocss/eslint-config': 0.58.9
@@ -10375,10 +10375,6 @@ packages:
       smart-buffer: 4.2.0
     dev: false
 
-  /sortablejs/1.10.2:
-    resolution: {integrity: sha512-YkPGufevysvfwn5rfdlGyrGjt7/CRHwvRPogD/lC+TnvcN29jDpCifKP+rBqf+LRldfXSTh+0CGLcSg0VIxq3A==}
-    dev: false
-
   /source-map-js/1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
@@ -11889,6 +11885,13 @@ packages:
     resolution: {integrity: sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ==}
     dev: false
 
+  /vue-draggable-next/2.2.1:
+    resolution: {integrity: sha512-EAMS1IRHF0kZO0o5PMOinsQsXIqsrKT1hKmbICxG3UEtn7zLFkLxlAtajcCcUTisNvQ6TtCB5COjD9a1raNADw==}
+    peerDependencies:
+      sortablejs: ^1.14.0
+      vue: ^3.2.2
+    dev: false
+
   /vue-eslint-parser/9.4.2_eslint@8.57.0:
     resolution: {integrity: sha512-Ry9oiGmCAK91HrKMtCrKFWmSFWvYkpGglCeFAIqDdr9zdXmMMpJOmUJS7WWsW7fX81h6mwHmUZCQQ1E0PkSwYQ==}
     engines: {node: ^14.17.0 || >=16.0.0}
@@ -11998,12 +12001,6 @@ packages:
       '@vue/server-renderer': 3.4.25_vue@3.4.25
       '@vue/shared': 3.4.25
       typescript: 5.4.5
-
-  /vuedraggable/2.24.3:
-    resolution: {integrity: sha512-6/HDXi92GzB+Hcs9fC6PAAozK1RLt1ewPTLjK0anTYguXLAeySDmcnqE8IC0xa7shvSzRjQXq3/+dsZ7ETGF3g==}
-    dependencies:
-      sortablejs: 1.10.2
-    dev: false
 
   /vueuc/0.4.58:
     resolution: {integrity: sha512-Wnj/N8WbPRSxSt+9ji1jtDHPzda5h2OH/0sFBhvdxDRuyCZbjGg3/cKMaKqEoe+dErTexG2R+i6Q8S/Toq1MYg==}

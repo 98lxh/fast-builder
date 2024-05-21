@@ -8,16 +8,18 @@ import {
   NFormItem,
   NSelect,
   NInput,
-  NForm
+  NForm,
+  NTag
 } from "naive-ui";
 
 interface DefineProps {
   formItems?: FormItem[];
+  padding?: number | string;
   groupFormItems?: GroupFormItem[];
   labelWidth?: number;
   colLayout?: string;
-  padding?: number | string;
-  formData: any
+  formData: any;
+  tag?: string;
 }
 
 interface DefineEmits {
@@ -30,12 +32,17 @@ const BasicForm: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     emit('update:formData', formData)
   }
 
-  const renderFormItems = (formItems: FormItem[]) => formItems.map(renderFormItem)
 
+  function renderHeaderExtra() {
+    if (!props.tag) return
+    return <NTag type="info" size="small">{props.tag}</NTag>
+  }
+
+  const renderFormItems = (formItems: FormItem[]) => formItems.map(renderFormItem)
   function renderGroupFormItems(groupFormItems: GroupFormItem[]) {
     const defaultExpandedNames = groupFormItems.map((_, index) => String(index))
     return (
-      <NCollapse displayDirective="show" defaultExpandedNames={defaultExpandedNames}>
+      <NCollapse displayDirective="show" defaultExpandedNames={defaultExpandedNames} v-slots={{ 'header-extra': renderHeaderExtra }}>
         {groupFormItems.map((group, index) => (
           <NCollapseItem title={group.name} name={String(index)}>
             {renderFormItems(group.formItems)}
@@ -55,11 +62,11 @@ const BasicForm: FC<DefineProps, DefineEmits> = function (props, { emit }) {
         labelPlacement="left"
         labelWidth={(props.labelWidth || 80) + 'px'}
       >{(() => {
-        const attrs = { value: props.formData['field'], 'onUpdate:value': onUpdateData }
+        const attrs = { value: props.formData[field], 'onUpdate:value': onUpdateData }
         switch (type) {
           case 'input':
           case 'password':
-            return <NInput  {...attrs} {...{ type: type === 'password' ? 'password' : 'text', placeholder }} />
+            return <NInput  {...attrs} {...{ type: type === 'password' ? 'password' : 'text', placeholder, ...props.otherOptions }} />
           case 'datepicker':
             return <NDatePicker {...attrs}  {...{ ...props.otherOptions, type: 'daterange' }} />
           case 'select':

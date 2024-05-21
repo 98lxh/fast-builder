@@ -1,6 +1,6 @@
 function BasisImage() {
   return (
-    <div>图片</div>
+    <div class="text-center bg-green h-full">图片</div>
   )
 }
 

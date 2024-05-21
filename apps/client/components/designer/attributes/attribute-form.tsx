@@ -1,4 +1,5 @@
 import { BasicForm, type GroupFormItem } from "@h5-designer/shared"
+import { Empty } from "~/components/common"
 import { NTag } from "naive-ui"
 
 function AttributeForm() {
@@ -10,7 +11,10 @@ function AttributeForm() {
           field: 'layer',
           type: 'input',
           label: '图层名称',
-          placeholder: '图层名称'
+          placeholder: '图层名称',
+          otherOptions: {
+            disabled: true
+          }
         },
         {
           field: 'background',
@@ -22,26 +26,35 @@ function AttributeForm() {
     }
   ]
 
-  const formData = {
+  const formData = reactive({
     layer: '图层1',
     background: '#000000'
-  }
+  })
+
+  const description = () => (
+    <div class="text-center mt-[5px]">
+      <p>选中组件后</p>
+      <p>在此处设置组件属性</p>
+    </div>
+  )
 
   return (
-    <ClientOnly>
-      <div class="flex flex-col px-[15px]">
-        <div class="flex items-center justify-between py-[8px] border-b-1 dark:border-neutral">
-          <h5 class="text-lg mr-2 ml-2">属性设置</h5>
-          <NTag type="info" size="small">文本组件</NTag>
-        </div>
-
-        <BasicForm
-          class="mt-5"
-          formData={formData}
-          groupFormItems={groupFormItems}
-        />
-      </div>
-    </ClientOnly>
+    <div class="flex flex-col px-[15px]">
+      {(() => {
+        if (true) /*EXCLUDE*/ return <Empty class="mt-[300px]" imgUrl="/figure/inform.png" v-slots={{ description }} />
+        
+        /*EXCLUDE*/ return (
+          <>
+            <BasicForm
+              tag="文本组件"
+              class="mt-5"
+              formData={formData}
+              groupFormItems={groupFormItems}
+            />
+          </>
+        )
+      })()}
+    </div>
   )
 }
 

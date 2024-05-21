@@ -10,6 +10,7 @@ export interface DesignerContext {
   simulatorRef: Ref<HTMLDivElement | null> // 元素
   simulatorData: Ref<SimulatorData> // 数据
   clearBlockFocus(): void // 清除所有block的focus状态
+  swapTwoComponentIndex(sourceId: string, targetId: string): void
 }
 
 export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
@@ -59,6 +60,21 @@ export function useDesigner(): DesignerContext {
     simulatorData.value.blocks[index] = { ...block, style }
   }
 
+  function swapTwoComponentIndex(sourceId: string, targetId: string) {
+    const { blocks } = simulatorData.value
+    const sourceIndex = blocks.findIndex(({ id }) => id === sourceId)
+    const targetIndex = blocks.findIndex(({ id }) => id === targetId)
+
+    if (sourceIndex === -1 || targetIndex === -1) {
+      return
+    }
+
+    const source = blocks[sourceIndex].style.zIndex
+    const target = blocks[targetIndex].style.zIndex
+    setSimulatorStyleById(sourceId, { ...blocks[sourceIndex].style, zIndex: target })
+    setSimulatorStyleById(targetId, { ...blocks[targetIndex].style, zIndex: source })
+  }
+
   return {
     simulatorRef,
     simulatorData,
@@ -69,6 +85,7 @@ export function useDesigner(): DesignerContext {
     setSimulatorDataById,
     setSimulatorStyleById,
     setSimulatorContainer,
+    swapTwoComponentIndex
   }
 }
 

@@ -10,3 +10,17 @@ export const HOME_TABS = [
     icon: 'tabs/star'
   }
 ];
+
+
+export const ATTRIBUTE_TABS = [
+  {
+    text: '属性设置',
+    key: 'attribute',
+    icon: 'designer/setting'
+  },
+  {
+    text: '图层管理',
+    key: 'layers',
+    icon: 'designer/layer'
+  }
+]
