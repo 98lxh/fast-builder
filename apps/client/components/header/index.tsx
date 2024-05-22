@@ -5,7 +5,7 @@ function Header() {
   const router = useRouter();
 
   return (
-    <header class="navbar bg-base-100 shadow-custom ">
+    <header class="navbar bg-base-100 shadow-custom border-b-1 dark:border-neutral">
       <div class="lg:hidden block static">
         <div class="dropdown">
           <div tabindex={0} role="button" class="btn  btn-square btn-ghost">

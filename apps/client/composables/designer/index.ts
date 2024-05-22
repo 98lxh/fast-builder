@@ -1,11 +1,6 @@
 import type { ComputedGetter } from "vue";
 import { devices } from "./device"
-
-interface simulatorLayer {
-  id: string;
-  label: string;
-  zIndex: number;
-}
+import { cloneDeep } from "@h5-designer/shared";
 
 export interface DesignerContext {
   setSimulatorRef(simulator: HTMLDivElement | null): void // 设置元素
@@ -19,7 +14,9 @@ export interface DesignerContext {
   clearBlockFocus(): void // 清除所有block的focus状态
   swapTwoComponentIndex(sourceId: string, targetId: string): void
   deleteBlockById(deleteId: string): void
-  layers: ComputedRef<simulatorLayer[]>
+  layers: ComputedRef<SimulatorLayer[]>
+  setBlockFocus(block: SimulatorBlock): void
+  currentEdit: Ref<SimulatorBlock | null>
 }
 
 export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
@@ -35,16 +32,18 @@ export const genarateDefaultSimulator = (): SimulatorData => ({
 export function useDesigner(): DesignerContext {
   const simulatorData = ref(genarateDefaultSimulator())
   const simulatorRef = ref<HTMLDivElement | null>(null)
+  // 原始容器信息
+  let originalContainer: SimulatorContainer = genarateDefaultSimulator().container
+  // 当前编辑组件
+  const currentEdit = ref<SimulatorBlock | null>(null)
 
   const layers = computed(() => {
     const { blocks } = simulatorData.value
-    const _layers: simulatorLayer[] = blocks.map(({ id, style, label }) => ({ id, label, zIndex: style.zIndex }))
+    const _layers: SimulatorLayer[] = blocks.map(({ id, style, layer, icon }) => ({ id, name: layer, icon, zIndex: style.zIndex }))
     _layers.sort((a, b) => b.zIndex - a.zIndex)
     return _layers
   })
 
-  // 原始容器信息
-  let originalContainer: SimulatorContainer = genarateDefaultSimulator().container
 
   function setSimulatorRef(simulator: HTMLDivElement) {
     simulatorRef.value = simulator
@@ -60,7 +59,14 @@ export function useDesigner(): DesignerContext {
   }
 
   function clearBlockFocus() {
+    currentEdit.value = null
     simulatorData.value.blocks.forEach(block => block.focus = false)
+  }
+
+  function setBlockFocus(block: SimulatorBlock) {
+    clearBlockFocus()
+    block.focus = true
+    currentEdit.value = cloneDeep(block);
   }
 
   function setSimulatorDataById(updateId: string, block: SimulatorBlock) {
@@ -96,6 +102,8 @@ export function useDesigner(): DesignerContext {
   }
 
   return {
+    currentEdit,
+    setBlockFocus,
     simulatorRef,
     simulatorData,
     clearBlockFocus,

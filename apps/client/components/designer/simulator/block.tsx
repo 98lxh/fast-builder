@@ -41,8 +41,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   })
 
   function down(_: MouseEvent, block: SimulatorBlock) {
-    designer.clearBlockFocus()
-    block.focus = true
+    designer.setBlockFocus(block)
     overflow.setCurrent(block)
   }
 

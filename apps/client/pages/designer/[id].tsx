@@ -9,9 +9,11 @@ function Designer() {
 
   return (
     <div class="flex w-full">
-      <MaterialPanel />
-      <Simulator />
-      <AttributePanel />
+      <ClientOnly>
+        <MaterialPanel />
+        <Simulator />
+        <AttributePanel />
+      </ClientOnly>
     </div>
   )
 }

@@ -18,7 +18,7 @@ function Layers() {
     const wrapper: CSSProperties = {}
     const arrow: CSSProperties = {}
     const transition = 'transform 0.3s'
-    wrapper.transform = `translateY(${state.open ? 'calc(100% - 32px)' : '0'})`
+    wrapper.transform = `translateY(${state.open ? 'calc(100% - 35px)' : '0'})`
     arrow.transform = `rotate(${state.open ? '270deg' : '90deg'})`
     wrapper.transition = transition
     arrow.transition = transition
@@ -36,26 +36,29 @@ function Layers() {
 
   return (
     <div class="flex flex-col absolute bottom-0 w-full min-h-[300px]" style={styles.value.wrapper}>
-      <div class="border-t-1 border-b-1 dark-border-neutral mb-[-1px] flex px-[5px] select-none h-[30px] items-center">
-        <p class="flex-1">图层管理</p>
+      <div class="border-t-1 border-b-1 dark-border-neutral mb-[-1px] flex px-[5px] select-none h-[35px] items-center">
+        <div class="flex-1 flex items-center">
+          <NuxtIcon class="w-[18px] h-[18px] mr-1" name="designer/layer" />
+          <p>图层</p>
+        </div>
+
         <div
-          class="w-[18px] h-[18px] rotate-[90deg] cursor-pointer hover:text-primary"
+          class="w-[16px] h-[16px] rotate-[90deg] cursor-pointer hover:text-primary"
           onClick={() => state.open = !state.open}
           style={styles.value.arrow}
         >
-          <NuxtIcon name="right" />
+          <NuxtIcon class="w-[18px] h-[18px]" name="right" />
         </div>
       </div>
 
       {(() => {
         const { layers } = designer
-
         if (layers.value.length === 0) {
           /*EXCLUDE*/ return <Empty class="py-[20px]" imgUrl="/figure/inform.png" description="暂无图层" />
         }
 
          /*EXCLUDE*/ return (
-          <NScrollbar style={{ maxHeight: 'calc(300px - 32px)' }}>
+          <NScrollbar style={{ maxHeight: 'calc(300px - 40px)', minHeight: 'calc(300px - 40px)' }}>
             <Draggable
               tag="div"
               animation={200}
@@ -66,14 +69,16 @@ function Layers() {
             >
               <TransitionGroup name={state.drag ? 'flip-list' : undefined} type="transition">
                 {layers.value.map(layer => (
-                  <div class="flex justify-between border-b-1 border-t-1 dark-border-neutral p-[10px] cursor-move mb-[-1px]" key={layer.id}>
-                    <NEllipsis class="text-sm" style="max-width:140px" tooltip={{ placement: 'bottom' }}>
-                      ID: {layer.id}
-                    </NEllipsis>
-
-                    <NTag type="info" size="small">
-                      {layer.label}
-                    </NTag>
+                  <div
+                    class="select-none flex justify-between mb-[-1px] py-[3px] px-[10px] cursor-pointer border-1 border-dashed border-transparent hover:border-primary"
+                    key={layer.id}
+                  >
+                    <div class="flex items-center">
+                      <NuxtIcon class="w-[18px] h-[18px] mr-1" name={layer.icon} />
+                      <NEllipsis class="text-sm" style="max-width:140px" tooltip={{ placement: 'bottom' }}>
+                        {layer.name}
+                      </NEllipsis>
+                    </div>
                   </div>
                 ))}
               </TransitionGroup>

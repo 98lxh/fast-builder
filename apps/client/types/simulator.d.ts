@@ -7,12 +7,14 @@ declare interface SimulatorBlockStyle {
 }
 
 declare interface SimulatorBlock {
-  id: string;
-  key: string;
-  label: string;
-  focus: boolean;
-  style: SimulatorBlockStyle;
-  props?: Record<string, any>;
+  id: string; // 组件ID
+  key: string; // 组件Key
+  layer:string; // 图层名
+  icon: string; // 组件图标
+  label: string; // 组件名称
+  focus: boolean; // 是否选中
+  style: SimulatorBlockStyle; // 组件样式
+  props?: Record<string, any>; // 组件属性
 }
 
 declare interface SimulatorContainer {
@@ -23,4 +25,12 @@ declare interface SimulatorContainer {
 declare interface SimulatorData {
   container: SimulatorContainer,
   blocks: Array<SimulatorBlock>
+}
+
+
+declare interface SimulatorLayer {
+  id: string;
+  icon: string;
+  name: string;
+  zIndex: number;
 }

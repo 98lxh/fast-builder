@@ -17,7 +17,22 @@ function onDragleave(evt: DragEvent) {
   evt.dataTransfer!.dropEffect = 'none';
 }
 
-function generateDropEventListener({ setSimulatorData, simulatorData, simulatorRef }: DesignerContext, record?: () => void) {
+function generateLayer(blocks: SimulatorBlock[]) {
+  const { key, text } = currentComponent!
+  const index = blocks.filter(block => block.key === key).length
+
+  function generator(index: number, text: string) {
+    const layer = `${text}${index}`
+    const block = blocks.find(block => block.layer === layer)
+    if (block) { return generator(index + 1, text) }
+    return layer
+  }
+
+  return generator(index + 1, text)
+}
+
+function generateDropEventListener(designer: DesignerContext, record?: () => void) {
+  const { setSimulatorData, simulatorData, simulatorRef } = designer
   return function (evt: DragEvent) {
     if (!currentComponent || !simulatorRef.value) { return }
 
@@ -35,7 +50,9 @@ function generateDropEventListener({ setSimulatorData, simulatorData, simulatorR
     const block = {
       id: nanoid(),
       key: currentComponent.key,
+      icon: currentComponent.icon,
       label: currentComponent.text,
+      layer: generateLayer(simulatorData.value.blocks),
       focus: false,
       style
     }

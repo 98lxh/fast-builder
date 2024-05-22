@@ -30,5 +30,4 @@ export function render(key: string, props: any) {
   return isFunction(component) ? component(props) : component.setup(props)
 }
 
-
 export * from "./interface"

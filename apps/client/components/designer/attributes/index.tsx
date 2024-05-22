@@ -3,7 +3,6 @@ import AttributeForm from "./attribute-form"
 import ArrowButton from "../arrow"
 import Layers from "./layers"
 
-
 function AttributePanel() {
   const isHidden = shallowRef(false);
   const styles = computed(() => {
@@ -13,17 +12,14 @@ function AttributePanel() {
     return styles
   })
 
-
   return (
-    <ClientOnly>
-      <div class="flex flex-col bg-base- shadow-custom w-[248px] absolute z-[2] main-height bg-base-100 right-[0px]"
-        style={styles.value}
-      >
-        <Layers />
-        <AttributeForm />
-        <ArrowButton v-model={isHidden.value} direction="right" />
-      </div>
-    </ClientOnly>
+    <div class="flex flex-col bg-base- shadow-custom w-[248px] absolute z-[2] main-height bg-base-100 right-[0px]"
+      style={styles.value}
+    >
+      <Layers />
+      <AttributeForm />
+      <ArrowButton v-model={isHidden.value} direction="right" />
+    </div>
   )
 }
 
