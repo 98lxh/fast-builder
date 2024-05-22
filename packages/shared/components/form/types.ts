@@ -18,3 +18,14 @@ export interface GroupFormItem {
   padding?: string | number
   formItems: FormItem[]
 }
+
+
+export interface DefineProps {
+  formItems?: FormItem[];
+  padding?: number | string;
+  groupFormItems?: GroupFormItem[];
+  labelWidth?: number;
+  colLayout?: string;
+  formData: any;
+  tag?: string;
+}

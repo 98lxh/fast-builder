@@ -2,12 +2,8 @@ import { TransitionGroup, type CSSProperties } from "vue"
 import type { FC } from "vite-plugin-vueact"
 
 import { useDesignerContext } from "~/composables/designer"
-import { NTag, NScrollbar, NEllipsis, NTree, type TreeOption, type TreeDropInfo } from "naive-ui"
-import { VueDraggableNext } from "vue-draggable-next"
+import { NTree, type TreeOption, type TreeDropInfo } from "naive-ui"
 import { Empty } from "~/components/common"
-
-
-const Draggable = VueDraggableNext as unknown as FC
 
 function DragLayers() {
   const designer = useDesignerContext()
@@ -59,7 +55,7 @@ function DragLayers() {
   }
 
   return (
-    <div class="flex flex-col absolute bottom-0 w-full min-h-[300px]" style={styles.value.wrapper}>
+    <div class="flex flex-col absolute bottom-0 w-full min-h-[300px] z-[100] bg-base-100" style={styles.value.wrapper}>
       {Header()}
       {(() => {
         const { layers, currentEdit, setBlockFocus } = designer

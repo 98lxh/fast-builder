@@ -1,17 +1,16 @@
+import { CSSProperties, shallowRef } from "vue";
 import type { FC } from "vite-plugin-vueact"
 import type { FormItem, GroupFormItem } from "./types"
 
 import { BorderRadius } from "./../form-field"
 
 import {
-  NCollapseItem,
   NDatePicker,
-  NCollapse,
   NFormItem,
   NSelect,
   NInput,
   NForm,
-  NTag,
+  NScrollbar,
 } from "naive-ui";
 
 interface DefineProps {
@@ -29,15 +28,39 @@ interface DefineEmits {
 }
 
 const BasicForm: FC<DefineProps, DefineEmits> = function (props, { emit }) {
+  const currentTab = shallowRef(props.groupFormItems && props.groupFormItems[0] ? props.groupFormItems[0].name : '')
+
+
   function onUpdateData(field, newValue) {
     const formData = { ...props.formData, [field]: newValue }
     emit('update:formData', formData)
   }
 
+  const renderFormItems = (formItems: FormItem[]) => {
+    return formItems.map(renderFormItem)
+  }
 
-  const renderFormItems = (formItems: FormItem[]) => formItems.map(renderFormItem)
   function renderGroupFormItems(groupFormItems: GroupFormItem[]) {
-    return groupFormItems.map((group, index) => (renderFormItems(group.formItems)))
+    const index = groupFormItems.findIndex(({ name }) => currentTab.value === name)
+    const styles: CSSProperties = { left: `${index * 60}px`, transition: `left .3s` }
+    return (
+      <div class="flex flex-col">
+        <div role="tablist" class="tabs border-b-2 dark:border-neutral relative">
+          {groupFormItems.map(group => (
+            <a class="tab" onClick={() => currentTab.value = group.name}>
+              {group.name}
+            </a>))}
+          <div
+            class="absolute w-[60px] h-[2px] bg-black dark:bg-light bottom-[-2px]"
+            style={styles}
+          />
+        </div >
+
+        <NScrollbar class="p-[10px]" style={{ maxHeight: 'calc(100vh - 170px)' }}>
+          {groupFormItems[index] && renderFormItems(groupFormItems[index].formItems)}
+        </NScrollbar>
+      </div >
+    )
   }
 
   function renderFormItem(formItem: FormItem) {
