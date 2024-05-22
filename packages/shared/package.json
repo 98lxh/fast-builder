@@ -2,5 +2,9 @@
   "name": "@h5-designer/shared",
   "type": "module",
   "version": "1.0.0",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@vicons/fluent": "^0.12.0",
+    "@vicons/tabler": "^0.12.0"
+  }
 }

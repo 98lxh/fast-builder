@@ -15,7 +15,7 @@ export interface DesignerContext {
   swapTwoComponentIndex(sourceId: string, targetId: string): void
   deleteBlockById(deleteId: string): void
   layers: ComputedRef<SimulatorLayer[]>
-  setBlockFocus(block: SimulatorBlock): void
+  setBlockFocus(blockId: string): void
   currentEdit: Ref<SimulatorBlock | null>
 }
 
@@ -31,19 +31,18 @@ export const genarateDefaultSimulator = (): SimulatorData => ({
 
 export function useDesigner(): DesignerContext {
   const simulatorData = ref(genarateDefaultSimulator())
+  // 模拟器元素
   const simulatorRef = ref<HTMLDivElement | null>(null)
-  // 原始容器信息
-  let originalContainer: SimulatorContainer = genarateDefaultSimulator().container
   // 当前编辑组件
   const currentEdit = ref<SimulatorBlock | null>(null)
-
+  // 原始容器信息
+  let originalContainer: SimulatorContainer = genarateDefaultSimulator().container
   const layers = computed(() => {
     const { blocks } = simulatorData.value
     const _layers: SimulatorLayer[] = blocks.map(({ id, style, layer, icon }) => ({ id, name: layer, icon, zIndex: style.zIndex }))
     _layers.sort((a, b) => b.zIndex - a.zIndex)
     return _layers
   })
-
 
   function setSimulatorRef(simulator: HTMLDivElement) {
     simulatorRef.value = simulator
@@ -63,10 +62,12 @@ export function useDesigner(): DesignerContext {
     simulatorData.value.blocks.forEach(block => block.focus = false)
   }
 
-  function setBlockFocus(block: SimulatorBlock) {
+  function setBlockFocus(blockId: string) {
+    const index = simulatorData.value.blocks.findIndex(({ id }) => id === blockId)
+    if (index < 0) { return }
     clearBlockFocus()
-    block.focus = true
-    currentEdit.value = cloneDeep(block);
+    simulatorData.value.blocks[index].focus = true
+    currentEdit.value = cloneDeep(simulatorData.value.blocks[index]);
   }
 
   function setSimulatorDataById(updateId: string, block: SimulatorBlock) {

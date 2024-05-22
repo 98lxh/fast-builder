@@ -11,41 +11,10 @@ function AttributeForm() {
       formItems: [
         {
           field: 'layer',
-          type: 'input',
-          label: '图层名称',
-          placeholder: '图层名称',
-          otherOptions: {
-            disabled: true
-          }
-        },
-        {
-          field: 'background',
-          type: 'input',
-          label: '背景颜色',
-          placeholder: '背景颜色'
+          type: 'border-radius'
         }
       ]
     },
-    {
-      name: '动画',
-      formItems: [
-        {
-          field: 'layer',
-          type: 'input',
-          label: '图层名称1',
-          placeholder: '图层名称',
-          otherOptions: {
-            disabled: true
-          }
-        },
-        {
-          field: 'background',
-          type: 'input',
-          label: '背景颜色',
-          placeholder: '背景颜色'
-        }
-      ]
-    }
   ]
 
   const formData = reactive({
@@ -71,15 +40,11 @@ function AttributeForm() {
           {designer.currentEdit.value ? designer.currentEdit.value.label : '未选择'}
         </NTag>
       </div>
-      {designer.currentEdit.value === null
+
+      {/* {designer.currentEdit.value === null
         ? (<Empty class="mt-[100px]" imgUrl="/figure/inform.png" v-slots={{ description }} />)
-        : (<div class="border-t-1 dark:border-neutral pt-[5px]">
-          <BasicForm
-            class="px-[10px]"
-            formData={formData}
-            groupFormItems={groupFormItems}
-          />
-        </div>)}
+        : (<BasicForm  class="px-[10px]"  formData={formData} groupFormItems={groupFormItems} />)} */}
+      <BasicForm class="px-[10px]" formData={formData} groupFormItems={groupFormItems} />
     </div>
   )
 }

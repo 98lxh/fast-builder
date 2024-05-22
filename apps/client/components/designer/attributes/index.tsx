@@ -2,6 +2,7 @@ import type { CSSProperties } from "vue"
 import AttributeForm from "./attribute-form"
 import ArrowButton from "../arrow"
 import Layers from "./layers"
+import { useDesignerContext } from "~/composables/designer";
 
 function AttributePanel() {
   const isHidden = shallowRef(false);
@@ -13,7 +14,9 @@ function AttributePanel() {
   })
 
   return (
-    <div class="flex flex-col bg-base- shadow-custom w-[248px] absolute z-[2] main-height bg-base-100 right-[0px]"
+    <div
+      id="attribute-panel"
+      class="flex flex-col bg-base- shadow-custom w-[248px] absolute z-[2] main-height bg-base-100 right-[0px]"
       style={styles.value}
     >
       <Layers />

@@ -30,6 +30,10 @@ body {
   height: calc(100vh - 60px) !important;
 }
 
+.bg-primary-1 {
+  background: rgba(26, 92, 255,.3);
+}
+
 /* 选中样式 */
 .block {
   cursor: pointer;

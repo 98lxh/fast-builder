@@ -1,4 +1,4 @@
-import { defineMaterialComponent, key } from "../../_composables/define";
+import { defineMaterialComponent, key } from "../../composables/define";
 import BasisImage from "./basis-image"
 
 export default defineMaterialComponent({

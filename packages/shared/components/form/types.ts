@@ -1,9 +1,9 @@
 import type { SelectOption, FormItemRule } from "naive-ui";
 
-export type FormItemType = "input" | "password" | "datepicker" | "select";
+export type FormItemType = "input" | "password" | "datepicker" | "select" | "border-radius";
 
 export interface FormItem {
-  label: string;
+  label?: string;
   field: string;
   placeholder?: any;
   rules?: FormItemRule[] | FormItemRule;

@@ -9,8 +9,9 @@ import {
   NSelect,
   NInput,
   NForm,
-  NTag
+  NTag,
 } from "naive-ui";
+import { BorderRadius } from "./fields";
 
 interface DefineProps {
   formItems?: FormItem[];
@@ -57,10 +58,10 @@ const BasicForm: FC<DefineProps, DefineEmits> = function (props, { emit }) {
       <NFormItem
         path={field}
         rule={rules}
-        label={label + ':'}
         labelAlign="left"
         labelPlacement="left"
-        labelWidth={(props.labelWidth || 80) + 'px'}
+        label={label ? (label + ':') : ''}
+        labelWidth={(label ? (props.labelWidth || 80) : 0) + 'px'}
       >{(() => {
         const attrs = { value: props.formData[field], 'onUpdate:value': onUpdateData }
         switch (type) {
@@ -71,6 +72,8 @@ const BasicForm: FC<DefineProps, DefineEmits> = function (props, { emit }) {
             return <NDatePicker {...attrs}  {...{ ...props.otherOptions, type: 'daterange' }} />
           case 'select':
             return <NSelect {...attrs} {...{ placeholder, options }} />
+          case 'border-radius':
+            return <BorderRadius />
           default:
             return null
         }

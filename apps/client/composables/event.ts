@@ -1,4 +1,4 @@
-import { isBoolean } from "@h5-designer/shared"
+import { isBoolean, isFunction } from "@h5-designer/shared"
 
 export interface MoveListenerOptions<T = any> {
   startX: number
@@ -75,25 +75,28 @@ const defaultEventOutsideOptions: EventOutsideOptions = {
 
 export function useEventOutside(options = defaultEventOutsideOptions, callback: () => void) {
   const target = ref<HTMLElement | null>(null)
-  const { event, isOnlyChildContains } = options
+  let { event, isOnlyChildContains } = options
+  let header: HTMLElement | null = null
+  let attributePanel: HTMLElement | null = null
 
   function listener(evt: MouseEvent) {
-    if (!target.value) {
-      return
-    }
-
-    const isContains = isOnlyChildContains
-      ? ([...target.value.childNodes]).some(el => el.contains(evt.target as HTMLElement))
-      : target.value.contains(evt.target as HTMLElement)
-
-    if (isContains) {
-      return
-    }
-
+    if (!target.value) { return }
+    const evtTarget = evt.target as HTMLElement
+    let isContains = isOnlyChildContains ? ([...target.value.childNodes]).some(el => el.contains(evt.target as HTMLElement)) : target.value.contains(evtTarget)
+    if(attributePanel) isContains = attributePanel.contains(evtTarget) || isContains
+    if(header) isContains = header.contains(evtTarget) || isContains
+    if (isContains) { return }
     callback()
   }
 
-  onMounted(() => nextTick(() => document.documentElement.addEventListener(event, listener)))
+  onMounted(() => nextTick(() => {
+    document.documentElement.addEventListener(event, listener)
+    if (event !== 'mousedown') { return }
+    /* 当事件为mousedown时排除header和attributePanel */
+    header = document.getElementById('header')
+    attributePanel = document.getElementById('attribute-panel')
+  }))
+
   onUnmounted(() => document.documentElement.removeEventListener(event, listener))
   return target
 }

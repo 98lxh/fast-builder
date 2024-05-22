@@ -23,12 +23,10 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   const history = useHistoryContext()
   const designer = useDesignerContext()
   const overflow = useMoveOverflow(designer)
-
-  const wrapperRef = useEventOutside({ event: 'mousedown', isOnlyChildContains: true }, designer.clearBlockFocus)
   const onMousedown = useDocumentMouseEvent({ down, move, up })
-
   const contextMenuAttrs = shallowReactive({ show: false, left: 0, top: 0, blockId: '' })
 
+  const wrapperRef = useEventOutside({ isOnlyChildContains: true, event: 'mousedown' }, designer.clearBlockFocus)
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}
@@ -41,7 +39,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   })
 
   function down(_: MouseEvent, block: SimulatorBlock) {
-    designer.setBlockFocus(block)
+    designer.setBlockFocus(block.id)
     overflow.setCurrent(block)
   }
 
@@ -88,8 +86,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
           onContextmenu={handleContextMenu}
           key={block.id}
           block={block}
-        >
-          {render(block.key, block.props)}
+        >{render(block.key, block.props)}
         </Editable>
       ))}
 
