@@ -39,7 +39,7 @@ export function useDesigner(): DesignerContext {
   let originalContainer: SimulatorContainer = genarateDefaultSimulator().container
   const layers = computed(() => {
     const { blocks } = simulatorData.value
-    const _layers: SimulatorLayer[] = blocks.map(({ id, style, layer, icon }) => ({ id, name: layer, icon, zIndex: style.zIndex }))
+    const _layers: SimulatorLayer[] = blocks.map(({ id, style, layer, icon }) => ({ key: id, label: layer, icon, zIndex: style.zIndex, children: [] }))
     _layers.sort((a, b) => b.zIndex - a.zIndex)
     return _layers
   })

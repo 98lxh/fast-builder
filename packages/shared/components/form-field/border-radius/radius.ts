@@ -1,13 +1,13 @@
 import { RadiusBottomRight, RadiusTopLeft, RadiusTopRight, RadiusBottomLeft } from "@vicons/tabler"
 
-export const radius = [
+export const radius: RadiusItem[] = [
   {
     type: 'top-left',
     icon: RadiusTopLeft
   },
   {
     type: 'top-right',
-    icon: RadiusTopLeft
+    icon: RadiusTopRight
   },
   {
     type: 'bottom-left',
@@ -18,3 +18,9 @@ export const radius = [
     icon: RadiusBottomRight
   }
 ]
+
+
+export interface RadiusItem {
+  type: string
+  icon: any
+}

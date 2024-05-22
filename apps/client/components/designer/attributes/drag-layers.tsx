@@ -1,0 +1,88 @@
+import { TransitionGroup, type CSSProperties } from "vue"
+import type { FC } from "vite-plugin-vueact"
+
+import { useDesignerContext } from "~/composables/designer"
+import { NTag, NScrollbar, NEllipsis, NTree, type TreeOption, type TreeDropInfo } from "naive-ui"
+import { VueDraggableNext } from "vue-draggable-next"
+import { Empty } from "~/components/common"
+
+
+const Draggable = VueDraggableNext as unknown as FC
+
+function DragLayers() {
+  const designer = useDesignerContext()
+  const state = shallowReactive({ drag: false, open: false })
+
+  const styles = computed(() => {
+    const wrapper: CSSProperties = {}
+    const arrow: CSSProperties = {}
+    const transition = 'transform 0.3s'
+    arrow.transform = `rotate(${state.open ? '270deg' : '90deg'})`
+    wrapper.transform = `translateY(${state.open ? 'calc(100% - 39px)' : '0'})`
+    arrow.transition = transition
+    wrapper.transition = transition
+    return { wrapper, arrow }
+  })
+
+  function renderTreeLabel(layer: SimulatorLayer) {
+    const { icon, label } = layer
+    return (
+      <div class="flex">
+        <NuxtIcon class="mr-[5px]" name={icon} />
+        <p>{label}</p>
+      </div>
+    )
+  }
+
+  function handleDrop({ node, dragNode }: TreeDropInfo) {
+    const { key: sourceId } = dragNode;
+    const { key: targetId } = node;
+    designer.swapTwoComponentIndex(sourceId as string, targetId as string)
+  }
+
+  function Header() {
+    const { arrow } = styles.value
+    return (
+      <div class="border-t-1 border-b-1 dark-border-neutral mb-[-1px] flex px-[5px] select-none h-[35px] items-center">
+        <div class="flex-1 flex items-center">
+          <NuxtIcon class="w-[18px] h-[18px] mr-1" name="designer/layer" />
+          <p>图层</p>
+        </div>
+        <div class="w-[16px] h-[16px] rotate-[90deg] cursor-pointer hover:text-primary"
+          onClick={() => state.open = !state.open}
+          style={arrow}
+        >
+          <NuxtIcon class="w-[18px] h-[18px]" name="right" />
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div class="flex flex-col absolute bottom-0 w-full min-h-[300px]" style={styles.value.wrapper}>
+      {Header()}
+      {(() => {
+        const { layers, currentEdit, setBlockFocus } = designer
+        const length = layers.value.length
+        const selectKeys = currentEdit.value ? [currentEdit.value.id] : []
+        const data = (layers.value as unknown as TreeOption[]).map((layer: any) => ({ ...layer, label: () => renderTreeLabel(layer) }))
+        if (length === 0) /*EXCLUDE*/ return (<Empty class="py-[20px]" imgUrl="/figure/inform.png" description="暂无图层" />)
+         /*EXCLUDE*/ return (
+          <NTree
+            data={data}
+            draggable={true}
+            blockLine={true}
+            selectable={true}
+            onDrop={handleDrop}
+            virtualScroll={true}
+            style="height: 260px"
+            selectedKeys={selectKeys}
+            {...{ 'onUpdate:selectedKeys': (keys) => keys.length === 1 && setBlockFocus(keys[0]) }}
+          />
+        )
+      })()}
+    </div>
+  )
+}
+
+export default DragLayers

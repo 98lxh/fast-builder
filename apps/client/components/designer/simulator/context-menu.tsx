@@ -34,15 +34,15 @@ const ContextMenu: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     delete: () => designer.deleteBlockById(props.blockId),
     up: () => {
       const { layers, swapTwoComponentIndex } = designer
-      const index = layers.value.findIndex(({ id }) => id === props.blockId)
+      const index = layers.value.findIndex(({ key }) => key === props.blockId)
       if (index === 0 || index === -1) { return }
-      swapTwoComponentIndex(layers.value[index].id, layers.value[index - 1].id)
+      swapTwoComponentIndex(layers.value[index].key, layers.value[index - 1].key)
     },
     down: () => {
       const { layers, swapTwoComponentIndex } = designer
-      const index = layers.value.findIndex(({ id }) => id === props.blockId)
+      const index = layers.value.findIndex(({ key }) => key === props.blockId)
       if (index === layers.value.length - 1 || index === -1) { return }
-      swapTwoComponentIndex(layers.value[index].id, layers.value[index + 1].id)
+      swapTwoComponentIndex(layers.value[index].key, layers.value[index + 1].key)
     }
   }
 

@@ -9,7 +9,7 @@ declare interface SimulatorBlockStyle {
 declare interface SimulatorBlock {
   id: string; // 组件ID
   key: string; // 组件Key
-  layer:string; // 图层名
+  layer: string; // 图层名
   icon: string; // 组件图标
   label: string; // 组件名称
   focus: boolean; // 是否选中
@@ -29,8 +29,9 @@ declare interface SimulatorData {
 
 
 declare interface SimulatorLayer {
-  id: string;
+  key: string;
   icon: string;
-  name: string;
+  label: string;
   zIndex: number;
+  children?: SimulatorLayer[]
 }

@@ -3,7 +3,7 @@ import { SHORTCUT_KEYS } from "~/constants/shortcutKeys"
 
 function ShortcutKeys() {
   const trigger = () => (
-    <div class="hover:text-primary w-[22px] h-[22px] ml-2">
+    <div class="hover:text-primary w-[20px] h-[20px] mx-2">
       <NuxtIcon name="designer/keyboard" />
     </div>
   )

@@ -16,7 +16,7 @@ function MaterialPanel() {
   }
 
   return (
-    <div class={`flex relative bg-base-100 shadow-custom main-height transition-width duration-300 w-[${state.isHidden ? '60px' : '248px'}]`}>
+    <div class={`flex relative bg-base-100 shadow-custom main-height transition-width duration-300 w-[${state.isHidden ? '60px' : '248px'}] border-r-1 dark:border-neutral`}>
       <Categories onChange={onUpdateCategory} {...state} />
       <Components {...state} />
       <ArrowButton v-model={state.isHidden} direction="left" />

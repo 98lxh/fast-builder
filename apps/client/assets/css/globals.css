@@ -31,7 +31,9 @@ body {
 }
 
 .bg-primary-1 {
-  background: rgba(26, 92, 255,.3);
+  background: rgba(26, 92, 255, .6);
+  font-weight: bold;
+  color: #FFFFFF;
 }
 
 /* 选中样式 */

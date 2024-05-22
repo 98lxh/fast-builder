@@ -22,7 +22,7 @@ function generateLayer(blocks: SimulatorBlock[]) {
   const index = blocks.filter(block => block.key === key).length
 
   function generator(index: number, text: string) {
-    const layer = `${text}${index}`
+    const layer = `${text} ${index}`
     const block = blocks.find(block => block.layer === layer)
     if (block) { return generator(index + 1, text) }
     return layer

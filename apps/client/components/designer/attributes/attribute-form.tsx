@@ -34,7 +34,7 @@ function AttributeForm() {
       <div class="flex justify-between items-center h-[40px]">
         <div class="flex items-center ml-[10px]">
           <NuxtIcon class="w-[16px] h-[16px] mr-1" name="designer/setting" />
-          <p>属性设置</p>
+          <p>{designer.currentEdit.value ? designer.currentEdit.value.layer : '未选择图层'}</p>
         </div>
         <NTag class="mr-[10px]" size="small" type="info" bordered={false}>
           {designer.currentEdit.value ? designer.currentEdit.value.label : '未选择'}

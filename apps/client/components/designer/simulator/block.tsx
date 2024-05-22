@@ -76,7 +76,8 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
 
   return (
     <div
-      class="shadow-custom  top-[60px] left-[30%] bg-base-100 absolute cursor-auto border-1 dark:border-neutral"
+      class="shadow-custom  top-[60px] left-[30%] bg-base-100 absolute cursor-auto border-1 dark:border-0"
+      {...{ 'data-theme': 'light' }}
       style={styles.value}
       ref={wrapperRef}
     >
@@ -106,7 +107,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
       })()}
 
       <ContextMenu {...contextMenuAttrs} {...{ 'onUpdate:show': (value: boolean) => contextMenuAttrs.show = value }} />
-    </div>
+    </div >
   )
 }
 

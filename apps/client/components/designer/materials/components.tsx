@@ -21,7 +21,7 @@ const Components: FC<DefineProps> = function (props) {
         /*EXCLUDE*/ return components.map(component => (
           <div class="flex flex-col justify-around items-center h-[80px] w-[60px] cursor-move">
             <div
-              class="text-primary border-2 border-dotted rounded-sm dark:border-[#8b8b8d] w-full p-3 hover:border-primary duration-300"
+              class="text-primary border-1 border-dotted rounded-sm dark:border-[#8b8b8d] w-full p-3 hover:border-primary duration-300"
               onDragstart={evt => onDragstart(evt, history.record, designer, component)}
               draggable
             >
