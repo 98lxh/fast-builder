@@ -13,16 +13,6 @@ function AttributeForm() {
         {
           field: 'layer',
           type: 'border-radius'
-        },
-        {
-          field: 'layer',
-          type: 'border-radius'
-        }, {
-          field: 'layer',
-          type: 'border-radius'
-        }, {
-          field: 'layer',
-          type: 'border-radius'
         }
       ]
     },
