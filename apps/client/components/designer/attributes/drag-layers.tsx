@@ -58,9 +58,9 @@ function DragLayers() {
     <div class="flex flex-col absolute bottom-0 w-full min-h-[300px] z-[100] bg-base-100" style={styles.value.wrapper}>
       {Header()}
       {(() => {
-        const { layers, currentEdit, setBlockFocus } = designer
+        const { layers, currentBlockID, setBlockFocus } = designer
         const length = layers.value.length
-        const selectKeys = currentEdit.value ? [currentEdit.value.id] : []
+        const selectKeys = currentBlockID.value ? [currentBlockID.value] : []
         const data = (layers.value as unknown as TreeOption[]).map((layer: any) => ({ ...layer, label: () => renderTreeLabel(layer) }))
         if (length === 0) /*EXCLUDE*/ return (<Empty class="py-[20px]" imgUrl="/figure/inform.png" description="暂无图层" />)
          /*EXCLUDE*/ return (

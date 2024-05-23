@@ -1,6 +1,5 @@
 import type { FC } from "vite-plugin-vueact"
 import { Teleport, type CSSProperties } from "vue";
-
 import { useDesignerContext } from "~/composables/designer";
 import { CONTEXT_MENU_KEYS } from "~/constants/shortcutKeys";
 

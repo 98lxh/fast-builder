@@ -1,11 +1,10 @@
 import type { CSSProperties } from "vue"
 import type { FC } from "vite-plugin-vueact"
-import { useDesignerContext } from "~/composables/designer"
+import { getMaxIndex, useDesignerContext } from "~/composables/designer"
 import { generatePointStyles, placements, calculateResizeStyle } from "../util/editable"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
 import { useHistoryContext } from "~/composables/designer/history"
 import { useResizeOverflow } from "../util/overflow"
-import ContextMenu from "./context-menu"
 
 interface DefineProps {
   block: SimulatorBlock
@@ -24,7 +23,14 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}
-    const { zIndex, width, height, left, top } = props.block.style
+    let { zIndex, width, height, left, top } = props.block.style
+    const { currentBlockID, simulatorData } = designer
+
+    // 当前编辑的块置顶
+    if (currentBlockID.value === props.block.id) {
+      zIndex = getMaxIndex(simulatorData.value.blocks) + 1
+    }
+
     styles.zIndex = zIndex
     styles.width = width + 'px'
     styles.height = height + 'px'

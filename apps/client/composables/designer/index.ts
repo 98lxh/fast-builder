@@ -16,7 +16,8 @@ export interface DesignerContext {
   deleteBlockById(deleteId: string): void
   layers: ComputedRef<SimulatorLayer[]>
   setBlockFocus(blockId: string): void
-  currentEdit: Ref<SimulatorBlock | null>
+
+  currentBlockID: Ref<string>
 }
 
 export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
@@ -33,8 +34,9 @@ export function useDesigner(): DesignerContext {
   const simulatorData = ref(genarateDefaultSimulator())
   // 模拟器元素
   const simulatorRef = ref<HTMLDivElement | null>(null)
-  // 当前编辑组件
-  const currentEdit = ref<SimulatorBlock | null>(null)
+  // 当前编辑的块的ID
+  const currentBlockID = shallowRef("")
+
   // 原始容器信息
   let originalContainer: SimulatorContainer = genarateDefaultSimulator().container
   const layers = computed(() => {
@@ -58,7 +60,7 @@ export function useDesigner(): DesignerContext {
   }
 
   function clearBlockFocus() {
-    currentEdit.value = null
+    currentBlockID.value = ""
     simulatorData.value.blocks.forEach(block => block.focus = false)
   }
 
@@ -67,7 +69,7 @@ export function useDesigner(): DesignerContext {
     if (index < 0) { return }
     clearBlockFocus()
     simulatorData.value.blocks[index].focus = true
-    currentEdit.value = cloneDeep(simulatorData.value.blocks[index]);
+    currentBlockID.value = blockId
   }
 
   function setSimulatorDataById(updateId: string, block: SimulatorBlock) {
@@ -103,7 +105,7 @@ export function useDesigner(): DesignerContext {
   }
 
   return {
-    currentEdit,
+    currentBlockID,
     setBlockFocus,
     simulatorRef,
     simulatorData,
@@ -118,6 +120,12 @@ export function useDesigner(): DesignerContext {
     deleteBlockById,
     layers
   }
+}
+
+// 获取最大层级
+export function getMaxIndex(blocks: SimulatorBlock[]) {
+  const zIndex = blocks.map(({ style }) => Number(style.zIndex))
+  return zIndex.length === 0 ? 0 : Math.max.apply(Math, zIndex)
 }
 
 export function useDesignerContext() {

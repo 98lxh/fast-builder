@@ -8,7 +8,7 @@ function App() {
   onMounted(() => initDarkMode())
 
   const state = computed(() => {
-    const theme =  isDark.value ? darkTheme : null
+    const theme = isDark.value ? darkTheme : null
     const themeOverride = isDark.value ? darkThemeOverrides : lightThemeOverrides
     return { theme, themeOverride }
   })

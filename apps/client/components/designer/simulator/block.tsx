@@ -2,13 +2,13 @@ import type { FC } from "vite-plugin-vueact";
 
 import type { CSSProperties } from "vue"
 import { useMoveOverflow } from "../util/overflow";
-import { useDesignerContext } from "~/composables/designer"
+import { getMaxIndex, useDesignerContext } from "~/composables/designer"
 import { useHistoryContext } from "~/composables/designer/history";
 import { type MoveListenerOptions, useDocumentMouseEvent, useEventOutside } from "~/composables/event"
 import Editable from "./editable"
 
+import { ContextMenu } from "~/components/common";
 import { render } from "@h5-designer/material"
-import ContextMenu from "./context-menu";
 
 interface DefineProps {
   translateX: number;
@@ -96,12 +96,12 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
         if (!style || !id) /*EXCLUDE*/ return null
         const classes = "absolute border-1 border-primary top-0 left-0 duration-150 border-dashed"
         const { left, top, width, height } = style
-        const { layers } = designer
+        const zIndex = getMaxIndex(designer.simulatorData.value.blocks)
         const styles: CSSProperties = {
           transform: `translate(${left}px,${top}px)`,
           height: height + 'px',
           width: width + 'px',
-          zIndex: layers.value[layers.value.length - 1].zIndex + 1
+          zIndex
         };
         /*EXCLUDE*/ return <div class={classes} style={styles} />
       })()}

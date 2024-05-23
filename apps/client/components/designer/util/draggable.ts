@@ -1,5 +1,5 @@
 import type { MaterialComponent } from "@h5-designer/material";
-import type { DesignerContext } from "~/composables/designer";
+import { getMaxIndex, type DesignerContext } from "~/composables/designer";
 import { nanoid } from "nanoid"
 
 let currentComponent: null | MaterialComponent = null
@@ -37,14 +37,12 @@ function generateDropEventListener(designer: DesignerContext, record?: () => voi
     if (!currentComponent || !simulatorRef.value) { return }
 
     const rect = simulatorRef.value.getBoundingClientRect()
-    const zIndex = simulatorData.value.blocks.map(({ style }) => Number(style.zIndex))
-    const max = zIndex.length === 0 ? 0 : Math.max.apply(Math, zIndex)
 
     const style = {
       ...currentComponent.style,
       left: evt.clientX - rect.x,
       top: evt.clientY - rect.y,
-      zIndex: max + 1
+      zIndex: getMaxIndex(simulatorData.value.blocks) + 1
     }
 
     const block = {

@@ -32,7 +32,7 @@ function BorderRadius() {
     <div class="flex items-center flex-wrap">
       {(isMore.value ? [radius[0]] : radius).map(item => (
         <div class="w-[43%] mr-[5px] mb-[5px]">
-          <NInput v-slots={{ ...slot(item) }} placeholder="" />
+          <NInput size="small" v-slots={{ ...slot(item) }} placeholder="" />
         </div>
       ))}
 

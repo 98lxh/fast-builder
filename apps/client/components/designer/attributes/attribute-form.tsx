@@ -5,6 +5,7 @@ import { NTag } from "naive-ui"
 
 function AttributeForm() {
   const designer = useDesignerContext()
+
   const groupFormItems: GroupFormItem[] = [
     {
       name: '基础',
@@ -36,6 +37,12 @@ function AttributeForm() {
     },
   ]
 
+  const currentBlock = computed(() => {
+    const { currentBlockID, simulatorData } = designer
+    if (!currentBlockID.value) return null
+    return simulatorData.value.blocks.find(({ id }) => id === currentBlockID.value)
+  })
+
   const formData = reactive({
     layer: '图层1',
     background: '#000000'
@@ -53,14 +60,14 @@ function AttributeForm() {
       <div class="flex justify-between items-center h-[40px]">
         <div class="flex items-center ml-[5px]">
           <NuxtIcon class="w-[16px] h-[16px] mr-1" name="designer/setting" />
-          <p>{designer.currentEdit.value ? designer.currentEdit.value.layer : '未选择图层'}</p>
+          <p>{currentBlock.value ? currentBlock.value.layer : '未选择图层'}</p>
         </div>
         <NTag class="mr-[5px]" size="small" type="info" bordered={false}>
-          {designer.currentEdit.value ? designer.currentEdit.value.label : '未选择'}
+          {currentBlock.value ? currentBlock.value.label : '未选择'}
         </NTag>
       </div>
 
-      {designer.currentEdit.value === null
+      {currentBlock.value === null
         ? (<Empty class="mt-[100px]" imgUrl="/figure/inform.png" v-slots={{ description }} />)
         : (<BasicForm formData={formData} groupFormItems={groupFormItems} />)}
     </div>
