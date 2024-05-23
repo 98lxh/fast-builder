@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   devServer: {
     port: 8888
   },
-  app:{
+  app: {
     head: {
       htmlAttrs: {
         class: 'dark',

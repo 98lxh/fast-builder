@@ -5,7 +5,7 @@ import { useDesignerContext } from "~/composables/designer"
 import { NTree, type TreeOption, type TreeDropInfo } from "naive-ui"
 import { Empty } from "~/components/common"
 
-function DragLayers() {
+function ControlLayers() {
   const designer = useDesignerContext()
   const state = shallowReactive({ drag: false, open: false })
 
@@ -81,4 +81,4 @@ function DragLayers() {
   )
 }
 
-export default DragLayers
+export default ControlLayers

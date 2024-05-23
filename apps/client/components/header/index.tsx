@@ -24,13 +24,14 @@ function Header() {
       </div >
 
       <div class="flex-1">
-        <a
+        <NuxtLink
           class="btn btn-ghost text-lg color-primary relative"
-          onClick={() => router.push('/')}
+          external
+          to="/"
         >
           <img class="w-[30px] h-[30px]" src="/logo.png" />
           H5 Designer
-        </a>
+        </NuxtLink>
       </div>
 
       <div class="flex-none">

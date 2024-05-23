@@ -1,38 +1,42 @@
 import { HOME_SIDEBAR_ITEMS } from "~/constants/sidebar"
 import { MessageBox } from "~/components/common"
 
+import { Fragment } from "vue"
+
 function SidebarItems() {
   const visible = shallowRef(false)
-  const router = useRouter()
 
-  function patch(isFinished?: boolean, path?: string){
-    if(!isFinished || !path){
-      visible.value = true;
-      return;
-    } else {
-      router.push(path)
-    }
+  function render(item: any){
+    const { class: itemClass, patch, isFinished } = item;
+    const classes = `btn w-full ${itemClass && itemClass}`
+    return patch && isFinished
+      ? (<NuxtLink class={classes} external to={patch}>{children(item)}</NuxtLink> )
+      : (<div class={classes} onClick={() => visible.value = true}>{children(item)}</div>)
+  }
+
+  function children(item: any){
+    const { icon, text } = item;
+    return (
+      <Fragment>
+        <div class="text-[18px]"> <NuxtIcon name={icon!} /></div>
+        <span>{text}</span>
+      </Fragment>
+    )
   }
 
   return (
-    <>{HOME_SIDEBAR_ITEMS.map((item) => (
+    <Fragment>
+      {HOME_SIDEBAR_ITEMS.map((item) => (
         item.divider
            ? <div class="my-2 border-b-1 dark:border-neutral" /> 
-           : (<div class="flex justify-center">
-              <div class={`btn w-full ${item.class && item.class}`} onClick={() => patch(item.isFinished,item.patch)}>
-                  <div class="text-[18px]">
-                    <NuxtIcon name={item.icon!} />
-                  </div>
-                  <span>{item.text}</span>
-              </div>
-            </div>
-        )
+           : (<div class="flex justify-center">{render(item)}</div>)
       ))}
+
       <MessageBox
         v-model:visible={visible.value}
         content="该功能尚未开发完成"
       />
-    </>
+    </Fragment>
   )
 }
 

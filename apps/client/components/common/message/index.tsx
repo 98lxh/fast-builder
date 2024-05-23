@@ -1,7 +1,20 @@
 import { Teleport } from "vue"
 import type { FC } from "vite-plugin-vueact"
-import type { DefineProps, DefineEmits } from "./interface"
 import { useMergeProps } from "@h5-designer/shared"
+
+interface DefineProps {
+  visible?: boolean;
+  title?: string;
+  content?: string;
+  confirmBtnText?: string;
+  cancelBtnText?: string;
+}
+
+interface DefineEmits {
+  (name: 'update:visible', visible: boolean): void;
+  (name: 'confirm'): void;
+  (name: 'cancel'): void;
+}
 
 const MessageBox: FC<DefineProps, DefineEmits> = function (componentProps, { emit }) {
   const props = useMergeProps(componentProps, {

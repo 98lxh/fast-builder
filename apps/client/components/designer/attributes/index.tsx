@@ -1,8 +1,8 @@
 import type { CSSProperties } from "vue"
+
 import AttributeForm from "./attribute-form"
-import DragLayers from "./drag-layers"
+import DragLayers from "./control-layers"
 import ArrowButton from "../arrow"
-import { useDesignerContext } from "~/composables/designer";
 
 function AttributePanel() {
   const isHidden = shallowRef(false);
