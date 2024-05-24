@@ -8,13 +8,13 @@ function Designer() {
   provide(historyInjectionKey, useHistory(designer))
 
   return (
-    <div class="flex w-full">
-      <ClientOnly>
+    <NuxtLayout name="designer">
+      <div class="flex w-full">
         <MaterialPanel />
         <Simulator />
         <AttributePanel />
-      </ClientOnly>
-    </div>
+      </div>
+    </NuxtLayout>
   )
 }
 

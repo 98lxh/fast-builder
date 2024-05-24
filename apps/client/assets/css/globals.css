@@ -3,6 +3,20 @@
   --pf: 223 100% 55% !important;
   --pc: 0 0% 100% !important;
   --rounded-btn: 0% !important;
+
+  --b1: 0 0% 97% !important;
+  --b3: 0 0% 100% !important;
+  --b2: 0 0% 96% !important;
+  --b4: 210 4% 11% !important;
+  --un-default-border-color: #E9E9EA;
+}
+
+.dark {
+  --b1: 0 0% 17% !important;
+  --b3: 0 0% 11% !important;
+  --b2: 228 5% 19% !important;
+  --b4: 0 0% 100% !important;
+  --un-default-border-color: #282828;
 }
 
 .logo-bg {
