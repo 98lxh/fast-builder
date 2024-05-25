@@ -1,9 +1,7 @@
 function Home() {
   return (
     <NuxtLayout>
-      <div class="flex w-full">
-        11
-      </div>
+      <NuxtPage />
     </NuxtLayout>
   )
 }

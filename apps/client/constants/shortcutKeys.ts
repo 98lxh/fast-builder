@@ -1,5 +1,5 @@
 export const SHORTCUT_KEYS = [
-  { 
+  {
     text: '撤销操作',
     keys: ['ctrl/command', 'z']
   },
@@ -15,15 +15,15 @@ export const SHORTCUT_KEYS = [
 
 
 export const CONTEXT_MENU_KEYS = [
-  { 
+  {
     text: '上移一层',
     key: 'up',
   },
-  { 
+  {
     text: '下移一层',
     key: 'down',
   },
-  { 
+  {
     text: '删除',
     key: 'delete',
   },

@@ -1,6 +1,9 @@
 export const layout = {
-  transition: `all ease-in-out .3s`,
-  collapseSidebarWidth: 56,
-  sidebarWidth: 248,
-  headerHeight: 60
+  collapseSidebarWidth: 46,
+  sidebarWidth: 168,
+  headerHeight: 48,
+
+  sidebarTransition: `width ease-in-out .3s,transform ease-in-out .3s`,
+  headerTransition: `width ease-in-out .3s`,
+  mainTransition: `padding ease-in-out .3s`
 }

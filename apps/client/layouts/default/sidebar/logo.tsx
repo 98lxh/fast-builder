@@ -6,9 +6,9 @@ interface DefineProps {
 
 const Logo: FC<DefineProps> = function (props) {
   return (
-    <div class="flex w-full pl-[16px] pt-[22px] select-none">
-      <img class="w-[25px] h-[25px] mr-[8px]" src="/logo.png" />
-      {props.isCollapse ? null : <p class="mr-[5px] text-nowrap">H5 Designer</p>}
+    <div class="flex w-full pl-[12px] pt-[18px] select-none items-center">
+      <img class="w-[25px] h-[25px] p-[3px]" src="/logo.png" />
+      {props.isCollapse ? null : <p class="mx-[6px] text-nowrap text-sm">H5 Designer</p>}
     </div>
   )
 }

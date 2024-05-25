@@ -9,6 +9,8 @@
   --b2: 0 0% 96% !important;
   --b4: 210 4% 11% !important;
   --un-default-border-color: #E9E9EA;
+
+  --menu-text: 223 100% 55%;
 }
 
 .dark {
@@ -152,4 +154,48 @@ body {
 
 .flip-list-move {
   transition: transform 0.5s;
+}
+
+
+.custom-menu {
+  user-select: none;
+}
+
+.custom-menu>.custom-menu-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background ease-in-out .3s;
+  line-height: 28px;
+  padding: 0px 5px;
+  margin-left: 12px;
+  margin-right: 12px;
+  font-size: 12px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.custom-menu>.custom-menu-item>.nuxt-icon {
+  font-size: 16px !important;
+  background-color: transparent !important;
+  padding: 0;
+}
+
+.custom-menu>.custom-menu-item:hover {
+  background-color: hsl(var(--bc)/0.1);
+}
+
+.custom-menu>.custom-menu-item.active {
+  color: hsl(var(--menu-text)) !important;
+  background-color: hsl(var(--menu-text)/0.1) !important;
+}
+
+.custom-menu>.custom-menu-item.collapse {
+  width: 28px;
+  height: 28px;
+  border-radius: 0px;
+  justify-content: center;
+  padding: 0px;
+  margin-left: 10px;
+  margin-right: 10px;
 }

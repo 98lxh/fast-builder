@@ -1,33 +1,21 @@
-export const HOME_SIDEBAR_ITEMS = [
+export const sidebarItems = [
   {
-    patch: '/designer/start',
+    patch: '/workspace',
     class: 'btn-primary',
-    text: '开始创作',
-    isFinished: true,
-    icon: 'sidebar/add'
+    text: '工作空间',
+    icon: 'sidebar/page',
+    isExternal: false
   },
   {
-    patch: '/mine',
-    class: 'btn-ghost',
-    text: '我的页面',
-    isFinished: false,
-    icon: 'sidebar/page'
-  },
-  {
-    divider: true
+    patch: '/community',
+    text: '社区资源',
+    icon: 'sidebar/community',
+    isExternal: false
   },
   {
     patch: '/admin',
-    class: 'btn-ghost',
     text: '后台管理',
-    isFinished: false,
-    icon: 'sidebar/admin'
-  },
-  {
-    patch: '/docs',
-    class: 'btn-ghost',
-    text: '接口文档',
-    isFinished: false,
-    icon: 'sidebar/doc'
+    icon: 'sidebar/admin',
+    isExternal: true
   }
 ];
