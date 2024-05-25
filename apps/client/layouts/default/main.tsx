@@ -12,9 +12,9 @@ const Main: FC<DefineProps> = function (props) {
   const styles = computed(() => {
     const _styles: CSSProperties = {}
     const { isCollapse, isMobile } = props
-    const { sidebarWidth, collapseSidebarWidth, headerHeight, mainTransition } = layout
+    const { sidebarWidth, collapseSidebarWidth, defaultHeaderHeight, mainTransition } = layout
     if (!isMobile) { _styles.paddingLeft = `${isCollapse ? collapseSidebarWidth : sidebarWidth}px` }
-    _styles.paddingTop = `${headerHeight}px`
+    _styles.paddingTop = `${defaultHeaderHeight}px`
     _styles.transition = mainTransition
     return _styles
   })

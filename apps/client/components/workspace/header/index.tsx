@@ -12,7 +12,7 @@ function Header() {
                 <div class="flex ml-[8px] items-center">
                   <NuxtIcon class="w-[20px] h-[20px] inline-block" name={button.icon} />
                   <div class="ml-[8px]">
-                    <p class="text-[12px] font-bold">{button.label}</p>
+                    <p class="text-[12px] font-bold text-black dark:text-white">{button.label}</p>
                     <p class="text-[10px] text-coolgray">{button.description}</p>
                   </div>
                 </div>

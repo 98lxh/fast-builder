@@ -1,5 +1,5 @@
 import type { FC } from "vite-plugin-vueact"
-import { sidebarItems } from "~/constants/sidebar"
+import { sidebarOptions } from "~/constants/options"
 
 interface DefineProps {
   isCollapse?: boolean
@@ -17,7 +17,7 @@ const SidebarItems: FC<DefineProps> = function (props) {
 
   return (
     <div class="w-full pt-[20px] custom-menu">
-      {sidebarItems.map((item) => (
+      {sidebarOptions.map((item) => (
         <div
           class={`custom-menu-item relative ${item.patch === route.path ? 'active' : ''} ${classes.value}`}
           onClick={() => toPath(item.patch, item.isExternal)}

@@ -4,13 +4,11 @@ import type { GlobalThemeOverrides } from "naive-ui";
 const baseThemeOverride: GlobalThemeOverrides = {
   common: {
     primaryColor: '#1A5CFF',
+    borderRadius: '0px'
   },
   Input: {
     borderHover: '#1A5CFF',
     borderFocus: '#1A5CFF'
-  },
-  Dropdown: {
-    color: '#2b2b2b'
   }
 }
 
@@ -21,6 +19,9 @@ export const lightThemeOverrides: GlobalThemeOverrides = {
   },
   Tooltip: {
     textColor: "#000000"
+  },
+  Dropdown: {
+    color: '#F7F7F7'
   }
 }
 
@@ -29,5 +30,8 @@ export const darkThemeOverrides: GlobalThemeOverrides = {
   Popover: {
     color: '#1D232A'
   },
+  Dropdown: {
+    color: '#2b2b2b'
+  }
 }
 

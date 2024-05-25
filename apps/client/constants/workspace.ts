@@ -1,5 +1,6 @@
 import type { Tab } from "@h5-designer/shared";
 
+/* 工作台标签页配置 */
 export const workspaceTabs: Tab[] = [
   {
     label: '我的页面',
@@ -11,7 +12,7 @@ export const workspaceTabs: Tab[] = [
   }
 ]
 
-
+/* 工作台顶部按钮配置 */
 export const workspaceButtons = [
   {
     label: '创建页面',

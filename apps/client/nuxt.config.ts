@@ -13,20 +13,8 @@ export default defineNuxtConfig({
   devServer: {
     port: 8888
   },
-  app: {
-    head: {
-      htmlAttrs: {
-        class: 'dark',
-        'data-theme': 'dark'
-      }
-    }
-  },
   unocss: {
-    theme: {
-      colors: {
-        'primary': '#1A5CFF'
-      }
-    }
+    theme: { colors: { 'primary': '#1A5CFF' } }
   },
   css: ["~/assets/css/globals.css", '@unocss/reset/tailwind.css'],
   vite: { plugins: [vitePluginVueact()] },

@@ -6,6 +6,12 @@ import Main from "./main"
 function Default() {
   const isMobile = useIsMobile()
   const isCollapse = shallowRef(false)
+
+  const stop = watch(() => isMobile.value, () => isCollapse.value = isMobile.value, {
+    immediate: true
+  })
+
+  onUnmounted(stop)
   
   return (
     <div class="w-full h-full bg-base-200 dark:bg-base-300  transition-colors">
