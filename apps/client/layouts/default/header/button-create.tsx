@@ -5,7 +5,7 @@ function CreateButton() {
   const options = workspaceButtons.map(({ path: key, icon, label }) => ({ key, label: _label(icon, label) }))
   function _label(icon: string, label: string) {
     return () => (
-      <div class="flex text-[12px]">
+      <div class="flex text-[14px]">
         <NuxtIcon name={icon} />
         <p class="ml-[5px]">{label}</p>
       </div>
@@ -13,8 +13,8 @@ function CreateButton() {
   }
 
   return (
-    <NDropdown options={options} size="small" trigger="click" placement="bottom-start">
-      <button class=" btn-ghost p-[1px] h-full">
+    <NDropdown options={options} placement="bottom-start">
+      <button class=" btn-ghost h-full">
         <NuxtIcon name="add" />
       </button >
     </NDropdown>

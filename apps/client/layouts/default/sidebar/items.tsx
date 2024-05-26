@@ -22,7 +22,7 @@ const SidebarItems: FC<DefineProps> = function (props) {
           class={`custom-menu-item relative ${item.patch === route.path ? 'active' : ''} ${classes.value}`}
           onClick={() => toPath(item.patch, item.isExternal)}
         >
-          <NuxtIcon class=" inline-block" name={item.icon}></NuxtIcon>
+          <NuxtIcon class="inline-block" name={item.icon}></NuxtIcon>
           {!props.isCollapse && <p class="text-nowrap ml-[8px]">{item.text}</p>}
           {!props.isCollapse && item.isExternal && <NuxtIcon class="absolute inline-block right-1" name="direction/right-thin" />}
         </div>

@@ -10,15 +10,18 @@
   --b4: 210 4% 11% !important;
   --un-default-border-color: #E9E9EA;
 
+
   --menu-text: 223 100% 55%;
 }
+
+/* hsla() */
 
 .dark {
   --b1: 0 0% 17% !important;
   --b3: 0 0% 11% !important;
   --b2: 228 5% 19% !important;
   --b4: 0 0% 100% !important;
-  --un-default-border-color: #282828;
+  --un-default-border-color: #3e3f43;
 }
 
 .logo-bg {
@@ -166,17 +169,17 @@ body {
   align-items: center;
   cursor: pointer;
   transition: background ease-in-out .3s;
-  line-height: 28px;
+  line-height: 34px;
   padding: 0px 5px;
   margin-left: 12px;
   margin-right: 12px;
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 5px;
   text-align: left;
 }
 
 .custom-menu>.custom-menu-item>.nuxt-icon {
-  font-size: 16px !important;
+  font-size: 18px !important;
   background-color: transparent !important;
   padding: 0;
 }
@@ -191,11 +194,37 @@ body {
 }
 
 .custom-menu>.custom-menu-item.collapse {
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   border-radius: 0px;
   justify-content: center;
   padding: 0px;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+
+.custom-category>.custom-menu-item {
+  height: 40px !important;
+  width: 100% !important;
+  margin-top: 5px;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.custom-category>.custom-menu-item>p {
+  margin: 0;
+  line-height: 18px !important;
+}
+
+.n-tabs-rail {
+  padding: 3px !important;
+}
+
+.n-tabs-tab {
+  font-weight: bold !important;
+}
+
+.n-tabs-tab--active {
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .8) !important;
 }

@@ -1,6 +1,8 @@
+import type { FC } from "vite-plugin-vueact";
 import type { CSSProperties } from "vue";
 
 import { layout } from "~/constants/layouts";
+
 
 function Main() {
   const styles = computed(() => {
@@ -11,8 +13,8 @@ function Main() {
   })
 
   return (
-    <div class="w-[100vw] h-[100vh] bg-base-400" style={styles.value}>
-      <div class="p-[15px] h-full">
+    <div class="w-[100vw] h-[100vh] bg-base-300" style={styles.value}>
+      <div class="h-full w-full">
         <NuxtPage />
       </div>
     </div>

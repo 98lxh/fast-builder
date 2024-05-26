@@ -1,26 +1,19 @@
-import Categories from "./categories"
-import Components from "./components"
-import ArrowButton from "../arrow"
-
 import { getDefaultCategoryKey } from "@h5-designer/material"
+import { Sidebar } from "~/components/common"
+import Category from "./category"
 
 function MaterialPanel() {
-  const state = shallowReactive({
-    category: getDefaultCategoryKey(),
-    isHidden: false
-  })
+  const state = shallowReactive({ category: getDefaultCategoryKey(), isCollapse: false })
 
   function onUpdateCategory(value: string) {
     state.category = value;
-    state.isHidden === true && (state.isHidden = false);
+    state.isCollapse === true && (state.isCollapse = false);
   }
 
   return (
-    <div class={`flex relative bg-base-100 shadow-custom main-height transition-width duration-300 w-[${state.isHidden ? '60px' : '248px'}] border-r-1 dark:border-neutral`}>
-      <Categories onChange={onUpdateCategory} {...state} />
-      <Components {...state} />
-      <ArrowButton v-model={state.isHidden} direction="left" />
-    </div>
+    <Sidebar isDesigner={true} isCollapse={state.isCollapse}>
+      <Category v-model:isCollapse={state.isCollapse} category={state.category} onChange={onUpdateCategory} />
+    </Sidebar>
   )
 }
 

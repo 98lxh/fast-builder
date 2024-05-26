@@ -1,10 +1,10 @@
 import { FC } from "vite-plugin-vueact"
-import { shallowRef, ref, onMounted, computed } from "vue"
+import { shallowRef, ref, onMounted, computed, CSSProperties } from "vue"
 import { Tab } from "./types"
 
 interface DefineProps {
-  tabs: Tab[]
-  current?: string
+  tabs: Tab[];
+  current?: string;
 }
 
 interface DefineEmits {
@@ -24,6 +24,15 @@ const Tabs: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     return { width, offset }
   })
 
+  const styles = computed(() => {
+    const styles: CSSProperties = {}
+    const { offset, width } = state.value
+    styles.transition = "left ease-in-out .3s"
+    styles.width = `${width}px`
+    styles.left = `${offset}px`
+    return styles
+  })
+
   function handleClick(index: number) {
     const current = props.tabs[index]
     if (!current) { return }
@@ -41,21 +50,16 @@ const Tabs: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   }
 
   onMounted(getTabPanelWidth)
-
   return (
-    <div role="tablist" class="tabs border-b-1 dark:border-neutral relative">
+    <div role="tablist" class={`tabs border-b-1 dark:border-neutral relative ${props.background ? 'bg-base-100 p-[5px]' : 'bg-transparent'}`}>
       {props.tabs.map((tab, index) => (
         <a
-          class={`tab text-[12px] line-height-[12px] ${index === currentIndex.value ? 'text-black dark:text-coolgray' : ''}`}
+          class={`tab text-[14px] line-height-[14px] px-[10px] relative z-2 ${index === currentIndex.value ? 'text-black dark:text-coolgray' : ''}`}
           ref={(ref: any) => tabPanelRef.value.push(ref)}
           onClick={() => handleClick(index)}>
           {tab.label}
         </a>))}
-
-      <div
-        class="absolute w-[55px] h-[2px] bottom-[0px] bg-black dark:bg-light bottom-[-2px]"
-        style={{ left: `${state.value.offset}px`, transition: `left .3s`, width: `${state.value.width}px` }}
-      />
+      <div class="absolute w-[55px] bg-black dark:bg-light h-[2px] bottom-[-2px]" style={styles.value} />
     </div >
   )
 }

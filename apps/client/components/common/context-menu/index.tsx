@@ -16,7 +16,6 @@ interface DefineEmits {
 
 const ContextMenu: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   const designer = useDesignerContext()
-
   const close = () => emit('update:show', false)
   const wrapperRef = useEventOutside({ event: 'click' }, close)
 

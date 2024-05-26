@@ -21,7 +21,7 @@ const Header: FC<DefineProps> = function (props, { slots }) {
 
   return (
     <header
-      class={`${props.isDesigner ? 'bg-base-200 p-[5px]' : 'bg-base-300 p-[10px]'} border-b-1 flex h-[48px] items-center right-0 fixed box-border`}
+      class={`${props.isDesigner ? 'bg-base-300 dark:bg-base-200 p-[5px]' : 'bg-base-300 p-[10px]'} border-b-1 flex h-[48px] items-center right-0 fixed box-border`}
       style={styles.value}
     >
       {slots.default && slots.default()}

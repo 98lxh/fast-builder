@@ -36,7 +36,6 @@ export function useDesigner(): DesignerContext {
   const simulatorRef = ref<HTMLDivElement | null>(null)
   // 当前编辑的块的ID
   const currentBlockID = shallowRef("")
-
   // 原始容器信息
   let originalContainer: SimulatorContainer = genarateDefaultSimulator().container
   const layers = computed(() => {
