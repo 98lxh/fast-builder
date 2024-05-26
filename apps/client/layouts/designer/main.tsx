@@ -13,7 +13,7 @@ function Main() {
   })
 
   return (
-    <div class="w-[100vw] h-[100vh] bg-base-300" style={styles.value}>
+    <div class="w-[100vw] h-[100vh] bg-base-400 dark:bg-base-300" style={styles.value}>
       <div class="h-full w-full">
         <NuxtPage />
       </div>

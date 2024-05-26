@@ -218,13 +218,10 @@ body {
 }
 
 .n-tabs-rail {
-  padding: 3px !important;
+  padding: 2px 5px !important;
 }
 
-.n-tabs-tab {
-  font-weight: bold !important;
-}
 
 .n-tabs-tab--active {
-  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .8) !important;
+  font-weight: bold !important;
 }

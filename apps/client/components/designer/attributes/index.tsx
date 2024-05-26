@@ -1,23 +1,18 @@
-import type { CSSProperties } from "vue"
-
-import AttributeForm from "./attribute-form"
-import DragLayers from "./control-layers"
-
+import type { FC } from "vite-plugin-vueact";
 import { Sidebar, Arrow } from "~/components/common";
 
-function AttributePanel() {
-  const isCollapse = shallowRef(false);
+interface DefineProps {
+  isCollapse?: boolean
+}
+
+interface DefineEmits {
+  (name:'update:isCollapse',isCollapse:boolean):void
+}
+
+const AttributePanel:FC<DefineProps,DefineEmits> = function (props) {
+  const isCollapse = useVModel(props, 'isCollapse');
 
   return (
-    // <div
-    //   id="attribute-panel"
-    //   class="flex flex-col shadow-custom w-[248px] fixed z-[2] main-height bg-base-100 right-[0px] border-l-1 dark:border-neutral"
-    //   style={styles.value}
-    // >
-    //   <DragLayers />
-    //   <AttributeForm />
-    //   <ArrowButton v-model={isHidden.value} direction="right" />
-    // </div>
     <Sidebar isDesigner={true} isFixed={true} right={true} isCollapse={isCollapse.value}>
       <Arrow isDesigner={true} right={true} v-model:isCollapse={isCollapse.value} />
     </Sidebar>

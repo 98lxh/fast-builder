@@ -25,6 +25,7 @@ export const lightThemeOverrides: GlobalThemeOverrides = {
   },
   Tabs: {
     tabColorSegment: '#F7F7F7',
+    colorSegment: "#ededed",
     tabTextColorSegment: '#A2A2A2'
   }
 }

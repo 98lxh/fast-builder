@@ -3,37 +3,56 @@ import { getComponents } from "@h5-designer/material";
 import { useDesignerContext } from "~/composables/designer";
 import { useHistoryContext } from "~/composables/designer/history";
 import { onDragstart } from "../util/draggable";
-import { Empty } from "~/components/common";
+import { layout } from "~/constants/layouts";
+import type { CSSProperties } from "vue";
+import { NEllipsis } from "naive-ui";
 
 interface DefineProps {
   category: string;
-  isHidden: boolean;
 }
 
 const Components: FC<DefineProps> = function (props) {
   const history = useHistoryContext()
   const designer = useDesignerContext()
 
+  const components = computed(() => {
+    const target = [];
+    const source = getComponents(props.category)
+    for (var i = 0; i < source.length; i += 3) {
+      target.push(source.slice(i, i + 3));
+    }
+    return target
+  })
+
+  const styles = computed(() => {
+    const styles: CSSProperties = {}
+    const { sidebarWidth, designerCollapseSidebarWidth, designerHeaderHeight } = layout
+    styles.width = `${sidebarWidth - designerCollapseSidebarWidth}px`
+    styles.height = `calc(100vh - ${designerHeaderHeight}px)`
+    return styles
+  })
+
   return (
-    <div class="flex m-2 flex-1 justify-around overflow-hidden">
-      {(() => {
-        const components = getComponents(props.category)
-        if (components.length === 0) /*EXCLUDE*/ return <Empty description="暂无物料组件" />
-        /*EXCLUDE*/ return components.map(component => (
-          <div class="flex flex-col justify-around items-center h-[80px] w-[60px] cursor-move">
-            <div
-              class="text-primary border-1 border-dotted rounded-sm dark:border-[#8b8b8d] w-full p-3 hover:border-primary duration-300"
-              onDragstart={evt => onDragstart(evt, history.record, designer, component)}
-              draggable
-            >
-              <NuxtIcon name={component.icon} />
+    <div class="flex-1 flex flex-col overflow-hidden h-full p-[10px]" style={styles.value}>
+      {components.value.map((group, index) => (
+        <div class="flex w-full bg-[#F1F2F4] dark:bg-[#434448] px-[10px] py-[5px]" key={index}>
+          {group.map(component => (
+            <div class="flex flex-col w-[26%] mr-[15px]">
+              <div
+                class="rounded-sm p-[5px] hover:bg-[#D4D5D6] dark:hover:bg-[#56575b] duration-300 cursor-move"
+                onDragstart={evt => onDragstart(evt, history.record, designer, component)}
+                draggable
+              >
+                <NuxtIcon name={component.icon} />
+              </div>
+
+              <NEllipsis class="text-[12px] whitespace-nowrap select-none" style="max-width: 40px">
+                {component.text}
+              </NEllipsis>
             </div>
-            <p class="text-xs mt-2 whitespace-nowrap select-none font-bold">
-              {component.text}
-            </p>
-          </div>
-        ))
-      })()}
+          ))}
+        </div>
+      ))}
     </div >
   )
 }
