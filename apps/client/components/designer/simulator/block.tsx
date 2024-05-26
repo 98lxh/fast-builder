@@ -5,18 +5,19 @@ import { useMoveOverflow } from "../util/overflow";
 import { getMaxIndex, useDesignerContext } from "~/composables/designer"
 import { useHistoryContext } from "~/composables/designer/history";
 import { type MoveListenerOptions, useDocumentMouseEvent, useEventOutside } from "~/composables/event"
+import type { BlockTranslate } from "../util/editable";
 import Editable from "./editable"
 
 import { ContextMenu } from "~/components/common";
 import { render } from "@h5-designer/material"
 
 interface DefineProps {
-  translateX: number;
-  translateY: number;
+  translate?: BlockTranslate;
 }
 
 interface DefineEmits {
-  (name: 'updateWrapperRef', wrapperRef: HTMLElement | null): void
+  (name: 'updateWrapperRef', wrapperRef: HTMLElement | null): void;
+  (name: 'update:translate', translate: BlockTranslate): void;
 }
 
 const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
@@ -28,11 +29,11 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
 
   const wrapperRef = useEventOutside({ isOnlyChildContains: true, event: 'mousedown' }, designer.clearBlockFocus)
 
+  const blockTranslate = useVModel(props, 'translate')
+
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}
-    const { translateX, translateY } = props
     const { height, width } = designer.simulatorData.value.container
-    styles.transform = `translate(${translateX}px,${translateY}px)`
     styles.height = height + 'px'
     styles.width = width + 'px'
     return styles
@@ -75,39 +76,46 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   onMounted(() => emit('updateWrapperRef', wrapperRef.value))
 
   return (
-    <div
-      class="shadow-custom  top-[60px] left-[30%] bg-base-100 absolute cursor-auto border-1 dark:border-0"
-      {...{ 'data-theme': 'light' }}
-      style={styles.value}
-      ref={wrapperRef}
+    <Editable
+      focus={true}
+      mode="container"
+      class="absolute top-[95px] left-[calc(50%-150px)]"
+      v-model:translate={blockTranslate.value}
     >
-      {designer.simulatorData.value.blocks.map((block) => (
-        <Editable
-          onMousedown={(evt: MouseEvent) => onMousedown(evt, block)}
-          onContextmenu={handleContextMenu}
-          key={block.id}
-          block={block}
-        >{render(block.key, block.props)}
-        </Editable>
-      ))}
-
-      {(() => {
-        const { style, id } = overflow.current.value
-        if (!style || !id) /*EXCLUDE*/ return null
-        const classes = "absolute border-1 border-primary top-0 left-0 duration-150 border-dashed"
-        const { left, top, width, height } = style
-        const zIndex = getMaxIndex(designer.simulatorData.value.blocks)
-        const styles: CSSProperties = {
-          transform: `translate(${left}px,${top}px)`,
-          height: height + 'px',
-          width: width + 'px',
-          zIndex
-        };
+      <div
+        class={`bg-base-100 cursor-auto dark:border-0 relative`}
+        {...{ 'data-theme': 'light' }}
+        style={styles.value}
+        ref={wrapperRef}
+      >
+        {designer.simulatorData.value.blocks.map((block) => (
+          <Editable
+            mode="block"
+            class="absolute top-0 left-0 select-none"
+            onMousedown={(evt: MouseEvent) => onMousedown(evt, block)}
+            onContextmenu={handleContextMenu}
+            key={block.id}
+            block={block}
+          >{render(block.key, block.props)}
+          </Editable>
+        ))}
+        {(() => {
+          const { style, id } = overflow.current.value
+          if (!style || !id) /*EXCLUDE*/ return null
+          const classes = "absolute border-1 border-primary top-0 left-0 duration-150 border-dashed"
+          const { left, top, width, height } = style
+          const zIndex = getMaxIndex(designer.simulatorData.value.blocks)
+          const styles: CSSProperties = {
+            transform: `translate(${left}px,${top}px)`,
+            height: height + 'px',
+            width: width + 'px',
+            zIndex
+          };
         /*EXCLUDE*/ return <div class={classes} style={styles} />
-      })()}
-
-      <ContextMenu {...contextMenuAttrs} {...{ 'onUpdate:show': (value: boolean) => contextMenuAttrs.show = value }} />
-    </div >
+        })()}
+        <ContextMenu {...contextMenuAttrs} {...{ 'onUpdate:show': (value: boolean) => contextMenuAttrs.show = value }} />
+      </div >
+    </Editable>
   )
 }
 

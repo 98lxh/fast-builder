@@ -54,6 +54,7 @@ export function useDesigner(): DesignerContext {
   }
 
   function setSimulatorContainer(container: SimulatorContainer, isUpdateOriginal = false) {
+    console.log(isUpdateOriginal)
     simulatorData.value.container = { ...container }
     isUpdateOriginal && (originalContainer = { ...container })
   }

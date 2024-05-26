@@ -2,17 +2,18 @@ import { useDesignerContext } from "~/composables/designer";
 import Block from "./block"
 
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event";
-
+import type { BlockTranslate } from "../util/editable";
 
 function BlockContainer() {
   const context = useDesignerContext();
   const containerRef = ref<HTMLDivElement | null>(null)
   const wrapperRef = ref<HTMLDivElement | null>(null)
-  const translate = shallowReactive({ x: 0, y: 0 })
+
+  const translate = ref<BlockTranslate>({ x: 0, y: 0 })
 
   function move({ deltaX, deltaY }: MoveListenerOptions) {
-    deltaX !== 0 && Number(deltaX) > 0 ? translate.x += deltaX : translate.x -= Math.abs(deltaX);
-    deltaY !== 0 && Number(deltaY) > 0 ? translate.y += deltaY : translate.y -= Math.abs(deltaY);
+    deltaX !== 0 && Number(deltaX) > 0 ? translate.value.x += deltaX : translate.value.x -= Math.abs(deltaX);
+    deltaY !== 0 && Number(deltaY) > 0 ? translate.value.y += deltaY : translate.value.y -= Math.abs(deltaY);
   }
 
   const onMousedown = useDocumentMouseEvent({
@@ -28,11 +29,7 @@ function BlockContainer() {
       onMousedown={onMousedown}
       ref={containerRef}
     >
-      <Block
-        translateX={translate.x}
-        translateY={translate.y}
-        onUpdateWrapperRef={(ref: HTMLDivElement | null) => wrapperRef.value = ref}
-      />
+      <Block v-model:translate={translate.value} onUpdateWrapperRef={(ref: HTMLDivElement) => wrapperRef.value = ref}/>
     </div>
   )
 }

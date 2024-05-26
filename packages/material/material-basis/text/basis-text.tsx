@@ -1,6 +1,6 @@
 const BasisText = function () {
   return (
-    <div class="text-center bg-red h-full">文本</div>
+    <div class="text-center bg-base-300 h-full">文本</div>
   )
 }
 

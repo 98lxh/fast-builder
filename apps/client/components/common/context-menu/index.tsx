@@ -16,37 +16,43 @@ interface DefineEmits {
 
 const ContextMenu: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   const designer = useDesignerContext()
-  const close = () => emit('update:show', false)
-  const wrapperRef = useEventOutside({ event: 'click' }, close)
+
+  const handleClose = () => emit('update:show', false)
+  const wrapperRef = useEventOutside({ event: 'click' }, handleClose)
+
 
   const styles = computed(() => {
-    const _styles: CSSProperties = {}
+    const styles: CSSProperties = {}
     const { top, left, show } = props
-    _styles.display = show ? 'block' : 'none'
-    _styles.left = left + 'px'
-    _styles.top = top + 'px'
-    return _styles
+    styles.display = show ? 'block' : 'none'
+    styles.left = left + 'px'
+    styles.top = top + 'px'
+    return styles
   })
 
+  function up() {
+    const { layers, swapTwoComponentIndex } = designer
+    const index = layers.value.findIndex(({ key }) => key === props.blockId)
+    if (index === 0 || index === -1) { return }
+    swapTwoComponentIndex(layers.value[index].key, layers.value[index - 1].key)
+  }
+
+  function down() {
+    const { layers, swapTwoComponentIndex } = designer
+    const index = layers.value.findIndex(({ key }) => key === props.blockId)
+    if (index === layers.value.length - 1 || index === -1) { return }
+    swapTwoComponentIndex(layers.value[index].key, layers.value[index + 1].key)
+  }
+
   const methods: Record<string, Function> = {
-    delete: () => designer.deleteBlockById(props.blockId),
-    up: () => {
-      const { layers, swapTwoComponentIndex } = designer
-      const index = layers.value.findIndex(({ key }) => key === props.blockId)
-      if (index === 0 || index === -1) { return }
-      swapTwoComponentIndex(layers.value[index].key, layers.value[index - 1].key)
-    },
-    down: () => {
-      const { layers, swapTwoComponentIndex } = designer
-      const index = layers.value.findIndex(({ key }) => key === props.blockId)
-      if (index === layers.value.length - 1 || index === -1) { return }
-      swapTwoComponentIndex(layers.value[index].key, layers.value[index + 1].key)
-    }
+    up,
+    down,
+    delete: () => designer.deleteBlockById(props.blockId)
   }
 
   function handleClick(key: string) {
     methods[key] && methods[key]()
-    close()
+    handleClose()
   }
 
   return (

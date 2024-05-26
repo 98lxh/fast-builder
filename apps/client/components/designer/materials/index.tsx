@@ -1,23 +1,24 @@
 import { getDefaultCategoryKey } from "@h5-designer/material"
-import { Sidebar } from "~/components/common"
-import Category from "./category"
-import Components from "./components"
 import type { FC } from "vite-plugin-vueact"
+
+import { Sidebar } from "~/components/common"
+import Components from "./components"
+import Category from "./category"
 
 interface DefineProps {
   isCollapse?: boolean
 }
 
 interface DefineEmits {
-  (name:'update:isCollapse',isCollapse:boolean):void
+  (name: 'update:isCollapse', isCollapse: boolean): void
 }
 
-const MaterialPanel:FC<DefineProps,DefineEmits> = function(props) {
+const MaterialPanel: FC<DefineProps, DefineEmits> = function (props) {
+  const isCollapse = useVModel(props, 'isCollapse')
   const currentCategory = shallowRef(getDefaultCategoryKey())
-  const isCollapse = useVModel(props,'isCollapse')
 
-  function onUpdateCategory(value: string) {
-    currentCategory.value = value;
+  function onUpdateCategory(category: string) {
+    currentCategory.value = category;
     isCollapse.value === true && (isCollapse.value = false);
   }
 
