@@ -2,8 +2,7 @@ import type { FC } from "vite-plugin-vueact";
 
 import type { CSSProperties } from "vue"
 import { useMoveOverflow } from "../util/overflow";
-import { getMaxIndex, useDesignerContext } from "~/composables/designer"
-import { useHistoryContext } from "~/composables/designer/history";
+import { getMaxIndex, useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { type MoveListenerOptions, useDocumentMouseEvent, useEventOutside } from "~/composables/event"
 import type { BlockTranslate } from "../util/editable";
 import Editable from "./editable"
@@ -29,7 +28,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
 
   const wrapperRef = useEventOutside({ isOnlyChildContains: true, event: 'mousedown' }, designer.clearBlockFocus)
 
-  const blockTranslate = useVModel(props, 'translate')
+  const translate = useVModel(props, 'translate')
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}
@@ -41,7 +40,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
 
   function down(_: MouseEvent, block: SimulatorBlock) {
     designer.setBlockFocus(block.id)
-    overflow.setCurrent(block)
+    overflow.setCurrentBlock(block)
   }
 
   function move({ currentY, startX, startY, currentX }: MoveListenerOptions, block: SimulatorBlock) {
@@ -50,16 +49,16 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     const style = { ...block.style, left, top }
     const updateBlock = { ...block, style }
     designer.setSimulatorDataById(block.id, updateBlock)
-    overflow.setCurrent(updateBlock)
+    overflow.setCurrentBlock(updateBlock)
     overflow.check()
   }
 
   function up() {
     overflow.check()
     // 重新设置组件样式 保证组件不出现越界
-    designer.setSimulatorStyleById(overflow.current.value.id, overflow.current.value.style!)
+    designer.setSimulatorStyleById(overflow.currentBlock.value.id, overflow.currentBlock.value.style!)
     // 重置预览位置元素的状态
-    overflow.reset()
+    overflow.resetCurrentBlock()
     // 记录当前更改到快照
     history.record()
   }
@@ -80,7 +79,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
       focus={true}
       mode="container"
       class="absolute top-[95px] left-[calc(50%-150px)]"
-      v-model:translate={blockTranslate.value}
+      v-model:translate={translate.value}
     >
       <div
         class={`bg-base-100 cursor-auto dark:border-0 relative`}
@@ -100,7 +99,7 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
           </Editable>
         ))}
         {(() => {
-          const { style, id } = overflow.current.value
+          const { style, id } = overflow.currentBlock.value
           if (!style || !id) /*EXCLUDE*/ return null
           const classes = "absolute border-1 border-primary top-0 left-0 duration-150 border-dashed"
           const { left, top, width, height } = style

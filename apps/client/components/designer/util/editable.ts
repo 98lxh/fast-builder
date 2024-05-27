@@ -15,7 +15,9 @@ const mapPlacement2Cursor: Record<string, string> = {
   'rb': 'nwse-resize'
 }
 
-export const placements = Object.keys(mapPlacement2Cursor)
+export const blockPlacements = Object.keys(mapPlacement2Cursor)
+export const containerPlacements = ['rb', 'r', 'b']
+
 export function getHasPosition(placement: string) {
   return {
     hasTop: /t/.test(placement),

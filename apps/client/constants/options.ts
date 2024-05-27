@@ -24,11 +24,11 @@ export const sidebarOptions = [
 ];
 
 
+/* designer顶部dropdown */
 export enum DesignerMenuOptionKey {
   BackWorkspace
 }
 const _label = (label: string, icon?: string) => h('div', { class: 'flex text-[12px]' }, [h('p', { class: `${icon ? 'ml-[5px]' : ''}` }, label)])
-/* designer顶部dropdown */
 export const designerMenuOptions: DropdownOption[] = [
   {
     key: DesignerMenuOptionKey.BackWorkspace,

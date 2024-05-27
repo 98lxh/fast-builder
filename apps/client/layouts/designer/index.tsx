@@ -1,7 +1,12 @@
-import { designerInjectionKey, useDesigner } from "~/composables/designer"
-import { historyInjectionKey, useHistory } from "~/composables/designer/history"
 import Header from "./header"
 import Main from "./main"
+
+import { 
+  designerInjectionKey, 
+  historyInjectionKey, 
+  useDesigner, 
+  useHistory 
+} from "~/composables/designer"
 
 function Designer() {
   const designer = useDesigner()

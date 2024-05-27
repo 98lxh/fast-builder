@@ -14,7 +14,10 @@ function App() {
   })
 
   return (
-    <NConfigProvider theme={state.value.theme} themeOverrides={state.value.themeOverride}>
+    <NConfigProvider
+      theme={state.value.theme}
+      themeOverrides={state.value.themeOverride}
+    >
       <NuxtPage />
     </NConfigProvider>
   )

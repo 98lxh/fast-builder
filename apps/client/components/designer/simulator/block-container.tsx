@@ -5,15 +5,17 @@ import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/e
 import type { BlockTranslate } from "../util/editable";
 
 function BlockContainer() {
-  const context = useDesignerContext();
-  const containerRef = ref<HTMLDivElement | null>(null)
+  const designer = useDesignerContext()
   const wrapperRef = ref<HTMLDivElement | null>(null)
+  const containerRef = ref<HTMLDivElement | null>(null)
 
-  const translate = ref<BlockTranslate>({ x: 0, y: 0 })
+  const blockTranslate = ref<BlockTranslate>({ x: 0, y: 0 })
 
   function move({ deltaX, deltaY }: MoveListenerOptions) {
-    deltaX !== 0 && Number(deltaX) > 0 ? translate.value.x += deltaX : translate.value.x -= Math.abs(deltaX);
-    deltaY !== 0 && Number(deltaY) > 0 ? translate.value.y += deltaY : translate.value.y -= Math.abs(deltaY);
+    let { x, y } = blockTranslate.value
+    deltaX !== 0 && Number(deltaX) > 0 ? x += deltaX : x -= Math.abs(deltaX)
+    deltaY !== 0 && Number(deltaY) > 0 ? y += deltaY : y -= Math.abs(deltaY)
+    blockTranslate.value = { x, y }
   }
 
   const onMousedown = useDocumentMouseEvent({
@@ -21,7 +23,7 @@ function BlockContainer() {
     move
   })
 
-  watch(() => wrapperRef.value, () => wrapperRef.value && context.setSimulatorRef(wrapperRef.value), { deep: true })
+  watch(() => wrapperRef.value, () => wrapperRef.value && designer.setSimulatorRef(wrapperRef.value), { deep: true })
 
   return (
     <div
@@ -29,7 +31,10 @@ function BlockContainer() {
       onMousedown={onMousedown}
       ref={containerRef}
     >
-      <Block v-model:translate={translate.value} onUpdateWrapperRef={(ref: HTMLDivElement) => wrapperRef.value = ref}/>
+      <Block 
+        v-model:translate={blockTranslate.value} 
+        onUpdateWrapperRef={(ref: HTMLDivElement) => wrapperRef.value = ref} 
+      />
     </div>
   )
 }

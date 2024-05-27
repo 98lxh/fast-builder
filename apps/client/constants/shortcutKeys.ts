@@ -1,4 +1,6 @@
-export const SHORTCUT_KEYS = [
+
+/* 快捷键配置 */
+export const shortcutKeys = [
   {
     text: '撤销操作',
     keys: ['ctrl/command', 'z']

@@ -1,5 +1,5 @@
 import type { FC } from "vite-plugin-vueact"
-import { useHistoryContext } from "~/composables/designer/history"
+import { useHistoryContext } from "~/composables/designer"
 
 interface DefineProps {
   type: 'undo' | 'redo'

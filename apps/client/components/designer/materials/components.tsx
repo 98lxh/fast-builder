@@ -1,7 +1,6 @@
 import type { FC } from "vite-plugin-vueact";
 import { getComponents } from "@h5-designer/material";
-import { useDesignerContext } from "~/composables/designer";
-import { useHistoryContext } from "~/composables/designer/history";
+import { useDesignerContext, useHistoryContext } from "~/composables/designer";
 import { onDragstart } from "../util/draggable";
 import { layout } from "~/constants/layouts";
 import type { CSSProperties } from "vue";

@@ -1,5 +1,5 @@
 import { NPopover, NTag } from "naive-ui"
-import { SHORTCUT_KEYS } from "~/constants/shortcutKeys"
+import { shortcutKeys } from "~/constants/shortcutKeys"
 
 function ShortcutKeys() {
   const trigger = () => (
@@ -13,7 +13,7 @@ function ShortcutKeys() {
       <div class="w-[248px]">
         <p class="p-2 text-center">快捷键</p>
         <div class="border-b-1 dark:border-neutral mb-[10px]"></div>
-        {SHORTCUT_KEYS.map(item => (<div class="flex justify-between mt-[10px]">
+        {shortcutKeys.map(item => (<div class="flex justify-between mt-[10px]">
           <div class="flex items-center">
             {item.keys.map((key, index) => (<>
               <kbd class="kbd kbd-sm">{key}</kbd>

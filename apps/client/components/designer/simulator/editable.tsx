@@ -1,10 +1,20 @@
-import type { CSSProperties } from "vue"
 import type { FC } from "vite-plugin-vueact"
-import { getMaxIndex, useDesignerContext } from "~/composables/designer"
-import { generatePointStyles, placements, calculateResizeStyle, type SourceStyles, calculateContainerResizeStyle, type BlockTranslate } from "../util/editable"
+
+import type { CSSProperties } from "vue"
+import { getMaxIndex, useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
-import { useHistoryContext } from "~/composables/designer/history"
+import type { SourceStyles, BlockTranslate } from "../util/editable"
 import { useResizeOverflow } from "../util/overflow"
+
+import {
+  blockPlacements,
+  containerPlacements,
+  generatePointStyles,
+  calculateResizeStyle,
+  calculateContainerResizeStyle
+} from "../util/editable"
+
+
 
 interface DefineProps {
   focus?: boolean;
@@ -20,23 +30,25 @@ interface DefineEmits {
 }
 
 const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
-  const history = useHistoryContext()
   const designer = useDesignerContext()
-  const overflow = useResizeOverflow(designer)
+  const history = useHistoryContext()
+
+  /* mouseup时记录一下记录到历史快照中 */
   const onMousedown = useDocumentMouseEvent({ move, down, up: history.record })
 
-  // 容器由外部传入focus受控
-  const isControlled = computed(() => props.mode === 'container')
-  // 是否选中
-  const isFocus = computed(() => isControlled.value ? props.focus : props.block && props.block.focus)
+  const isContainer = computed(() => props.mode === 'container')
+  const overflow = useResizeOverflow(designer)
 
-  const translate = useVModel(props, 'translate')
+  /* 组件的focus状态由内部的mouse事件决定而容器的focus状态由父组件传入 */
+  const isFocus = computed(() => isContainer.value ? props.focus : props.block && props.block.focus)
 
-  function generateContainerStyles() {
+  /* 转换容器或组件的位置和尺寸信息为统一的格式 */
+  const source = computed(() => isContainer.value ? convertContainerStyles() : convertBlockStyles())
+  function convertContainerStyles() {
     const styles: SourceStyles = {} as SourceStyles
     const { simulatorData } = designer
     const { width, height } = simulatorData.value.container
-    const { x = 0, y = 0 } = translate.value || {}
+    const { x = 0, y = 0 } = props.translate || {}
     styles.height = height
     styles.width = width
     styles.left = x
@@ -44,15 +56,13 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     return styles
   }
 
-  function generateBlockStyles() {
+  function convertBlockStyles() {
     const styles: SourceStyles = {} as SourceStyles
     if (!props.block) { return styles }
-    let { zIndex, width, height, left, top } = props.block.style
     const { currentBlockID, simulatorData } = designer
-    // 当前编辑的块置顶
-    if (currentBlockID.value === props.block.id) {
-      zIndex = getMaxIndex(simulatorData.value.blocks) + 1
-    }
+    let { zIndex, width, height, left, top } = props.block.style
+    // 当前编辑的组件暂时放到顶层
+    if (currentBlockID.value === props.block.id) { zIndex = getMaxIndex(simulatorData.value.blocks) + 1 }
     styles.zIndex = zIndex
     styles.height = height
     styles.width = width
@@ -61,8 +71,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     return styles
   }
 
-  // 原样式
-  const source = computed(() => isControlled.value ? generateContainerStyles() : generateBlockStyles())
+  /* 计算样式 */
   const styles = computed(() => {
     const styles: CSSProperties = {}
     let { zIndex, width, height, left, top } = source.value
@@ -74,50 +83,61 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     return styles
   })
 
+  /* 控制尺寸的point的Mousedown事件监听器 */
   function down(evt: MouseEvent) {
-    evt.stopPropagation()
-    evt.preventDefault()
-    if (props.block) { overflow.setCurrent(props.block) }
+    evt.stopPropagation();
+    evt.preventDefault();
+    // 编辑的是组件时记录一下当前的组件
+    (props.block && !isContainer.value) && overflow.setCurrentBlock(props.block)
+    // 这里返回的相当于是编辑前样式信息,返回给move事件计算时使用
     return source.value
   }
 
+  /* 控制尺寸的point的Mousemove事件监听器 */
   function move(options: MoveListenerOptions<SimulatorBlockStyle>, placement: string) {
-    if (isControlled.value || !props.block) {
-      const { height, width, top, left } = calculateContainerResizeStyle(options, placement)
-      designer.setSimulatorContainer({ height, width }, true)
-      translate.value = { x: left, y: top }
+    if (isContainer.value || !props.block) {
+      // 编辑的是容器更新容器的信息
+      const { height, width } = calculateContainerResizeStyle(options, placement)
+      const updatedContainer = { height, width }
+      designer.setSimulatorContainer(updatedContainer, true)
+      overflow.setCurrentContainer(updatedContainer)
+      // 检查是否溢出
+      overflow.checkContainer()
     } else {
+      // 编辑的是组件更新组件样式
       const style = calculateResizeStyle(options, props.block, placement)
       const updatedBlock = { ...props.block, style: { ...style } }
       designer.setSimulatorDataById(props.block.id, updatedBlock)
-      overflow.setCurrent(updatedBlock)
-      overflow.check()
+      overflow.setCurrentBlock(updatedBlock)
+      // 检查是否溢出
+      overflow.checkBlock()
     }
   }
 
   function handleContextmenu(evt: MouseEvent) {
-    if (isControlled.value) { return emit('contextmenu', evt) }
+    if (isContainer.value) { return emit('contextmenu', evt) }
     emit('contextmenu', evt, props.block ? props.block.id : '')
+  }
+
+  function renderResizePoints() {
+    if (!isFocus.value) { return null }
+    return (isContainer.value ? containerPlacements : blockPlacements).map(placement => (
+      <div
+        key={placement}
+        onMousedown={evt => onMousedown(evt, placement)}
+        style={generatePointStyles(placement, source.value)}
+        class="h-[8px] w-[8px] absolute bg-primary border-1 border-primary  bg-white z-1"
+      />
+    ))
   }
 
   return (
     <div
-      onMousedown={evt => !isControlled.value && emit('mousedown', evt)}
+      onMousedown={evt => !isContainer.value && emit('mousedown', evt)}
       onContextmenu={handleContextmenu}
       style={styles.value}
     >
-      {(() => {
-        if (!isFocus.value) /*EXCLUDE*/ return null
-        /*EXCLUDE*/ return placements.map(placement => (
-          <div
-            class="h-[8px] w-[8px] absolute bg-primary border-1 border-primary  bg-white z-1"
-            style={generatePointStyles(placement, source.value)}
-            onMousedown={evt => onMousedown(evt, placement)}
-            key={placement}
-          />
-        ))
-      })()}
-
+      {renderResizePoints()}
       {isFocus.value && <div class={`h-full w-full absolute block-focus`} />}
       {slots.default && slots.default()}
     </div>
