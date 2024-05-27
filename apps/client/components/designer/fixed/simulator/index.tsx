@@ -1,9 +1,9 @@
-import { useDesignerContext } from "~/composables/designer";
+import { useDesignerContext } from "~/composables/designer"
 import Blocks from "./blocks"
 
-import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event";
+import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
 
-function BlockContainer() {
+function Simulator() {
   const designer = useDesignerContext()
   const wrapperRef = ref<HTMLDivElement | null>(null)
   const containerRef = ref<HTMLDivElement | null>(null)
@@ -33,5 +33,4 @@ function BlockContainer() {
   )
 }
 
-
-export default BlockContainer
+export default Simulator

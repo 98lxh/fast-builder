@@ -3,7 +3,7 @@ import type { FC } from "vite-plugin-vueact"
 import { layout } from "~/constants/layouts"
 
 import Simulator from "./simulator"
-import Ruler from "./canvas-ruler"
+import Ruler from "./absolute"
 
 interface DefineProps {
   isCollapse: boolean
