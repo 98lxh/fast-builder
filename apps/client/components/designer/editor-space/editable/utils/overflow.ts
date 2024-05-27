@@ -1,18 +1,17 @@
 import { type DesignerContext } from "~/composables/designer"
 import { cloneDeep } from "@h5-designer/shared"
 
-export type ICurrentBlockStyles = { style: SimulatorBlockStyle | null, id: string }
+export type ICurrentBlockStyles = { style: BlockStyle | null, id: string }
 export const generateCurrentBlock = (): ICurrentBlockStyles => ({ style: null, id: '' })
-export const generateCurrentContainer = (): Partial<SimulatorContainer> => ({ width: 0, height: 0 })
+export const generateCurrentContainer = (): Partial<Container> => ({ width: 0, height: 0 })
 
 // 移动组件时是否溢出
 export function useMoveOverflow(designer: DesignerContext) {
   const { setCurrentBlock, currentBlock, resetCurrentBlock, calculateBlockEdge } = useCurrent()
-
   // 检查组件在移动中是否溢出并在溢出后做相应处理
   function check() {
     const style = currentBlock.value.style!
-    const { width, height } = designer.simulatorData.value.container
+    const { width, height } = designer.data.value.container
     const edge = calculateBlockEdge(designer)
     // 左越界
     if (edge.left < 0) { style.left = 0 }
@@ -24,7 +23,7 @@ export function useMoveOverflow(designer: DesignerContext) {
     // 底部越界
     if (edge.bottom < 0) {
       // 更新容器高度
-      designer.setSimulatorContainer({ width, height: height - edge.bottom })
+      designer.setContainer({ width, height: height - edge.bottom })
     }
   }
 
@@ -47,29 +46,29 @@ export function useResizeOverflow(designer: DesignerContext) {
   // 检查组件在resize时是否溢出并做相应的溢出处理
   function checkBlock() {
     const style = currentBlock.value.style!
-    const { width, height } = designer.simulatorData.value.container
+    const { width, height } = designer.data.value.container
     const edge = calculateBlockEdge(designer)
     if (edge.right < 0) { // 右越界
       const updatedWidth = width - style.left
-      designer.setSimulatorStyleById(currentBlock.value.id, { ...currentBlock.value.style!, width: updatedWidth })
+      designer.setBlockStyleById(currentBlock.value.id, { ...currentBlock.value.style!, width: updatedWidth })
       style.width = updatedWidth
     }
     if (edge.left < 0) { // 左越界
       const updatedWidth = width - (width - style.width) + edge.left
       const updatedStyle = { top: edge.top < 0 ? 0 : style.top, left: 0, width: updatedWidth }
-      designer.setSimulatorStyleById(currentBlock.value.id, { ...currentBlock.value.style!, ...updatedStyle })
+      designer.setBlockStyleById(currentBlock.value.id, { ...currentBlock.value.style!, ...updatedStyle })
       style.width = updatedWidth
     }
     if (edge.top < 0) { // 顶部越界
       const updatedHeight = height - (height - style.height) + edge.top
       const updatedStyle = { left: edge.left < 0 ? 0 : style.left, top: 0, height: updatedHeight }
-      designer.setSimulatorStyleById(currentBlock.value.id, { ...currentBlock.value.style!, ...updatedStyle })
+      designer.setBlockStyleById(currentBlock.value.id, { ...currentBlock.value.style!, ...updatedStyle })
       style.height = updatedHeight
     }
 
     if (edge.bottom < 0) { // 底部越界
       // 更新容器高度
-      designer.setSimulatorContainer({ width, height: height + Math.abs(edge.bottom) })
+      designer.setContainer({ width, height: height + Math.abs(edge.bottom) })
     }
   }
 
@@ -80,13 +79,13 @@ export function useResizeOverflow(designer: DesignerContext) {
     if (width < edge.right) {
       const heightDifference = height - edge.bottom
       const updatedHeight = heightDifference < 0 ? edge.bottom : height
-      designer.setSimulatorContainer({ height: updatedHeight, width: edge.right })
+      designer.setContainer({ height: updatedHeight, width: edge.right })
     }
 
     if (height < edge.bottom) {
       const widthDifference = width - edge.right
       const updatedWidth = widthDifference < 0 ? edge.right : width
-      designer.setSimulatorContainer({ width: updatedWidth, height: edge.bottom })
+      designer.setContainer({ width: updatedWidth, height: edge.bottom })
     }
   }
 
@@ -110,9 +109,9 @@ const useCurrent = () => {
   const currentContainer = ref(generateCurrentContainer())
   // 重置当前容器信息
   const resetCurrentContainer = () => { currentContainer.value = generateCurrentContainer() }
-  const setCurrentContainer = (container: SimulatorContainer) => { currentContainer.value = { ...container } }
+  const setCurrentContainer = (container: Container) => { currentContainer.value = { ...container } }
   // 设置当前组件
-  function setCurrentBlock(block: SimulatorBlock) {
+  function setCurrentBlock(block: Block) {
     const { style, id } = block
     currentBlock.value = { style: cloneDeep(style), id }
   }
@@ -120,7 +119,7 @@ const useCurrent = () => {
   // 计算组件resize后的边缘
   function calculateBlockEdge(designer: DesignerContext) {
     // 容器的宽高
-    const { width, height } = designer.simulatorData.value.container
+    const { width, height } = designer.data.value.container
     // 当前组件的样式
     const style = currentBlock.value.style!
     return {
@@ -133,7 +132,7 @@ const useCurrent = () => {
 
   // 计算当前容器边缘
   function calculateContainerEdge(designer: DesignerContext) {
-    const { blocks } = designer.simulatorData.value
+    const { blocks } = designer.data.value
     const position = blocks.map(({ style }) => ({ right: style.left + style.width, bottom: style.top + style.height }))
     return {
       right: Math.max.apply(Math, position.map(({ right }) => right)),

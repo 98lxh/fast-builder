@@ -28,9 +28,9 @@ function AttributeForm() {
   ]
 
   const currentBlock = computed(() => {
-    const { currentBlockID, simulatorData } = designer
+    const { currentBlockID, data } = designer
     if (!currentBlockID.value) return null
-    return simulatorData.value.blocks.find(({ id }) => id === currentBlockID.value)
+    return data.value.blocks.find(({ id }) => id === currentBlockID.value)
   })
 
   const formData = reactive({

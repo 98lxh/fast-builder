@@ -1,8 +1,8 @@
 import type { FC } from "vite-plugin-vueact"
 
 interface DefineProps {
-  container?: SimulatorContainer;
-  block?: SimulatorBlock;
+  container?: Container;
+  block?: Block;
   isContainer: boolean;
   focus: boolean
 }

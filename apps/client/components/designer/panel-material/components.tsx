@@ -1,10 +1,11 @@
 import type { FC } from "vite-plugin-vueact";
 import { getComponents } from "@h5-designer/material";
 import { useDesignerContext, useHistoryContext } from "~/composables/designer";
-import { onDragstart } from "../util/draggable";
 import { layout } from "~/constants/layouts";
 import type { CSSProperties } from "vue";
 import { NEllipsis } from "naive-ui";
+
+import { onDragstart } from "./util";
 
 interface DefineProps {
   category: string;

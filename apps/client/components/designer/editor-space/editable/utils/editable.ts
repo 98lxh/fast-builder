@@ -69,10 +69,10 @@ export function generatePointStyles(placement: string, source: CSSProperties): C
 }
 
 export function calculateResizeStyle(
-  { currentY, currentX, startY, startX, result }: MoveListenerOptions<SimulatorBlockStyle>,
-  block: SimulatorBlock,
+  { currentY, currentX, startY, startX, result }: MoveListenerOptions<BlockStyle>,
+  block: Block,
   placement: string,
-): SimulatorBlockStyle {
+): BlockStyle {
   let { height, width, top, left } = result
   const { hasTop, hasBottom, hasLeft, hasRight } = getHasPosition(placement)
   const disY = currentY - startY
@@ -104,7 +104,7 @@ export function calculateContainerResizeStyle(
 }
 
 
-export function convertContainerStyles(container: SimulatorContainer) {
+export function convertContainerStyles(container: Container) {
   const styles: CSSProperties = {}
   const { width, height, top, left } = container
   // 容器边框宽高+4px把左右border的2px计算进去
@@ -115,13 +115,13 @@ export function convertContainerStyles(container: SimulatorContainer) {
   return styles
 }
 
-export function convertBlockStyles(designer: DesignerContext, block: SimulatorBlock) {
+export function convertBlockStyles(designer: DesignerContext, block: Block) {
   const styles: CSSProperties = {}
   if (!block) { return styles }
-  const { currentBlockID, simulatorData } = designer
+  const { currentBlockID, data } = designer
   let { zIndex, width, height, left, top } = block.style
   // 当前编辑的组件暂时放到顶层
-  if (currentBlockID.value === block.id) { zIndex = getMaxIndex(simulatorData.value.blocks) + 1 }
+  if (currentBlockID.value === block.id) { zIndex = getMaxIndex(data.value.blocks) + 1 }
   styles.zIndex = zIndex
   styles.height = height
   styles.width = width

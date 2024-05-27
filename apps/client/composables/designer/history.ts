@@ -1,11 +1,11 @@
-import { genarateDefaultSimulator, type DesignerContext } from "./index";
+import { genarateDefaultSimulator, type DesignerContext, useDesignerContext } from "./index";
 import { cloneDeep } from "@h5-designer/shared"
 
 interface SimulatorSnapshot {
-  data: SimulatorData[], // 快照集合
-  index: number, // 当前索引
-  undoable: boolean // 可撤销
-  redoable: boolean // 可重做
+  data: DesignerData[]
+  undoable: boolean
+  redoable: boolean
+  index: number
 }
 
 export interface HistoryContext {
@@ -23,9 +23,10 @@ const generateDefaultSnapshot = (): SimulatorSnapshot => ({
   redoable: false
 })
 
-let designer: DesignerContext | null = null
-export function useHistory(context?: DesignerContext): HistoryContext {
-  context && (designer = context)
+export function useHistory(): HistoryContext {
+  const designer = useDesignerContext()
+
+  /* 快照信息 */
   const snapshot = ref<SimulatorSnapshot>(generateDefaultSnapshot())
 
   function setDoable() {
@@ -33,25 +34,29 @@ export function useHistory(context?: DesignerContext): HistoryContext {
     snapshot.value.redoable = snapshot.value.index < snapshot.value.data.length - 1
   }
 
+  /* 撤销 */
   function undo() {
     if (!designer || !snapshot.value.undoable) { return }
     const { data } = snapshot.value
     snapshot.value.index--
-    designer.setSimulatorData && designer.setSimulatorData(cloneDeep(data[snapshot.value.index]) || genarateDefaultSimulator())
+    designer.setData && designer.setData(cloneDeep(data[snapshot.value.index]) || genarateDefaultSimulator())
     setDoable()
   }
 
+
+  /* 重做 */
   function redo() {
     if (!designer || !snapshot.value.redoable) { return }
     const { data } = snapshot.value
     snapshot.value.index++
-    designer.setSimulatorData && designer.setSimulatorData(cloneDeep(data[snapshot.value.index]))
+    designer.setData && designer.setData(cloneDeep(data[snapshot.value.index]))
     setDoable()
   }
 
+  /* 记录当前操作到快照 */
   function record() {
     if (!designer) { return }
-    snapshot.value.data[++snapshot.value.index] = cloneDeep(designer.simulatorData.value)
+    snapshot.value.data[++snapshot.value.index] = cloneDeep(designer.data.value)
     if (snapshot.value.index < snapshot.value.data.length - 1) {
       snapshot.value.data = snapshot.value.data.slice(0, snapshot.value.index + 1)
     }

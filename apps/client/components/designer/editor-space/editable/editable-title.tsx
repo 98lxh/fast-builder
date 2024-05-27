@@ -15,10 +15,10 @@ interface DefineEmits {
 const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   const titleRef = useEventOutside({ event: 'click', excludeId: ['editable'] }, () => onUpdateValue(false))
   const designer = useDesignerContext()
-  const { simulatorData } = designer
+  const { data } = designer
 
   function onUpdateValue(focus: boolean, clear = false) {
-    designer.setSimulatorContainer({ focus })
+    designer.setContainer({ focus })
     clear && designer.clearBlockFocus()
   }
 
@@ -26,7 +26,7 @@ const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     !(props.isContainer) ? null : (
       <p
         class="absolute top-[-18px] left-[2px] text-[13px] text-[#939393] dark:text-white"
-        style={{ color: props.hover || simulatorData.value.container.focus ? primaryColor : undefined }}
+        style={{ color: props.hover || data.value.container.focus ? primaryColor : undefined }}
         onMouseenter={(evt) => emit('mouseenter', evt)}
         onMouseleave={(evt) => emit('mouseleave', evt)}
         onClick={() => onUpdateValue(true, true)}

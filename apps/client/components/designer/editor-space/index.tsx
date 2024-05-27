@@ -2,14 +2,14 @@ import type { CSSProperties } from "vue"
 import type { FC } from "vite-plugin-vueact"
 import { layout } from "~/constants/layouts"
 
-import BlockContainer from "./block-container"
-import Ruler from "./ruler"
+import Simulator from "./simulator"
+import Ruler from "./canvas-ruler"
 
 interface DefineProps {
   isCollapse: boolean
 }
 
-const Simulator: FC<DefineProps> = function (props) {
+const Editor: FC<DefineProps> = function (props) {
   const wrapper = ref<HTMLDivElement | null>(null)
   const size = reactive(useElementSize(wrapper))
 
@@ -38,9 +38,9 @@ const Simulator: FC<DefineProps> = function (props) {
     >
       <Ruler mode="horizontal" {...attrs.value} />
       <Ruler mode="vertical"  {...attrs.value} />
-      <BlockContainer />
+      <Simulator />
     </div>
   )
 }
 
-export default Simulator
+export default Editor

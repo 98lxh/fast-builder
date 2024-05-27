@@ -20,7 +20,7 @@ function ControlLayers() {
     return { wrapper, arrow }
   })
 
-  function renderTreeLabel(layer: SimulatorLayer) {
+  function renderTreeLabel(layer: DesignerLayer) {
     const { icon, label } = layer
     return (
       <div class="flex">

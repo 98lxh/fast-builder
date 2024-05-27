@@ -1,7 +1,9 @@
 import type { CSSProperties } from "vue";
 import type { FC } from "vite-plugin-vueact";
-import { getRenderOptions, horizontal, vertical } from "../util/ruler";
 import { useDarkMode } from "~/composables/styles/dark";
+
+import { getRenderOptions, horizontal, vertical } from "./util";
+
 
 interface DefineProps {
   mode?: 'vertical' | 'horizontal';

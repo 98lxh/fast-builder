@@ -1,5 +1,5 @@
 import type { FC } from "vite-plugin-vueact";
-import { blockPlacements, containerPlacements, generatePointStyles } from "../../util/editable";
+import { blockPlacements, containerPlacements, generatePointStyles } from "./utils/editable";
 import type { CSSProperties } from "vue";
 
 interface DefineProps {

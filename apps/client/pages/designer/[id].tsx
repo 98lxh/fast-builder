@@ -4,7 +4,7 @@ import "@h5-designer/material"
 import {
   AttributePanel,
   MaterialPanel,
-  Simulator
+  EditorSpace
 } from "~/components/designer"
 
 function Designer() {
@@ -18,9 +18,9 @@ function Designer() {
 
   return (
     <div class="flex h-full w-full">
-      <MaterialPanel v-model:isCollapse={collapse.materialPanel} />
-      <Simulator isCollapse={collapse.materialPanel} />
-      <AttributePanel v-model:isCollapse={collapse.attributePanel} />
+      <AttributePanel v-model:isCollapse={collapse.materialPanel} />
+      <EditorSpace isCollapse={collapse.materialPanel} />
+      <MaterialPanel v-model:isCollapse={collapse.attributePanel} />
     </div>
   )
 }

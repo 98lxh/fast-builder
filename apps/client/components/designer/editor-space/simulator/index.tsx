@@ -1,5 +1,5 @@
 import { useDesignerContext } from "~/composables/designer";
-import Block from "./block"
+import Blocks from "./blocks"
 
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event";
 
@@ -9,10 +9,10 @@ function BlockContainer() {
   const containerRef = ref<HTMLDivElement | null>(null)
 
   function move({ deltaX, deltaY }: MoveListenerOptions) {
-    let { left, top } = designer.simulatorData.value.container
+    let { left, top } = designer.data.value.container
     deltaX !== 0 && Number(deltaX) > 0 ? left += deltaX : left -= Math.abs(deltaX)
     deltaY !== 0 && Number(deltaY) > 0 ? top += deltaY : top -= Math.abs(deltaY)
-    designer.setSimulatorContainer({ left, top })
+    designer.setContainer({ left, top })
   }
 
   const onMousedown = useDocumentMouseEvent({
@@ -28,7 +28,7 @@ function BlockContainer() {
       onMousedown={onMousedown}
       ref={containerRef}
     >
-      <Block onUpdateWrapperRef={(ref: HTMLDivElement) => wrapperRef.value = ref} />
+      <Blocks onUpdateWrapperRef={(ref: HTMLDivElement) => wrapperRef.value = ref} />
     </div>
   )
 }

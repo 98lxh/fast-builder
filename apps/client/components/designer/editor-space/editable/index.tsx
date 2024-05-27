@@ -1,9 +1,9 @@
 import type { FC } from "vite-plugin-vueact"
 
 import type { CSSProperties } from "vue"
-import { getMaxIndex, useDesignerContext, useHistoryContext } from "~/composables/designer"
+import { useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
-import { useResizeOverflow } from "../../util/overflow"
+import { useResizeOverflow } from "./utils/overflow"
 
 
 import Border from "./editable-border"
@@ -12,16 +12,16 @@ import Title from "./editable-title"
 import Size from "./editable-size"
 
 import {
+  calculateContainerResizeStyle,
   type BlockTranslate,
   calculateResizeStyle,
-  calculateContainerResizeStyle,
   convertContainerStyles,
   convertBlockStyles
-} from "../../util/editable"
+} from "./utils/editable"
 
 interface DefineProps {
-  block?: SimulatorBlock;
-  container?: SimulatorContainer;
+  block?: Block;
+  container?: Container;
   mode?: 'container' | 'block';
 }
 
@@ -71,20 +71,20 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
   }
 
   /* 控制尺寸的point的Mousemove事件监听器 */
-  function move(options: MoveListenerOptions<SimulatorBlockStyle>, placement: string) {
+  function move(options: MoveListenerOptions<BlockStyle>, placement: string) {
     if (isContainer.value || !props.block) {
       // 编辑的是容器更新容器的信息
       const { height, width } = calculateContainerResizeStyle(options, placement)
       const updatedContainer = { height, width }
-      designer.setSimulatorContainer(updatedContainer)
-      overflow.setCurrentContainer(designer.simulatorData.value.container)
+      designer.setContainer(updatedContainer)
+      overflow.setCurrentContainer(designer.data.value.container)
       // 检查是否溢出
       overflow.checkContainer()
     } else {
       // 编辑的是组件更新组件样式
       const style = calculateResizeStyle(options, props.block, placement)
       const updatedBlock = { ...props.block, style: { ...style } }
-      designer.setSimulatorDataById(props.block.id, updatedBlock)
+      designer.setBlockById(props.block.id, updatedBlock)
       overflow.setCurrentBlock(updatedBlock)
       // 检查是否溢出
       overflow.checkBlock()
