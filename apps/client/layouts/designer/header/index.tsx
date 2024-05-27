@@ -1,5 +1,5 @@
 import MenuButton from "./button-menu"
-import { Header as CommonHeader, ThemeButton } from "~/components/common"
+import { Header as CommonHeader } from "~/components/common"
  
 import { NTabPane, NTabs } from "naive-ui"
 
@@ -18,8 +18,6 @@ function Header() {
         <MenuButton />
       </div>
       <div class="flex">
-        <ThemeButton />
-  
         <NTabs class="mt-[8px] mr-[5px] w-[165px]" type="segment" v-model:value={tabValue.value} size="small">
           {tabs.map(item => (<NTabPane v-slots={{ tab: () => tab(item.label) }} name={item.key} />))}
         </NTabs>

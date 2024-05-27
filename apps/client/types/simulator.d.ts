@@ -20,6 +20,9 @@ declare interface SimulatorBlock {
 declare interface SimulatorContainer {
   width: number;
   height: number;
+  top: number;
+  left: number;
+  focus: boolean; // 是否选中
 }
 
 declare interface SimulatorData {

@@ -17,10 +17,10 @@ const Ruler: FC<DefineProps> = function (props) {
   const { isDark } = useDarkMode();
 
   const styles = computed(() => {
-    const styles:CSSProperties = {}
-    styles.height = props.mode === 'horizontal' ? '30px' : '100%'
-    styles.width = props.mode === 'horizontal' ? '100%' : '30px'
-    styles.top =  props.mode === 'horizontal' ? '0px' : '30px'
+    const styles: CSSProperties = {}
+    styles.height = props.mode === 'horizontal' ? '24px' : '100%'
+    styles.width = props.mode === 'horizontal' ? '100%' : '24px'
+    styles.top = props.mode === 'horizontal' ? '0px' : '24px'
     return styles
   })
 

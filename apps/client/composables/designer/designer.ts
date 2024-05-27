@@ -4,9 +4,8 @@ export interface DesignerContext {
   setSimulatorRef(simulator: HTMLDivElement | null): void // 设置元素
   setSimulatorDataById(id: string, block: SimulatorBlock): void // 根据block id设置block
   setSimulatorStyleById(id: string, style: SimulatorBlockStyle): void // 根据block id 设置 block style
-  setSimulatorContainer(container: SimulatorContainer, isUpdateOriginal?: boolean): void // 设置容器
+  setSimulatorContainer(container: Partial<SimulatorContainer>, isUpdateOriginal?: boolean): void // 设置容器
   setSimulatorData(data: SimulatorData): void // 设置数据
-  originalContainer: SimulatorContainer // 原容器
   simulatorRef: Ref<HTMLDivElement | null> // 元素
   simulatorData: Ref<SimulatorData> // 数据
   clearBlockFocus(): void // 清除所有block的focus状态
@@ -22,8 +21,11 @@ export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIG
 
 export const genarateDefaultSimulator = (): SimulatorData => ({
   container: {
+    top: 0,
+    left: 0,
+    focus: false,
     width: devices[0].width,
-    height: devices[0].height
+    height: devices[0].height,
   },
   blocks: []
 })
@@ -34,8 +36,6 @@ export function useDesigner(): DesignerContext {
   const simulatorRef = ref<HTMLDivElement | null>(null)
   // 当前编辑的块的ID
   const currentBlockID = shallowRef("")
-  // 原始容器信息
-  let originalContainer: SimulatorContainer = genarateDefaultSimulator().container
   const layers = computed(() => {
     const { blocks } = simulatorData.value
     const _layers: SimulatorLayer[] = blocks.map(({ id, style, layer, icon }) => ({ key: id, label: layer, icon, zIndex: style.zIndex, children: [] }))
@@ -51,9 +51,10 @@ export function useDesigner(): DesignerContext {
     simulatorData.value = data
   }
 
-  function setSimulatorContainer(container: SimulatorContainer, isUpdateOriginal = false) {
-    simulatorData.value.container = { ...container }
-    isUpdateOriginal && (originalContainer = { ...container })
+  function setSimulatorContainer(udapteValue: Partial<SimulatorContainer>) {
+    const { container } = simulatorData.value
+    const updatedContainer = { ...container, ...udapteValue }
+    simulatorData.value.container = updatedContainer
   }
 
   function clearBlockFocus() {
@@ -109,7 +110,6 @@ export function useDesigner(): DesignerContext {
     clearBlockFocus,
     setSimulatorRef,
     setSimulatorData,
-    originalContainer,
     setSimulatorDataById,
     setSimulatorStyleById,
     setSimulatorContainer,

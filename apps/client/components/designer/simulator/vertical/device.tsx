@@ -21,7 +21,7 @@ function Device() {
       container.height = device.height
       container.width = device.width
     }
-    context.setSimulatorContainer(container, true)
+    context.setSimulatorContainer(container)
   }
 
   watch(() => context.simulatorData.value.container, (value) => {

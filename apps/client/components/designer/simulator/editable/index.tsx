@@ -3,23 +3,25 @@ import type { FC } from "vite-plugin-vueact"
 import type { CSSProperties } from "vue"
 import { getMaxIndex, useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
-import type { SourceStyles, BlockTranslate } from "../util/editable"
-import { useResizeOverflow } from "../util/overflow"
+import { useResizeOverflow } from "../../util/overflow"
+
+
+import Border from "./editable-border"
+import Points from "./editable-points"
+import Title from "./editable-title"
+import Size from "./editable-size"
 
 import {
-  blockPlacements,
-  containerPlacements,
-  generatePointStyles,
+  type BlockTranslate,
   calculateResizeStyle,
-  calculateContainerResizeStyle
-} from "../util/editable"
-
-
+  calculateContainerResizeStyle,
+  convertContainerStyles,
+  convertBlockStyles
+} from "../../util/editable"
 
 interface DefineProps {
-  focus?: boolean;
   block?: SimulatorBlock;
-  translate?: BlockTranslate;
+  container?: SimulatorContainer;
   mode?: 'container' | 'block';
 }
 
@@ -36,40 +38,15 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
   /* mouseup时记录一下记录到历史快照中 */
   const onMousedown = useDocumentMouseEvent({ move, down, up: history.record })
 
+  const state = shallowReactive({ focus: false, hover: false })
   const isContainer = computed(() => props.mode === 'container')
   const overflow = useResizeOverflow(designer)
 
-  /* 组件的focus状态由内部的mouse事件决定而容器的focus状态由父组件传入 */
-  const isFocus = computed(() => isContainer.value ? props.focus : props.block && props.block.focus)
-
   /* 转换容器或组件的位置和尺寸信息为统一的格式 */
-  const source = computed(() => isContainer.value ? convertContainerStyles() : convertBlockStyles())
-  function convertContainerStyles() {
-    const styles: SourceStyles = {} as SourceStyles
-    const { simulatorData } = designer
-    const { width, height } = simulatorData.value.container
-    const { x = 0, y = 0 } = props.translate || {}
-    styles.height = height
-    styles.width = width
-    styles.left = x
-    styles.top = y
-    return styles
-  }
-
-  function convertBlockStyles() {
-    const styles: SourceStyles = {} as SourceStyles
-    if (!props.block) { return styles }
-    const { currentBlockID, simulatorData } = designer
-    let { zIndex, width, height, left, top } = props.block.style
-    // 当前编辑的组件暂时放到顶层
-    if (currentBlockID.value === props.block.id) { zIndex = getMaxIndex(simulatorData.value.blocks) + 1 }
-    styles.zIndex = zIndex
-    styles.height = height
-    styles.width = width
-    styles.left = left
-    styles.top = top
-    return styles
-  }
+  const source = computed(() => {
+    if (isContainer.value) { return convertContainerStyles(props.container!) }
+    return convertBlockStyles(designer, props.block!)
+  })
 
   /* 计算样式 */
   const styles = computed(() => {
@@ -79,7 +56,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     styles.width = width + 'px'
     styles.height = height + 'px'
     styles.transform = `translate(${left}px,${top}px)`
-    styles.cursor = isFocus ? 'move' : 'pointer'
+    styles.cursor = state.focus ? 'move' : 'pointer'
     return styles
   })
 
@@ -99,8 +76,8 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
       // 编辑的是容器更新容器的信息
       const { height, width } = calculateContainerResizeStyle(options, placement)
       const updatedContainer = { height, width }
-      designer.setSimulatorContainer(updatedContainer, true)
-      overflow.setCurrentContainer(updatedContainer)
+      designer.setSimulatorContainer(updatedContainer)
+      overflow.setCurrentContainer(designer.simulatorData.value.container)
       // 检查是否溢出
       overflow.checkContainer()
     } else {
@@ -119,30 +96,59 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     emit('contextmenu', evt, props.block ? props.block.id : '')
   }
 
-  function renderResizePoints() {
-    if (!isFocus.value) { return null }
-    return (isContainer.value ? containerPlacements : blockPlacements).map(placement => (
-      <div
-        key={placement}
-        onMousedown={evt => onMousedown(evt, placement)}
-        style={generatePointStyles(placement, source.value)}
-        class="h-[8px] w-[8px] absolute bg-primary border-1 border-primary  bg-white z-1"
-      />
-    ))
-  }
+  const onMouseenter = () => state.hover = true
+  const onMouseleave = () => state.hover = false
+
+  // 编辑的是组件时focus状态由组件的focus决定
+  watch(() => [props.block?.focus, props.container?.focus], ([block, container]) => {
+    state.focus = !!(block || container)
+  }, {
+    immediate: true
+  })
 
   return (
     <div
+      id="editable"
       onMousedown={evt => !isContainer.value && emit('mousedown', evt)}
+      onMouseenter={!isContainer.value ? onMouseenter : undefined}
+      onMouseleave={!isContainer.value ? onMouseleave : undefined}
       onContextmenu={handleContextmenu}
       style={styles.value}
     >
-      {renderResizePoints()}
-      {isFocus.value && <div class={`h-full w-full absolute block-focus`} />}
+      {/* 容器的标题 */}
+      <Title
+        hover={state.hover}
+        isContainer={isContainer.value}
+        onMouseenter={onMouseenter}
+        onMouseleave={onMouseleave}
+      />
+
+      {/* 编辑点位 */}
+      <Points
+        style={source.value}
+        focus={state.focus}
+        onMousedown={onMousedown}
+        isContainer={isContainer.value}
+      />
+
+      {/* 预览边框 */}
+      <Border
+        hover={state.hover}
+        focus={state.focus}
+        isContainer={isContainer.value}
+      />
+
+      {/* 尺寸信息 */}
+      <Size
+        isContainer={isContainer.value}
+        container={props.container}
+        block={props.block}
+        focus={state.focus}
+      />
+
       {slots.default && slots.default()}
     </div>
   )
 }
-
 
 export default Editable

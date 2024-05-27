@@ -27,7 +27,7 @@ export function getRenderOptions(canvas: HTMLCanvasElement, isDark: boolean, pro
   ctx.lineWidth = 1
   ctx.strokeStyle = isDark ? '#8b8b8d' : '#8F949B'
   ctx.fillStyle = isDark ? '#8b8b8d' : '#8F949B'
-  ctx.font = '12px serif'
+  ctx.font = '10px serif'
   ctx.beginPath()
   const { offsetX, offsetY, scale } = props
   const offset = props.mode === 'horizontal' ? offsetX : offsetY
@@ -50,31 +50,21 @@ export function getRenderOptions(canvas: HTMLCanvasElement, isDark: boolean, pro
   }
 }
 
-
-
-export function horizontal({
-  ctx,
-  offset,
-  index,
-  pixelPerUnit,
-  sparsity,
-  h,
-  w,
-  gap
-}: RulerRenderOptions) {
+export function horizontal(options: RulerRenderOptions) {
+  let { ctx, offset, index, pixelPerUnit, sparsity, h, w, gap } = options
   ctx.translate(29.5, 0)
   const fixed = getFixed(sparsity)
   do {
     const num = ((offset + index) / pixelPerUnit) * sparsity
     if (isCloseToInteger(num / sparsity)) {
       ctx.moveTo(index, 0)
-      ctx.lineTo(index, h - 15)
+      ctx.lineTo(index, h - 12)
       const text = num.toFixed(fixed)
       const textWidth = ctx.measureText(text).width
-      num !== 0 && ctx.fillText(text, index - textWidth / 2, h)
+      num !== 0 && ctx.fillText(text, index - textWidth / 2, h - 3)
     } else {
       ctx.moveTo(index, 0)
-      ctx.lineTo(index, h - 20)
+      ctx.lineTo(index, h - 15)
     }
     index += gap
   } while (index < w)
@@ -89,23 +79,21 @@ export function vertical(options: RulerRenderOptions) {
     const num = ((offset + index) / pixelPerUnit) * sparsity
     if (isCloseToInteger(num / sparsity)) {
       ctx.moveTo(0, num === 0 ? index + 1 : index)
-      ctx.lineTo(w - 15, num === 0 ? index + 1 : index)
+      ctx.lineTo(w - 12, num === 0 ? index + 1 : index)
       const text = num.toFixed(fixed)
       ctx.save()
       ctx.rotate((-90 * Math.PI) / 180)
       const textWidth = ctx.measureText(text).width
-      num !== 0 && ctx.fillText(text, - ((index) + textWidth / 2), w)
+      num !== 0 && ctx.fillText(text, - ((index) + textWidth / 2), w - 3)
       ctx.rotate((0 * Math.PI) / 180)
       ctx.restore()
     } else {
       ctx.moveTo(0, index)
-      ctx.lineTo(w - 20, index)
+      ctx.lineTo(w - 15, index)
     }
     index += gap
   } while (index < h)
 }
-
-
 
 function getFixed(sparsity: number) {
   const pointIdx = String(sparsity).indexOf('.')

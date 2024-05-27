@@ -1,13 +1,15 @@
 import type { GlobalThemeOverrides } from "naive-ui";
 
+export const primaryColor = '#1A5CFF'
+
 const baseThemeOverride: GlobalThemeOverrides = {
   common: {
-    primaryColor: '#1A5CFF',
+    primaryColor: primaryColor,
     borderRadius: '0px'
   },
   Input: {
-    borderHover: '#1A5CFF',
-    borderFocus: '#1A5CFF'
+    borderHover: primaryColor,
+    borderFocus: primaryColor
   },
 
 }

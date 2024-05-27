@@ -71,7 +71,7 @@ body {
   background-position: 0 0, 0 100%, 0 0, 100% 0;
   animation: linearGradientMove .3s infinite linear; */
 
-  border: 1px solid #1A5CFF;
+  border: 2px solid #1A5CFF;
 }
 
 @keyframes linearGradientMove {

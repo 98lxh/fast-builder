@@ -4,31 +4,23 @@ import type { CSSProperties } from "vue"
 import { useMoveOverflow } from "../util/overflow";
 import { getMaxIndex, useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { type MoveListenerOptions, useDocumentMouseEvent, useEventOutside } from "~/composables/event"
-import type { BlockTranslate } from "../util/editable";
 import Editable from "./editable"
 
-import { ContextMenu } from "~/components/common";
 import { render } from "@h5-designer/material"
 
-interface DefineProps {
-  translate?: BlockTranslate;
-}
+interface DefineProps { }
 
 interface DefineEmits {
   (name: 'updateWrapperRef', wrapperRef: HTMLElement | null): void;
-  (name: 'update:translate', translate: BlockTranslate): void;
 }
 
-const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
+const Block: FC<DefineProps, DefineEmits> = function (_, { emit }) {
   const history = useHistoryContext()
   const designer = useDesignerContext()
   const overflow = useMoveOverflow(designer)
   const onMousedown = useDocumentMouseEvent({ down, move, up })
-  const contextMenuAttrs = shallowReactive({ show: false, left: 0, top: 0, blockId: '' })
 
   const wrapperRef = useEventOutside({ isOnlyChildContains: true, event: 'mousedown' }, designer.clearBlockFocus)
-
-  const translate = useVModel(props, 'translate')
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}
@@ -39,7 +31,9 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   })
 
   function down(_: MouseEvent, block: SimulatorBlock) {
-    designer.setBlockFocus(block.id)
+    const { setSimulatorContainer, setBlockFocus } = designer
+    setBlockFocus(block.id)
+    setSimulatorContainer({ focus: false })
     overflow.setCurrentBlock(block)
   }
 
@@ -63,26 +57,16 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     history.record()
   }
 
-  function handleContextMenu(evt: MouseEvent, blockId: string) {
-    evt.preventDefault()
-    const { pageX, pageY } = evt
-    contextMenuAttrs.blockId = blockId
-    contextMenuAttrs.left = pageX
-    contextMenuAttrs.top = pageY
-    contextMenuAttrs.show = true
-  }
-
   onMounted(() => emit('updateWrapperRef', wrapperRef.value))
 
   return (
     <Editable
-      focus={true}
       mode="container"
-      class="absolute top-[95px] left-[calc(50%-150px)]"
-      v-model:translate={translate.value}
+      class="absolute top-[100px] left-[calc(50%-150px)]"
+      container={designer.simulatorData.value.container}
     >
       <div
-        class={`bg-base-100 cursor-auto dark:border-0 relative`}
+        class="bg-base-100 cursor-auto dark:border-0 relative top-[50%] left-[50%] translate-[-50%]"
         {...{ 'data-theme': 'light' }}
         style={styles.value}
         ref={wrapperRef}
@@ -92,7 +76,6 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
             mode="block"
             class="absolute top-0 left-0 select-none"
             onMousedown={(evt: MouseEvent) => onMousedown(evt, block)}
-            onContextmenu={handleContextMenu}
             key={block.id}
             block={block}
           >{render(block.key, block.props)}
@@ -112,7 +95,6 @@ const Block: FC<DefineProps, DefineEmits> = function (props, { emit }) {
           };
         /*EXCLUDE*/ return <div class={classes} style={styles} />
         })()}
-        <ContextMenu {...contextMenuAttrs} {...{ 'onUpdate:show': (value: boolean) => contextMenuAttrs.show = value }} />
       </div >
     </Editable>
   )

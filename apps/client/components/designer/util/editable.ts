@@ -1,4 +1,5 @@
 import type { CSSProperties } from "vue";
+import { getMaxIndex, type DesignerContext } from "~/composables/designer";
 import type { MoveListenerOptions } from "~/composables/event";
 
 
@@ -36,9 +37,10 @@ export interface SourceStyles {
 }
 
 // 生成点样式
-export function generatePointStyles(placement: string, source: SourceStyles): CSSProperties {
+export function generatePointStyles(placement: string, source: CSSProperties): CSSProperties {
   const pointStyles: CSSProperties = {}
-  const { height, width } = source
+  let height = source.height as number
+  let width = source.width as number
 
   const { hasBottom, hasTop, hasLeft, hasRight } = getHasPosition(placement);
   let left = 0;
@@ -99,4 +101,31 @@ export function calculateContainerResizeStyle(
   left = left + (hasLeft ? disX : 0)
   top = top + (hasTop ? disY : 0)
   return { height, width, left, top, zIndex: 1 }
+}
+
+
+export function convertContainerStyles(container: SimulatorContainer) {
+  const styles: CSSProperties = {}
+  const { width, height, top, left } = container
+  // 容器边框宽高+4px把左右border的2px计算进去
+  styles.height = height + 3
+  styles.width = width + 3
+  styles.left = left
+  styles.top = top
+  return styles
+}
+
+export function convertBlockStyles(designer: DesignerContext, block: SimulatorBlock) {
+  const styles: CSSProperties = {}
+  if (!block) { return styles }
+  const { currentBlockID, simulatorData } = designer
+  let { zIndex, width, height, left, top } = block.style
+  // 当前编辑的组件暂时放到顶层
+  if (currentBlockID.value === block.id) { zIndex = getMaxIndex(simulatorData.value.blocks) + 1 }
+  styles.zIndex = zIndex
+  styles.height = height
+  styles.width = width
+  styles.left = left
+  styles.top = top
+  return styles
 }
