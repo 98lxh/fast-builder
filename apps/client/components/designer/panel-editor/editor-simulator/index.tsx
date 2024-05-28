@@ -14,12 +14,11 @@ function Simulator() {
     designer.setContainer({ left, top })
   }
 
-  const down = (evt:MouseEvent) => !(designer.simulatorRef.value?.contains(evt?.target as HTMLElement))
+  const down = (evt: MouseEvent) => !(designer.simulatorRef.value?.contains(evt?.target as HTMLElement))
   const onMousedown = useDocumentMouseEvent({ down, move })
 
   return (
-    <div
-      class="w-full h-full absolute top-[50%] left-[50%] translate-[-50%]"
+    <div class="w-full h-full absolute top-[50%] left-[50%] translate-[-50%]"
       onMousedown={onMousedown}
       ref={containerRef}
     >

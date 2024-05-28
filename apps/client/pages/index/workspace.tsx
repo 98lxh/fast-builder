@@ -1,10 +1,10 @@
-import { UpperApex, ContentArea } from "~/components/workspace"
+import Component from "~/components/workspace"
 
 function Workspace() {
   return (
     <div class="h-full flex flex-col">
-      <UpperApex />
-      <ContentArea />
+      <Component.Header />
+      <Component.Content />
     </div>
   )
 }

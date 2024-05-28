@@ -4,11 +4,11 @@ import type { Tab } from "@h5-designer/shared";
 export const workspaceTabs: Tab[] = [
   {
     label: '我的页面',
-    value: 'page'
+    value: 'Pages'
   },
   {
     label: '我的应用',
-    value: 'application'
+    value: 'Apps'
   }
 ]
 

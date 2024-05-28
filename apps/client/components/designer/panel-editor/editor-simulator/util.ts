@@ -1,5 +1,5 @@
 import type { DesignerContext } from "~/composables/designer"
-import { useCurrent } from "../current"
+import { useCurrent } from "../util"
 
 // 移动组件时是否溢出
 export function useMoveOverflow(designer: DesignerContext) {

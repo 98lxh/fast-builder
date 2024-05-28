@@ -1,6 +1,8 @@
 import type { GlobalThemeOverrides } from "naive-ui";
 
 export const primaryColor = '#1A5CFF'
+export const designerDarkColor = '#1C1C1C'
+export const designerLightColor = '#F5F5F5'
 
 const baseThemeOverride: GlobalThemeOverrides = {
   common: {
@@ -10,8 +12,7 @@ const baseThemeOverride: GlobalThemeOverrides = {
   Input: {
     borderHover: primaryColor,
     borderFocus: primaryColor
-  },
-
+  }
 }
 
 export const lightThemeOverrides: GlobalThemeOverrides = {
@@ -39,6 +40,6 @@ export const darkThemeOverrides: GlobalThemeOverrides = {
   },
   Dropdown: {
     color: '#2b2b2b'
-  },
+  }
 }
 

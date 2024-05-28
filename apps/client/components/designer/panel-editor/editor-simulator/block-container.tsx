@@ -1,5 +1,4 @@
 import type { CSSProperties } from "vue"
-import type { FC } from "vite-plugin-vueact";
 
 import { useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { type MoveListenerOptions, useDocumentMouseEvent, useEventOutside } from "~/composables/event"
@@ -7,9 +6,9 @@ import { useMoveOverflow } from "./util";
 
 import Editable from "../editable"
 import Border from "./border";
-import Block from "./block";
+import Blocks from "./blocks";
 
-function Blocks () {
+function BlockContainer() {
   const history = useHistoryContext()
   const designer = useDesignerContext()
   const overflow = useMoveOverflow(designer)
@@ -66,7 +65,7 @@ function Blocks () {
         style={styles.value}
         ref={wrapperRef}
       >
-        <Block onMousedown={onMousedown} />
+        <Blocks onMousedown={onMousedown} />
         <Border currentBlock={overflow.currentBlock.value} />
       </div >
     </Editable>
@@ -74,4 +73,4 @@ function Blocks () {
 }
 
 
-export default Blocks
+export default BlockContainer

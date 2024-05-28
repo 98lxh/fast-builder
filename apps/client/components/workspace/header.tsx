@@ -1,7 +1,7 @@
 import { NScrollbar } from "naive-ui"
 import { workspaceButtons } from "~/constants/workspace"
 
-function UpperApex() {
+function Header() {
   return (
     <div>
       <NScrollbar xScrollable={true}>
@@ -26,4 +26,4 @@ function UpperApex() {
   )
 }
 
-export default UpperApex
+export default Header

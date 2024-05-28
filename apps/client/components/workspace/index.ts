@@ -1,2 +1,5 @@
-export { default as ContentArea } from "./content-area"
-export { default as UpperApex } from "./apex"
+import Content from "./content"
+import Header from "./header"
+
+
+export default { Content, Header }

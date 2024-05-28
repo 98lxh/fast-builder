@@ -25,7 +25,7 @@ const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   return (
     !(props.isContainer) ? null : (
       <p
-        class="absolute top-[-18px] left-[2px] text-[13px] text-[#939393] dark:text-white"
+        class="absolute top-[-20px] left-[2px] text-[13px] text-[#939393] dark:text-white select-none"
         style={{ color: props.hover || data.value.container.focus ? primaryColor : undefined }}
         onMouseenter={(evt) => emit('mouseenter', evt)}
         onMouseleave={(evt) => emit('mouseleave', evt)}

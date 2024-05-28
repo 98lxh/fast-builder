@@ -6,21 +6,24 @@ export type CurrentBlock = Pick<Block, 'style' | 'id'>
 export const generateCurrentBlock = (): CurrentBlock => ({ style: { top: 0, left: 0, width: 0, height: 0, zIndex: 0 }, id: '' })
 export const generateCurrentContainer = (): Partial<Container> => ({ width: 0, height: 0 })
 
-export function useCurrent(){
-  // 当前组件信息
+export function useCurrent() {
+  /* 当前组件信息 */
   const currentBlock = ref(generateCurrentBlock())
-  // 重置当前编辑的组件
+  /* 重置当前编辑的组件 */
   const resetCurrentBlock = () => { currentBlock.value = generateCurrentBlock() }
-  // 当前容器信息
+  /* 当前容器信息 */
   const currentContainer = ref(generateCurrentContainer())
-  // 重置当前容器信息
+  /* 重置当前容器信息 */
   const resetCurrentContainer = () => { currentContainer.value = generateCurrentContainer() }
+  /* 设置当前容器 */
   const setCurrentContainer = (container: Container) => { currentContainer.value = { ...container } }
-  // 设置当前组件
+
+  /* 设置当前组件 */
   function setCurrentBlock(block: Block) {
     const { style, id } = block
     currentBlock.value = { style: cloneDeep(style), id }
   }
+
   /* 计算组件resize后的边缘 */
   function calculateResizeBlockEdge(designer: DesignerContext) {
     // 组件resize后
@@ -28,11 +31,12 @@ export function useCurrent(){
     // 当前组件的样式
     const style = currentBlock.value.style!
     const top = style.top
-    const left =  style.left
-    const right =  width - (style.left + style.width)
+    const left = style.left
+    const right = width - (style.left + style.width)
     const bottom = height - (style.top + style.height)
     return { right, bottom, left, top }
   }
+
   /* 计算组件move后的边缘 */
   function calculateMoveBlockEdge(designer: DesignerContext) {
     // 组件移动后..
@@ -50,7 +54,7 @@ export function useCurrent(){
   function calculateContainerEdge(designer: DesignerContext) {
     const { blocks } = designer.data.value
     const position = blocks.map(block => ({ right: block.style.left + block.style.width, bottom: block.style.top + block.style.height }))
-    const right =  Math.max.apply(Math, position.map(({ right }) => right))
+    const right = Math.max.apply(Math, position.map(({ right }) => right))
     const bottom = Math.max.apply(Math, position.map(({ bottom }) => bottom))
     return { right, bottom }
   }

@@ -1,16 +1,19 @@
 export interface RulerRenderOptions {
   h: number;
   w: number;
-  ctx: CanvasRenderingContext2D,
   gap: number,
   part: number,
   index: number,
   offset: number,
   sparsity: number,
   pixelPerUnit: number
+  ctx: CanvasRenderingContext2D
 }
 
-export function getRenderOptions(canvas: HTMLCanvasElement, isDark: boolean, props: any): RulerRenderOptions {
+
+
+/*生成渲染刻度的参数*/
+export function getScaleRenderOptions(canvas: HTMLCanvasElement, isDark: boolean, props: any): RulerRenderOptions {
   const { width, height } = canvas.getBoundingClientRect()
   const dpi = 2
   canvas.width = width * dpi
@@ -50,6 +53,7 @@ export function getRenderOptions(canvas: HTMLCanvasElement, isDark: boolean, pro
   }
 }
 
+/* 渲染横向的刻度 */
 export function horizontal(options: RulerRenderOptions) {
   let { ctx, offset, index, pixelPerUnit, sparsity, h, w, gap } = options
   ctx.translate(29.5, 0)
@@ -58,19 +62,19 @@ export function horizontal(options: RulerRenderOptions) {
     const num = ((offset + index) / pixelPerUnit) * sparsity
     if (isCloseToInteger(num / sparsity)) {
       ctx.moveTo(index, 0)
-      ctx.lineTo(index, h - 12)
+      ctx.lineTo(index, h - 14)
       const text = num.toFixed(fixed)
       const textWidth = ctx.measureText(text).width
-      num !== 0 && ctx.fillText(text, index - textWidth / 2, h - 3)
+      num !== 0 && ctx.fillText(text, index - textWidth / 2, h - 4)
     } else {
       ctx.moveTo(index, 0)
-      ctx.lineTo(index, h - 15)
+      ctx.lineTo(index, h - 17)
     }
     index += gap
   } while (index < w)
 }
 
-
+/* 渲染纵向的刻度 */
 export function vertical(options: RulerRenderOptions) {
   let { ctx, offset, index, pixelPerUnit, sparsity, h, w, gap } = options
   ctx.translate(0, -0.5)
@@ -79,17 +83,17 @@ export function vertical(options: RulerRenderOptions) {
     const num = ((offset + index) / pixelPerUnit) * sparsity
     if (isCloseToInteger(num / sparsity)) {
       ctx.moveTo(0, num === 0 ? index + 1 : index)
-      ctx.lineTo(w - 12, num === 0 ? index + 1 : index)
+      ctx.lineTo(w - 14, num === 0 ? index + 1 : index)
       const text = num.toFixed(fixed)
       ctx.save()
       ctx.rotate((-90 * Math.PI) / 180)
       const textWidth = ctx.measureText(text).width
-      num !== 0 && ctx.fillText(text, - ((index) + textWidth / 2), w - 3)
+      num !== 0 && ctx.fillText(text, - ((index) + textWidth / 2), w - 4)
       ctx.rotate((0 * Math.PI) / 180)
       ctx.restore()
     } else {
       ctx.moveTo(0, index)
-      ctx.lineTo(w - 15, index)
+      ctx.lineTo(w - 17, index)
     }
     index += gap
   } while (index < h)
@@ -104,7 +108,6 @@ function getFixed(sparsity: number) {
 function isCloseToInteger(num: number) {
   return Math.abs(num - Math.round(num)) < 0.0000001
 }
-
 
 function getSparsity(scale: number) {
   if (scale <= 1) {

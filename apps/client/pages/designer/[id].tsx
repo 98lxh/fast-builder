@@ -1,11 +1,7 @@
 import { useIsMobile } from "~/composables/styles/viewport"
 import "@h5-designer/material"
 
-import {
-  AttributePanel,
-  MaterialPanel,
-  Editor
-} from "~/components/designer"
+import Panel from "~/components/designer"
 
 function Designer() {
   const isMobile = useIsMobile()
@@ -18,9 +14,10 @@ function Designer() {
 
   return (
     <div class="flex h-full w-full">
-      <AttributePanel v-model:isCollapse={collapse.materialPanel} />
-      <Editor isCollapse={collapse.materialPanel} />
-      <MaterialPanel v-model:isCollapse={collapse.attributePanel} />
+      <Panel.Attribute v-model:isCollapse={collapse.attributePanel} />
+      <Panel.Editor isCollapse={collapse.materialPanel} />
+      <Panel.Materia v-model:isCollapse={collapse.materialPanel} />
+      <Panel.FixedButton />
     </div>
   )
 }

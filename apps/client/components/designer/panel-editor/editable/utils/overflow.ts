@@ -1,5 +1,5 @@
 import { type DesignerContext } from "~/composables/designer"
-import { useCurrent } from "../../current"
+import { useCurrent } from "../../util"
 
 // resize组件时是否溢出
 export function useResizeOverflow(designer: DesignerContext) {

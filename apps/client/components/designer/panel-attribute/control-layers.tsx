@@ -33,7 +33,7 @@ function ControlLayers() {
   function handleDrop({ node, dragNode }: TreeDropInfo) {
     const { key: sourceId } = dragNode;
     const { key: targetId } = node;
-    designer.swapTwoComponentIndex(sourceId as string, targetId as string)
+    // designer.swapTwoComponentIndex(sourceId as string, targetId as string)
   }
 
   function Header() {
@@ -58,7 +58,7 @@ function ControlLayers() {
     <div class="flex flex-col absolute bottom-0 w-full min-h-[300px] z-[100] bg-base-100" style={styles.value.wrapper}>
       {Header()}
       {(() => {
-        const { layers, currentBlockID, setBlockFocus } = designer
+        const { currentBlockID, setBlockFocus } = designer
         const length = layers.value.length
         const selectKeys = currentBlockID.value ? [currentBlockID.value] : []
         const data = (layers.value as unknown as TreeOption[]).map((layer: any) => ({ ...layer, label: () => renderTreeLabel(layer) }))
