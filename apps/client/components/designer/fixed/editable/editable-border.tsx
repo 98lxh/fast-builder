@@ -11,9 +11,12 @@ const Border: FC<DefineProps> = function (props) {
   const styles = computed(() => ({ borderWidth: `${props.isContainer ? 3 : 1}px` }))
 
   return (
-    visible.value
-      ? <div class="h-full w-full absolute border-primary" style={styles.value} />
-      : null
+    !visible.value ? null : (
+      <div
+        class="h-full w-full absolute border-primary"
+        style={styles.value}
+      ></div>
+    )
   )
 }
 

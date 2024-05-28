@@ -13,7 +13,7 @@ interface DefineEmits {
 }
 
 const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
-  const titleRef = useEventOutside({ event: 'click', excludeId: ['editable'] }, () => onUpdateValue(false))
+  const editableTitleRef = useEventOutside({ event: 'click', excludeId: ['editable'] }, () => onUpdateValue(false))
   const designer = useDesignerContext()
   const { data } = designer
 
@@ -30,7 +30,7 @@ const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
         onMouseenter={(evt) => emit('mouseenter', evt)}
         onMouseleave={(evt) => emit('mouseleave', evt)}
         onClick={() => onUpdateValue(true, true)}
-        ref={titleRef}
+        ref={editableTitleRef}
       >
         iPhone 14 Pro Max
       </p>

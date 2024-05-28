@@ -14,19 +14,3 @@ export const shortcutKeys = [
     keys: ['ctrl/command', 'v']
   }
 ]
-
-
-export const CONTEXT_MENU_KEYS = [
-  {
-    text: '上移一层',
-    key: 'up',
-  },
-  {
-    text: '下移一层',
-    key: 'down',
-  },
-  {
-    text: '删除',
-    key: 'delete',
-  },
-]

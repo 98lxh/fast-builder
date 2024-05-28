@@ -2,7 +2,6 @@ import type { CSSProperties } from "vue";
 import { getMaxIndex, type DesignerContext } from "~/composables/designer";
 import type { MoveListenerOptions } from "~/composables/event";
 
-
 export interface BlockTranslate { x: number; y: number }
 
 const mapPlacement2Cursor: Record<string, string> = {

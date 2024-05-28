@@ -5,7 +5,6 @@ import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/e
 
 function Simulator() {
   const designer = useDesignerContext()
-  const wrapperRef = ref<HTMLDivElement | null>(null)
   const containerRef = ref<HTMLDivElement | null>(null)
 
   function move({ deltaX, deltaY }: MoveListenerOptions) {
@@ -15,12 +14,8 @@ function Simulator() {
     designer.setContainer({ left, top })
   }
 
-  const onMousedown = useDocumentMouseEvent({
-    down: evt => !(wrapperRef.value?.contains(evt?.target as HTMLElement)),
-    move
-  })
-
-  watch(() => wrapperRef.value, () => wrapperRef.value && designer.setSimulatorRef(wrapperRef.value), { deep: true })
+  const down = (evt:MouseEvent) => !(designer.simulatorRef.value?.contains(evt?.target as HTMLElement))
+  const onMousedown = useDocumentMouseEvent({ down, move })
 
   return (
     <div
@@ -28,7 +23,7 @@ function Simulator() {
       onMousedown={onMousedown}
       ref={containerRef}
     >
-      <Blocks onUpdateWrapperRef={(ref: HTMLDivElement) => wrapperRef.value = ref} />
+      <Blocks />
     </div>
   )
 }

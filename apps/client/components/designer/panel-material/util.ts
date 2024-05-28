@@ -80,11 +80,7 @@ export function onDragstart(_: DragEvent, record: () => void, context?: Designer
 
 export function onDragend(_: DragEvent, context?: DesignerContext) {
   const simulator = context?.simulatorRef.value;
-
-  if (!simulator || !currentDropEventListener) {
-    return
-  }
-
+  if (!simulator || !currentDropEventListener) { return }
   simulator.removeEventListener('dragenter', onDragenter);
   simulator.removeEventListener('dragover', onDragover);
   simulator.removeEventListener('dragleave', onDragleave);

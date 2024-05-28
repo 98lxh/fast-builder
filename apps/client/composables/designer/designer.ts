@@ -3,11 +3,11 @@ import { devices } from "./device"
 export interface DesignerContext {
   data: Ref<DesignerData>
   setData(data: DesignerData): void
-  setSimulatorRef(simulator: HTMLDivElement | null): void
+  setSimulatorRef(simulator: HTMLElement | null): void
   setBlockById(id: string, block: Block): void
   setBlockStyleById(id: string, style: BlockStyle): void
   setContainer(container: Partial<Container>, isUpdateOriginal?: boolean): void
-  simulatorRef: Ref<HTMLDivElement | null>
+  simulatorRef: Ref<HTMLElement | null>
   clearBlockFocus(): void
   deleteBlockById(deleteId: string): void
   setBlockFocus(blockId: string): void
@@ -25,32 +25,27 @@ export function useDesigner(): DesignerContext {
   const data = ref(genarateDefaultSimulator())
   // 模拟器元素
   const simulatorRef = ref<HTMLDivElement | null>(null)
-  // 当前编辑的块的ID
+  // 当前编辑的组件的ID
   const currentBlockID = shallowRef("")
-
   /* 设置模拟器元素 */
   function setSimulatorRef(simulator: HTMLDivElement) {
     simulatorRef.value = simulator
   }
-
   /* 设置数据 */
   function setData(updatedData: DesignerData) {
     data.value = updatedData
   }
-
   /* 设置容器 */
   function setContainer(udapteValue: Partial<Container>) {
     const { container } = data.value
     const updatedContainer = { ...container, ...udapteValue }
     data.value.container = updatedContainer
   }
-
   /* 清除所有组件的focus状态 */
   function clearBlockFocus() {
     currentBlockID.value = ""
     data.value.blocks.forEach(block => block.focus = false)
   }
-
   /* 设置组件的focus状态根据组件ID */
   function setBlockFocus(blockId: string) {
     const index = data.value.blocks.findIndex(({ id }) => id === blockId)
@@ -95,17 +90,17 @@ export function useDesigner(): DesignerContext {
   // }
 
   return {
-    data,
-    setData,
+    setBlockStyleById,
+    deleteBlockById,
+    setSimulatorRef,
+    clearBlockFocus,
     currentBlockID,
     setBlockFocus,
-    simulatorRef,
-    clearBlockFocus,
-    setSimulatorRef,
-    setBlockById,
-    setBlockStyleById,
     setContainer,
-    deleteBlockById
+    setBlockById,
+    simulatorRef,
+    setData,
+    data
   }
 }
 

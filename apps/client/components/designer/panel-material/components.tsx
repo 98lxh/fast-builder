@@ -6,6 +6,7 @@ import type { CSSProperties } from "vue";
 import { NEllipsis } from "naive-ui";
 
 import { onDragstart } from "./util";
+import { chunk } from "@h5-designer/shared";
 
 interface DefineProps {
   category: string;
@@ -15,21 +16,17 @@ const Components: FC<DefineProps> = function (props) {
   const history = useHistoryContext()
   const designer = useDesignerContext()
 
-  const components = computed(() => {
-    const target = [];
-    const source = getComponents(props.category)
-    for (var i = 0; i < source.length; i += 3) {
-      target.push(source.slice(i, i + 3));
-    }
-    return target
-  })
-
   const styles = computed(() => {
     const styles: CSSProperties = {}
     const { sidebarWidth, designerCollapseSidebarWidth, designerHeaderHeight } = layout
     styles.width = `${sidebarWidth - designerCollapseSidebarWidth}px`
     styles.height = `calc(100vh - ${designerHeaderHeight}px)`
     return styles
+  })
+
+  const components = computed(() => {
+    const components = getComponents(props.category)
+    return chunk(components,3)
   })
 
   return (

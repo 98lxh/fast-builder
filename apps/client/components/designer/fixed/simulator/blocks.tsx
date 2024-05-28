@@ -1,21 +1,15 @@
+import type { CSSProperties } from "vue"
 import type { FC } from "vite-plugin-vueact";
 
-import type { CSSProperties } from "vue"
-import { getMaxIndex, useDesignerContext, useHistoryContext } from "~/composables/designer"
+import { useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { type MoveListenerOptions, useDocumentMouseEvent, useEventOutside } from "~/composables/event"
+import { useMoveOverflow } from "./util";
+
 import Editable from "../editable"
+import Border from "./border";
+import Block from "./block";
 
-import { useMoveOverflow } from "../editable/utils/overflow";
-
-import { render } from "@h5-designer/material"
-
-interface DefineProps { }
-
-interface DefineEmits {
-  (name: 'updateWrapperRef', wrapperRef: HTMLElement | null): void;
-}
-
-const Blocks: FC<DefineProps, DefineEmits> = function (_, { emit }) {
+function Blocks () {
   const history = useHistoryContext()
   const designer = useDesignerContext()
   const overflow = useMoveOverflow(designer)
@@ -58,7 +52,7 @@ const Blocks: FC<DefineProps, DefineEmits> = function (_, { emit }) {
     history.record()
   }
 
-  onMounted(() => emit('updateWrapperRef', wrapperRef.value))
+  onMounted(() => designer.setSimulatorRef(wrapperRef.value!))
 
   return (
     <Editable
@@ -72,30 +66,8 @@ const Blocks: FC<DefineProps, DefineEmits> = function (_, { emit }) {
         style={styles.value}
         ref={wrapperRef}
       >
-        {designer.data.value.blocks.map((block) => (
-          <Editable
-            mode="block"
-            class="absolute top-0 left-0 select-none"
-            onMousedown={(evt: MouseEvent) => onMousedown(evt, block)}
-            key={block.id}
-            block={block}
-          >{render(block.key, block.props)}
-          </Editable>
-        ))}
-        {(() => {
-          const { style, id } = overflow.currentBlock.value
-          if (!style || !id) /*EXCLUDE*/ return null
-          const classes = "absolute border-1 border-primary top-0 left-0 duration-150 border-dashed"
-          const { left, top, width, height } = style
-          const zIndex = getMaxIndex(designer.data.value.blocks)
-          const styles: CSSProperties = {
-            transform: `translate(${left}px,${top}px)`,
-            height: height + 'px',
-            width: width + 'px',
-            zIndex
-          };
-        /*EXCLUDE*/ return <div class={classes} style={styles} />
-        })()}
+        <Block onMousedown={onMousedown} />
+        <Border currentBlock={overflow.currentBlock.value} />
       </div >
     </Editable>
   )
