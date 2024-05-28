@@ -1,4 +1,4 @@
-import { devices } from "./device"
+import { devices } from "~/constants/devices"
 
 export interface DesignerContext {
   data: Ref<DesignerData>
@@ -16,13 +16,13 @@ export interface DesignerContext {
 
 export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
 
-export const genarateDefaultSimulator = (): DesignerData => ({
+export const genarateDefaultData = (): DesignerData => ({
   container: { top: 0, left: 0, focus: false, width: devices[0].width, height: devices[0].height },
   blocks: []
 })
 
 export function useDesigner(): DesignerContext {
-  const data = ref(genarateDefaultSimulator())
+  const data = ref(genarateDefaultData())
   // 模拟器元素
   const simulatorRef = ref<HTMLDivElement | null>(null)
   // 当前编辑的组件的ID
@@ -76,18 +76,6 @@ export function useDesigner(): DesignerContext {
     if (index === -1) { return }
     data.value.blocks.splice(index, 1)
   }
-
-  //TODO：移到useLayers 
-  // function swapTwoComponentIndex(sourceId: string, targetId: string) {
-  //   const { blocks } = data.value
-  //   const sourceIndex = blocks.findIndex(({ id }) => id === sourceId)
-  //   const targetIndex = blocks.findIndex(({ id }) => id === targetId)
-  //   if (sourceIndex === -1 || targetIndex === -1) { return }
-  //   const source = blocks[sourceIndex].style.zIndex
-  //   const target = blocks[targetIndex].style.zIndex
-  //   setBlockStyleById(sourceId, { ...blocks[sourceIndex].style, zIndex: target })
-  //   setBlockStyleById(targetId, { ...blocks[targetIndex].style, zIndex: source })
-  // }
 
   return {
     setBlockStyleById,

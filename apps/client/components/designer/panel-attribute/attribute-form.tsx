@@ -10,19 +10,13 @@ function AttributeForm() {
     {
       name: '基础',
       formItems: [
-        {
-          field: 'layer',
-          type: 'border-radius'
-        }
+        { field: 'layer', type: 'border-radius' }
       ]
     },
     {
       name: '动画',
       formItems: [
-        {
-          field: 'layer',
-          type: 'input'
-        }
+        { field: 'layer', type: 'input' }
       ]
     },
   ]

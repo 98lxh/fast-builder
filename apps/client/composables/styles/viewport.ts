@@ -13,17 +13,18 @@ const defaultOptions: ViewportOptions = {
 export function useViewport({ wait, immediate } = defaultOptions) {
   const viewport = shallowReactive({ width: 0, height: 0 });
 
+  const resize = useDebounceFn(listener, wait);
   function listener() {
     const { innerWidth, innerHeight } = window;
     viewport.height = innerHeight;
     viewport.width = innerWidth;
   }
 
-  const resize = useDebounceFn(listener, wait);
   function start() {
     if (immediate) { listener() };
     window.addEventListener("resize", resize);
   }
+
   const end = () => window.removeEventListener("resize", resize);
   tryOnMounted(start);
   tryOnUnmounted(end);

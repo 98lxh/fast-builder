@@ -1,5 +1,5 @@
 import MenuButton from "./button-menu"
-import { Header as CommonHeader } from "~/components/common"
+import { CommonHeader } from "~/components/common"
  
 import { NTabPane, NTabs } from "naive-ui"
 
