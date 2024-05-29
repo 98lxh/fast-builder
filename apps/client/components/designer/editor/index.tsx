@@ -1,15 +1,11 @@
 import type { CSSProperties } from "vue"
-import type { FC } from "vite-plugin-vueact"
 import { layout } from "~/constants/layouts"
-
-import Ruler from "./ruler"
+import { useDesignerContext } from "~/composables/designer"
 import Simulator from "./simulator"
+import Ruler from "./canvas"
 
-interface DefineProps {
-  isCollapse: boolean
-}
-
-const Editor: FC<DefineProps> = function (props) {
+function Editor() {
+  const { collapse } = useDesignerContext()
   const wrapper = ref<HTMLDivElement | null>(null)
   const size = reactive(useElementSize(wrapper))
 
@@ -23,9 +19,8 @@ const Editor: FC<DefineProps> = function (props) {
 
   const styles = computed(() => {
     const styles: CSSProperties = {}
-    const { isCollapse } = props
     const { sidebarWidth, designerCollapseSidebarWidth, mainTransition } = layout
-    styles.paddingLeft = `${isCollapse ? designerCollapseSidebarWidth : sidebarWidth}px`
+    styles.paddingLeft = `${collapse.left ? designerCollapseSidebarWidth : sidebarWidth}px`
     styles.transition = mainTransition
     return styles
   })

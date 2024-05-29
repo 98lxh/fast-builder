@@ -4,6 +4,7 @@ import type { FC } from "vite-plugin-vueact"
 import { Sidebar } from "~/components/common"
 import Components from "./components"
 import Category from "./category"
+import { useDesignerContext } from "~/composables/designer"
 
 interface DefineProps {
   isCollapse?: boolean
@@ -14,17 +15,17 @@ interface DefineEmits {
 }
 
 const MaterialPanel: FC<DefineProps, DefineEmits> = function (props) {
-  const isCollapse = useVModel(props, 'isCollapse')
+  const { collapse } = useDesignerContext()
   const currentCategory = shallowRef(getDefaultCategoryKey())
 
   function onUpdateCategory(category: string) {
     currentCategory.value = category;
-    isCollapse.value === true && (isCollapse.value = false);
+    collapse.left === true && (collapse.left = false);
   }
 
   return (
-    <Sidebar class="flex-wrap overflow-hidden" isDesigner={true} isCollapse={isCollapse.value}>
-      <Category v-model:isCollapse={isCollapse.value} category={currentCategory.value} onChange={onUpdateCategory} />
+    <Sidebar class="flex-wrap overflow-hidden" isDesigner={true} isCollapse={collapse.left}>
+      <Category v-model:isCollapse={collapse.left} category={currentCategory.value} onChange={onUpdateCategory} />
       <Components category={currentCategory.value}  />
     </Sidebar>
   )

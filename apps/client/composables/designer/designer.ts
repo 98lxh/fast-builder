@@ -1,32 +1,42 @@
 import { devices } from "~/constants/devices"
 
-export interface DesignerContext {
-  data: Ref<DesignerData>
-  setData(data: DesignerData): void
-  setSimulatorRef(simulator: HTMLElement | null): void
-  setBlockById(id: string, block: Block): void
-  setBlockStyleById(id: string, style: BlockStyle): void
-  setContainer(container: Partial<Container>, isUpdateOriginal?: boolean): void
-  simulatorRef: Ref<HTMLElement | null>
-  clearBlockFocus(): void
-  deleteBlockById(deleteId: string): void
-  setBlockFocus(blockId: string): void
-  currentBlockID: Ref<string>
-}
+// export interface DesignerContext {
+//   data: Ref<DesignerData>
+//   setData(data: DesignerData): void
+//   setBlockById(id: string, block: Block): void
+//   setSimulatorRef(simulator: HTMLElement | null): void
+//   setBlockStyleById(id: string, style: BlockStyle): void
+//   setContainer(container: Partial<Container>, isUpdateOriginal?: boolean): void
+//   deleteBlockById(deleteId: string): void
+//   setBlockFocus(blockId: string): void
+//   simulatorRef: Ref<HTMLElement | null>
+//   currentBlockID: Ref<string>
+//   clearBlockFocus(): void
+//   currentBlock: ComputedRef<Block | undefined>
+// }
 
 export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
 
 export const genarateDefaultData = (): DesignerData => ({
-  container: { top: 0, left: 0, focus: false, width: devices[0].width, height: devices[0].height },
+  container: { top: 0, left: 0, focus: false, name: devices[0].name, width: devices[0].width, height: devices[0].height },
   blocks: []
 })
 
-export function useDesigner(): DesignerContext {
+export function useDesigner() {
   const data = ref(genarateDefaultData())
+  // 左右侧面边的折叠状态
+  const collapse = shallowReactive({ left: false, right: false })
   // 模拟器元素
   const simulatorRef = ref<HTMLDivElement | null>(null)
   // 当前编辑的组件的ID
   const currentBlockID = shallowRef("")
+
+  // 当前编辑的组件
+  const currentBlock = computed(() => {
+    const block = data.value.blocks.find(({ id }) => currentBlockID.value === id)
+    return block
+  })
+
   /* 设置模拟器元素 */
   function setSimulatorRef(simulator: HTMLDivElement) {
     simulatorRef.value = simulator
@@ -78,11 +88,13 @@ export function useDesigner(): DesignerContext {
   }
 
   return {
+    collapse,
     setBlockStyleById,
     deleteBlockById,
     setSimulatorRef,
     clearBlockFocus,
     currentBlockID,
+    currentBlock,
     setBlockFocus,
     setContainer,
     setBlockById,
@@ -91,6 +103,8 @@ export function useDesigner(): DesignerContext {
     data
   }
 }
+
+export type DesignerContext = ReturnType<typeof useDesigner>
 
 // 获取最大层级
 export function getMaxIndex(blocks: Block[]) {

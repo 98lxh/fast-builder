@@ -6,8 +6,8 @@ export const hierarchyInjectionKey: InjectionKey<HierarchyContext> = Symbol('HIE
 
 export function useHierarchy(): HierarchyContext {
 
-  //TODO 交换两个组件的层级
-  // function swapTwoBlockIndex(sourceId: string, targetId: string) {
+  //TODO 交换两个组件的图层
+  // function swapTwoBlock(sourceId: string, targetId: string) {
   //   const { blocks } = data.value
   //   const sourceIndex = blocks.findIndex(({ id }) => id === sourceId)
   //   const targetIndex = blocks.findIndex(({ id }) => id === targetId)

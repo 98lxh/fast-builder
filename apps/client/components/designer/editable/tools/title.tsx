@@ -13,7 +13,7 @@ interface DefineEmits {
 }
 
 const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
-  const editableTitleRef = useEventOutside({ event: 'click', excludeId: ['editable'] }, () => onUpdateValue(false))
+  const editableTitleRef = useEventOutside({ event: 'mousedown', excludeId: ['editable'] }, () => onUpdateValue(false))
   const designer = useDesignerContext()
   const { data } = designer
 
@@ -29,10 +29,10 @@ const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
         style={{ color: props.hover || data.value.container.focus ? primaryColor : undefined }}
         onMouseenter={(evt) => emit('mouseenter', evt)}
         onMouseleave={(evt) => emit('mouseleave', evt)}
-        onClick={() => onUpdateValue(true, true)}
+        onMousedown={() => onUpdateValue(true, true)}
         ref={editableTitleRef}
       >
-        iPhone 14 Pro Max
+        { designer.data.value.container.name }
       </p>
     )
   )

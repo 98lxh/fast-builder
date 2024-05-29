@@ -17,40 +17,40 @@ function onDragleave(evt: DragEvent) {
   evt.dataTransfer!.dropEffect = 'none';
 }
 
-function generateLayer(blocks: Block[]) {
+function generateBlockName(blocks: Block[]) {
   const { key, text } = currentComponent!
-  const index = blocks.filter(block => block.key === key).length
-
-  function generator(index: number, text: string) {
-    const layer = `${text} ${index}`
-    const block = blocks.find(block => block.layer === layer)
-    if (block) { return generator(index + 1, text) }
-    return layer
+  // 找出同类组件的长度
+  const length = blocks.filter(block => block.key === key).length
+  const generator = (index: number, text: string) => {
+    // 生成一个默认名称： 文本组件 1
+    const name = `${text} ${index}`
+    // 查看是否存在这个组件名
+    const block = blocks.find(block => block.name === name)
+    if (block) return generator(index + 1, text)
+    return name
   }
-
-  return generator(index + 1, text)
+  return generator(length + 1, text)
 }
 
 function generateDropEventListener(designer: DesignerContext, record?: () => void) {
   const { setData, data, simulatorRef } = designer
   return function (evt: DragEvent) {
     if (!currentComponent || !simulatorRef.value) { return }
-
     const rect = simulatorRef.value.getBoundingClientRect()
 
     const style = {
       ...currentComponent.style,
-      left: evt.clientX - rect.x,
       top: evt.clientY - rect.y,
+      left: evt.clientX - rect.x,
       zIndex: getMaxIndex(data.value.blocks) + 1
     }
 
     const block = {
       id: nanoid(),
+      name: generateBlockName(designer.data.value.blocks),
       key: currentComponent.key,
       icon: currentComponent.icon,
       label: currentComponent.text,
-      layer: generateLayer(data.value.blocks),
       focus: false,
       style
     }
