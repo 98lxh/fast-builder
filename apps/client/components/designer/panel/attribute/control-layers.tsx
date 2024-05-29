@@ -30,11 +30,6 @@ function ControlLayers() {
     )
   }
 
-  function handleDrop({ node, dragNode }: TreeDropInfo) {
-    const { key: sourceId } = dragNode;
-    const { key: targetId } = node;
-    // designer.swapTwoComponentIndex(sourceId as string, targetId as string)
-  }
 
   function Header() {
     const { arrow } = styles.value
@@ -69,7 +64,6 @@ function ControlLayers() {
             draggable={true}
             blockLine={true}
             selectable={true}
-            onDrop={handleDrop}
             virtualScroll={true}
             style="height: 260px"
             selectedKeys={selectKeys}

@@ -3,21 +3,17 @@ import type { FC } from "vite-plugin-vueact"
 import type { CSSProperties } from "vue"
 import { useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
-import { useResizeOverflow } from "./utils/overflow"
 
-
-import Border from "./editable-border"
-import Points from "./editable-points"
-import Title from "./editable-title"
-import Size from "./editable-size"
+import { Tools } from "./"
 
 import {
-  calculateContainerResizeStyle,
   type BlockTranslate,
-  calculateResizeStyle,
+  useResizeOverflow,
+  calculateContainerResizeStyle,
   convertContainerStyles,
+  calculateResizeStyle,
   convertBlockStyles
-} from "./utils/editable"
+ } from "../utils"
 
 interface DefineProps {
   block?: Block;
@@ -116,30 +112,30 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
       style={styles.value}
     >
       {/* 容器的标题 */}
-      <Title
-        hover={state.hover}
+      <Tools.Title
         isContainer={isContainer.value}
         onMouseenter={onMouseenter}
         onMouseleave={onMouseleave}
+        hover={state.hover}
       />
 
       {/* 编辑点位 */}
-      <Points
+      <Tools.Points
+        isContainer={isContainer.value}
+        onMousedown={onMousedown}
         style={source.value}
         focus={state.focus}
-        onMousedown={onMousedown}
-        isContainer={isContainer.value}
       />
 
       {/* 预览边框 */}
-      <Border
+      <Tools.Border
+        isContainer={isContainer.value}
         hover={state.hover}
         focus={state.focus}
-        isContainer={isContainer.value}
       />
 
       {/* 尺寸信息 */}
-      <Size
+      <Tools.Size
         isContainer={isContainer.value}
         container={props.container}
         block={props.block}

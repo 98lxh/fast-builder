@@ -1,14 +1,12 @@
 import type { CSSProperties } from "vue"
-
 import { useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { type MoveListenerOptions, useDocumentMouseEvent, useEventOutside } from "~/composables/event"
-import { useMoveOverflow } from "./util";
-
-import Editable from "../editable"
+import { useMoveOverflow } from "../../utils"
+import { Editable } from "../../editable"
 import Border from "./border";
-import Blocks from "./blocks";
+import Block from "./block";
 
-function BlockContainer() {
+function Blocks() {
   const history = useHistoryContext()
   const designer = useDesignerContext()
   const overflow = useMoveOverflow(designer)
@@ -65,7 +63,7 @@ function BlockContainer() {
         style={styles.value}
         ref={wrapperRef}
       >
-        <Blocks onMousedown={onMousedown} />
+        <Block onMousedown={onMousedown} />
         <Border currentBlock={overflow.currentBlock.value} />
       </div >
     </Editable>
@@ -73,4 +71,4 @@ function BlockContainer() {
 }
 
 
-export default BlockContainer
+export default Blocks

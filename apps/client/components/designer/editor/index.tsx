@@ -2,13 +2,14 @@ import type { CSSProperties } from "vue"
 import type { FC } from "vite-plugin-vueact"
 import { layout } from "~/constants/layouts"
 
-import Editor from "./editor"
+import Ruler from "./ruler"
+import Simulator from "./simulator"
 
 interface DefineProps {
   isCollapse: boolean
 }
 
-const EditorPanel: FC<DefineProps> = function (props) {
+const Editor: FC<DefineProps> = function (props) {
   const wrapper = ref<HTMLDivElement | null>(null)
   const size = reactive(useElementSize(wrapper))
 
@@ -35,11 +36,11 @@ const EditorPanel: FC<DefineProps> = function (props) {
       style={styles.value}
       ref={wrapper}
     >
-      <Editor.Ruler mode="horizontal" {...attrs.value} />
-      <Editor.Ruler mode="vertical"  {...attrs.value} />
-      <Editor.Simulator />
+      <Ruler mode="horizontal" {...attrs.value} />
+      <Ruler mode="vertical"  {...attrs.value} />
+      <Simulator />
     </div>
   )
 }
 
-export default EditorPanel
+export default Editor

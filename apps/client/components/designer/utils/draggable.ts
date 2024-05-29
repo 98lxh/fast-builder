@@ -61,25 +61,21 @@ function generateDropEventListener(designer: DesignerContext, record?: () => voi
   }
 }
 
-export function onDragstart(_: DragEvent, record: () => void, context?: DesignerContext, component?: MaterialComponent) {
-  const simulator = context?.simulatorRef.value;
-
-  if (!simulator || !component || !context) {
-    return
-  }
-
+export function onDragstart(_: DragEvent, record: () => void, designer?: DesignerContext, component?: MaterialComponent) {
+  const simulator = designer?.simulatorRef.value;
+  if (!simulator || !component) { return }
   simulator.addEventListener('dragenter', onDragenter);
   simulator.addEventListener('dragover', onDragover);
   simulator.addEventListener('dragleave', onDragleave);
-
-  currentDropEventListener = generateDropEventListener(context, record);
+  currentDropEventListener = generateDropEventListener(designer!, record);
   simulator.addEventListener('drop', currentDropEventListener);
   currentComponent = component;
 }
 
 
-export function onDragend(_: DragEvent, context?: DesignerContext) {
-  const simulator = context?.simulatorRef.value;
+export function onDragend(_: DragEvent, designer?: DesignerContext) {
+  const simulator = designer?.simulatorRef.value;
+
   if (!simulator || !currentDropEventListener) { return }
   simulator.removeEventListener('dragenter', onDragenter);
   simulator.removeEventListener('dragover', onDragover);

@@ -1,7 +1,8 @@
 import type { CSSProperties } from "vue";
 import type { FC } from "vite-plugin-vueact";
 import { useDarkMode } from "~/composables/styles/dark";
-import { getScaleRenderOptions, vertical, horizontal } from "./util";
+
+import { ruler } from "../utils";
 
 interface DefineProps {
   mode?: 'vertical' | 'horizontal';
@@ -13,10 +14,8 @@ interface DefineProps {
 }
 
 const Ruler: FC<DefineProps> = function (props) {
-  const canvasRef = ref<HTMLCanvasElement | null>(null)
   const { isDark } = useDarkMode()
-
-
+  const canvasRef = ref<HTMLCanvasElement | null>(null)
   const styles = computed(() => {
     const styles: CSSProperties = {}
     styles.height = props.mode === 'horizontal' ? '22px' : '100%'
@@ -25,14 +24,7 @@ const Ruler: FC<DefineProps> = function (props) {
     return styles
   })
 
-  function scale() {
-    if (!canvasRef.value) { return }
-    const options = getScaleRenderOptions(canvasRef.value, isDark.value, props);
-    props.mode === 'vertical' ? vertical(options) : horizontal(options)
-    const { ctx } = options;
-    ctx.closePath()
-    ctx.stroke()
-  }
+  const scale = () => ruler.scale(canvasRef,isDark,props)
 
   watch(() => [props.height, props.width, isDark.value], useDebounceFn(scale, 50), { deep: true })
   onMounted(scale)

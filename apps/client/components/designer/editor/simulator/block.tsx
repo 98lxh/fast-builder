@@ -1,8 +1,8 @@
 import type { FC } from "vite-plugin-vueact"
 import { useDesignerContext } from "~/composables/designer"
-import { render } from "@h5-designer/material"
-import Editable from "./../editable"
+import { Editable } from "../../editable"
 
+import { render } from "@h5-designer/material"
 
 interface DefineEmits {
   (name: 'mousedown', evt: MouseEvent, block: Block): void

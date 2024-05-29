@@ -1,9 +1,7 @@
 import { cloneDeep } from "@h5-designer/shared"
 import type { DesignerContext } from "~/composables/designer"
 
-export type CurrentBlock = Pick<Block, 'style' | 'id'>
-
-export const generateCurrentBlock = (): CurrentBlock => ({ style: { top: 0, left: 0, width: 0, height: 0, zIndex: 0 }, id: '' })
+export const generateCurrentBlock = (): Block => ({ style: { top: 0, left: 0, width: 0, height: 0, zIndex: 0 }, id: '' } as Block)
 export const generateCurrentContainer = (): Partial<Container> => ({ width: 0, height: 0 })
 
 export function useCurrent() {
@@ -21,7 +19,7 @@ export function useCurrent() {
   /* 设置当前组件 */
   function setCurrentBlock(block: Block) {
     const { style, id } = block
-    currentBlock.value = { style: cloneDeep(style), id }
+    currentBlock.value = { style: cloneDeep(style), id } as Block
   }
 
   /* 计算组件resize后的边缘 */

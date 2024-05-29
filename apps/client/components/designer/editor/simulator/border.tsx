@@ -1,10 +1,9 @@
 import type { CSSProperties } from "vue"
 import type { FC } from "vite-plugin-vueact"
-import type { CurrentBlock } from "../util"
 import { getMaxIndex, useDesignerContext } from "~/composables/designer"
 
 interface DefineProps {
-  currentBlock: CurrentBlock
+  currentBlock: Block
 }
 
 const Border: FC<DefineProps> = function (props) {

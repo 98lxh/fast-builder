@@ -5,7 +5,7 @@ import { layout } from "~/constants/layouts";
 import type { CSSProperties } from "vue";
 import { NEllipsis } from "naive-ui";
 
-import { onDragstart } from "./util";
+import { onDragstart } from "../../utils";
 import { chunk } from "@h5-designer/shared";
 
 interface DefineProps {

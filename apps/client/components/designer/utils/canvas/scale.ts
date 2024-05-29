@@ -10,8 +10,6 @@ export interface RulerRenderOptions {
   ctx: CanvasRenderingContext2D
 }
 
-
-
 /*生成渲染刻度的参数*/
 export function getScaleRenderOptions(canvas: HTMLCanvasElement, isDark: boolean, props: any): RulerRenderOptions {
   const { width, height } = canvas.getBoundingClientRect()
@@ -40,17 +38,7 @@ export function getScaleRenderOptions(canvas: HTMLCanvasElement, isDark: boolean
   const gap = pixelPerUnit / part
   const index = offset % gap > 0 ? gap - (offset % gap) : -offset % gap
 
-  return {
-    h,
-    w,
-    ctx,
-    gap,
-    part,
-    index,
-    offset,
-    sparsity,
-    pixelPerUnit
-  }
+  return { h, w, ctx, gap, part, index, offset, sparsity, pixelPerUnit }
 }
 
 /* 渲染横向的刻度 */
@@ -120,4 +108,14 @@ function getSparsity(scale: number) {
     return 10
   }
   return 5
+}
+
+
+export function scale(canvasRef: Ref<HTMLCanvasElement | null>, isDark: Ref<boolean>,props:any) {
+  if (!canvasRef.value) { return }
+  const options = getScaleRenderOptions(canvasRef.value, isDark.value, props);
+  props.mode === 'vertical' ? vertical(options) : horizontal(options)
+  const { ctx } = options;
+  ctx.closePath()
+  ctx.stroke()
 }
