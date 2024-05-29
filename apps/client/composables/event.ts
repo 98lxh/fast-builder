@@ -1,4 +1,4 @@
-import { isBoolean, isFunction } from "@h5-designer/shared"
+import { isBoolean } from "@h5-designer/shared"
 
 export interface MoveListenerOptions<T = any> {
   startX: number
@@ -18,7 +18,7 @@ interface DocumentMouseEventListener<T = any> {
   up?(evt?: MouseEvent): void
 }
 
-export function useDocumentMouseEvent(listener: DocumentMouseEventListener) {
+export function useDocumentMouseEvent<T = any>(listener: DocumentMouseEventListener<T>) {
   let valve = true;
 
   function onMousedown(downEvent: MouseEvent, ...args: any[]) {
@@ -76,7 +76,7 @@ const defaultEventOutsideOptions: EventOutsideOptions = {
 
 export function useEventOutside(options = defaultEventOutsideOptions, callback: () => void) {
   const target = ref<HTMLElement | null>(null)
-  let { event, isOnlyChildContains, excludeId } = options
+  let { isOnlyChildContains, excludeId } = options
 
   const excludeElement = ref<HTMLElement[]>([])
 
@@ -101,5 +101,6 @@ export function useEventOutside(options = defaultEventOutsideOptions, callback: 
   }))
 
   onUnmounted(() => document.documentElement.removeEventListener('mousedown', listener))
+  
   return target
 }

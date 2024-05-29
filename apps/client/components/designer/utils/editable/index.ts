@@ -36,7 +36,7 @@ export interface SourceStyles {
 }
 
 // 生成点样式
-export function generatePointStyles(placement: string, source: CSSProperties): CSSProperties {
+export function generatePointStyles(placement: string, source: BlockStyle): CSSProperties {
   const pointStyles: CSSProperties = {}
   let height = source.height as number
   let width = source.width as number
@@ -104,7 +104,7 @@ export function calculateContainerResizeStyle(
 
 
 export function convertContainerStyles(container: Container) {
-  const styles: CSSProperties = {}
+  const styles: BlockStyle = {} as BlockStyle
   const { width, height, top, left } = container
   // 容器边框宽高+4px把左右border的2px计算进去
   styles.height = height + 3
@@ -115,7 +115,7 @@ export function convertContainerStyles(container: Container) {
 }
 
 export function convertBlockStyles(designer: DesignerContext, block: Block) {
-  const styles: CSSProperties = {}
+  const styles: BlockStyle = {} as BlockStyle
   if (!block) { return styles }
   const { currentBlockID, data } = designer
   let { zIndex, width, height, left, top } = block.style
@@ -127,4 +127,5 @@ export function convertBlockStyles(designer: DesignerContext, block: Block) {
   styles.left = left
   styles.top = top
   return styles
+
 }

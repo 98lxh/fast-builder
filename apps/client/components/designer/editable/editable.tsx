@@ -3,6 +3,7 @@ import type { FC } from "vite-plugin-vueact"
 import type { CSSProperties } from "vue"
 import { useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
+
 import { Tools } from "./"
 
 import {
@@ -12,7 +13,7 @@ import {
   convertContainerStyles,
   calculateResizeStyle,
   convertBlockStyles
- } from "../utils"
+} from "../utils"
 
 interface DefineProps {
   block?: Block;
@@ -30,8 +31,14 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
   const designer = useDesignerContext()
   const history = useHistoryContext()
 
-  /* mouseup时记录一下记录到历史快照中 */
-  const onMousedown = useDocumentMouseEvent({ move, down, up: history.record })
+  const onMousedown = useDocumentMouseEvent<BlockStyle>({ 
+    /* move时更新(容器or组件)的样式 */
+    move:(options, placement) => isContainer.value ? updateContainer(options!,placement) : updateBlock(options!, placement), 
+    /* mouseup时记录一下记录到历史快照中 */
+    up: history.record,
+    /* 设置选中状态并保存按下鼠标时的(容器or组件)的样式 */ 
+    down
+   })
 
   const state = shallowReactive({ focus: false, hover: false })
   const isContainer = computed(() => props.mode === 'container')
@@ -65,25 +72,22 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     return source.value
   }
 
-  /* 控制尺寸的point的Mousemove事件监听器 */
-  function move(options: MoveListenerOptions<BlockStyle>, placement: string) {
-    if (isContainer.value || !props.block) {
-      // 编辑的是容器更新容器的信息
-      const { height, width } = calculateContainerResizeStyle(options, placement)
-      const updatedContainer = { height, width }
-      designer.setContainer(updatedContainer)
-      overflow.setCurrentContainer(designer.data.value.container)
-      // 检查是否溢出
-      overflow.checkContainer()
-    } else {
-      // 编辑的是组件更新组件样式
-      const style = calculateResizeStyle(options, props.block, placement)
-      const updatedBlock = { ...props.block, style: { ...style } }
-      designer.setBlockById(props.block.id, updatedBlock)
-      overflow.setCurrentBlock(updatedBlock)
-      // 检查是否溢出
-      overflow.checkBlock()
-    }
+    /* 编辑的时容器更新容器的信息 */ 
+  function updateContainer(options: MoveListenerOptions<BlockStyle>, placement: string) {
+    const { height, width } = calculateContainerResizeStyle(options, placement)
+    const updatedContainer = { height, width }
+    designer.setContainer(updatedContainer)
+    overflow.setCurrentContainer(designer.data.value.container)
+    overflow.checkContainer()
+  }
+
+  /* 编辑时组件更新组件样式 */ 
+  function updateBlock(options: MoveListenerOptions<BlockStyle>, placement: string) {
+    const style = calculateResizeStyle(options, props.block!, placement)
+    const updatedBlock = { ...props.block!, style: { ...style } }
+    designer.setBlockById(props.block!.id, updatedBlock)
+    overflow.setCurrentBlock(updatedBlock)
+    overflow.checkBlock()
   }
 
   function handleContextmenu(evt: MouseEvent) {

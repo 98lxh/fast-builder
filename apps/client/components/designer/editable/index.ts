@@ -1,10 +1,9 @@
 import Editable from "./editable"
 
-import Points from "./tools/points"
-import Border from "./tools/border"
-import Title from "./tools/title"
-import Size from "./tools/size"
-
+import Points from "./components/points"
+import Border from "./components/border"
+import Title from "./components/title"
+import Size from "./components/size"
 
 const Tools = { Points, Border, Title, Size }
 

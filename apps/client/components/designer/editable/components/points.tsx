@@ -1,11 +1,9 @@
-import type { CSSProperties } from "vue";
 import type { FC } from "vite-plugin-vueact";
-
 import { blockPlacements, containerPlacements, generatePointStyles } from "../../utils";
 
 interface DefineProps {
   isContainer: boolean;
-  style: CSSProperties;
+  style: BlockStyle;
   focus: boolean;
 }
 
