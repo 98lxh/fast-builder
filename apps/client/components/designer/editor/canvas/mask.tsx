@@ -21,8 +21,7 @@ const Ruler: FC<DefineProps> = function (props) {
     const styles: CSSProperties = {}
     styles.height = props.mode === 'horizontal' ? '22px' : '100%'
     styles.width = props.mode === 'horizontal' ? '100%' : '22px'
-    styles.top = props.mode === 'horizontal' ? '0px' : '22px'
-    styles.opacity = 0.3
+    styles.opacity = 0.4
     return styles
   })
 
@@ -43,7 +42,7 @@ const Ruler: FC<DefineProps> = function (props) {
 
   return (
     <canvas
-      class="absolute bg-transparent block z-10"
+      class={`absolute bg-transparent block z-10 ${props.mode === 'horizontal' ? 'left-0' : 'top-0'}`}
       style={{ ...styles.value }}
       ref={canvasRef}
     />

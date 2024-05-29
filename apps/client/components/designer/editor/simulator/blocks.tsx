@@ -49,14 +49,10 @@ function Blocks() {
     history.record()
   }
 
-  onMounted(() => designer.setSimulatorRef(wrapperRef.value!))
+  onMounted(() => designer.simulatorRef.value = wrapperRef.value!)
 
   return (
-    <Editable
-      mode="container"
-      class="absolute top-[100px] left-[calc(50%-150px)]"
-      container={designer.data.value.container}
-    >
+    <Editable mode="container" class="absolute" container={designer.data.value.container}>
       <div
         class="bg-base-100 cursor-auto dark:border-0 relative top-[50%] left-[50%] translate-[-50%]"
         {...{ 'data-theme': 'light' }}

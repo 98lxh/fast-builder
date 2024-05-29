@@ -15,8 +15,7 @@ const mapPlacement2Cursor: Record<string, string> = {
   'rb': 'nwse-resize'
 }
 
-export const blockPlacements = Object.keys(mapPlacement2Cursor)
-export const containerPlacements = ['rb', 'r', 'b']
+export const placements = Object.keys(mapPlacement2Cursor)
 
 export function getHasPosition(placement: string) {
   return {
@@ -97,8 +96,8 @@ export function calculateContainerResizeStyle(
   width = width + (hasLeft ? -disX : hasRight ? disX : 0)
   height = height > 0 ? height : 0
   width = width > 0 ? width : 0
-  left = left + (hasLeft ? disX : 0)
-  top = top + (hasTop ? disY : 0)
+  // left = left + (hasLeft ? disX : 0)
+  top = top + (hasTop ? (top * 2) : 0)
   return { height, width, left, top, zIndex: 1 }
 }
 

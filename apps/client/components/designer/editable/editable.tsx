@@ -6,6 +6,7 @@ import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/e
 
 import { Tools } from "./"
 
+
 import {
   type BlockTranslate,
   useResizeOverflow,
@@ -31,14 +32,14 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
   const designer = useDesignerContext()
   const history = useHistoryContext()
 
-  const onMousedown = useDocumentMouseEvent<BlockStyle>({ 
+  const onMousedown = useDocumentMouseEvent<BlockStyle>({
     /* move时更新(容器or组件)的样式 */
-    move:(options, placement) => isContainer.value ? updateContainer(options!,placement) : updateBlock(options!, placement), 
+    move: (options, placement) => isContainer.value ? updateContainer(options!, placement) : updateBlock(options!, placement),
     /* mouseup时记录一下记录到历史快照中 */
     up: history.record,
-    /* 设置选中状态并保存按下鼠标时的(容器or组件)的样式 */ 
+    /* 设置选中状态并保存按下鼠标时的(容器or组件)的样式 */
     down
-   })
+  })
 
   const state = shallowReactive({ focus: false, hover: false })
   const isContainer = computed(() => props.mode === 'container')
@@ -57,6 +58,8 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     styles.zIndex = zIndex
     styles.width = width + 'px'
     styles.height = height + 'px'
+    const translateX = isContainer.value ? `calc(-50% + ${left}px)` : `${left}px`
+    const translateY = isContainer.value ? `calc(-50% + ${top}px)` : `${top}px`
     styles.transform = `translate(${left}px,${top}px)`
     styles.cursor = state.focus ? 'move' : 'pointer'
     return styles
@@ -72,7 +75,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     return source.value
   }
 
-    /* 编辑的时容器更新容器的信息 */ 
+  /* 编辑的时容器更新容器的信息 */
   function updateContainer(options: MoveListenerOptions<BlockStyle>, placement: string) {
     const { height, width } = calculateContainerResizeStyle(options, placement)
     const updatedContainer = { height, width }
@@ -81,7 +84,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     overflow.checkContainer()
   }
 
-  /* 编辑时组件更新组件样式 */ 
+  /* 编辑时组件更新组件样式 */
   function updateBlock(options: MoveListenerOptions<BlockStyle>, placement: string) {
     const style = calculateResizeStyle(options, props.block!, placement)
     const updatedBlock = { ...props.block!, style: { ...style } }
@@ -98,10 +101,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
   const onMouseenter = () => state.hover = true
   const onMouseleave = () => state.hover = false
 
-  // 编辑的是组件时focus状态由组件的focus决定
-  watch(() => [props.block?.focus, props.container?.focus], ([block, container]) => {
-    state.focus = !!(block || container)
-  }, {
+  watch(() => [props.block?.focus, props.container?.focus], ([block, container]) => state.focus = !!(block || container), {
     immediate: true
   })
 

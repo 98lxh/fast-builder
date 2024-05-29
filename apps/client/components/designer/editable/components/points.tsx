@@ -1,5 +1,5 @@
 import type { FC } from "vite-plugin-vueact";
-import { blockPlacements, containerPlacements, generatePointStyles } from "../../utils";
+import { placements, generatePointStyles } from "../../utils";
 
 interface DefineProps {
   isContainer: boolean;
@@ -12,9 +12,8 @@ interface DefineEmits {
 }
 
 const Points: FC<DefineProps, DefineEmits> = function (props, { emit }) {
-  const placements = computed(() => props.isContainer ? containerPlacements : blockPlacements)
   return (
-    !props.focus ? null : (placements.value.map(placement => (
+    !props.focus ? null : (placements.map(placement => (
       <div
         key={placement}
         onMousedown={evt => emit('mousedown', evt, placement)}

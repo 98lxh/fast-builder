@@ -1,4 +1,5 @@
 import type { DesignerContext } from "~/composables/designer"
+import { layout } from "~/constants/layouts"
 import { primaryColor } from "~/constants/overrides"
 
 interface ICurrent {
@@ -8,7 +9,7 @@ interface ICurrent {
 
 export function getRenderOptions(canvas: HTMLCanvasElement, current: ICurrent | null, designer: DesignerContext, props: any) {
   const { width: canvasWidth, height: canvasHeight } = canvas.getBoundingClientRect()
-  const dpi = 2
+  const dpi = 1
   canvas.width = canvasWidth * dpi
   canvas.height = canvasHeight * dpi
   canvas.style.width = canvasWidth + 'px'
@@ -30,18 +31,18 @@ export function getRenderOptions(canvas: HTMLCanvasElement, current: ICurrent | 
   let x = 0
   let y = 0
 
-  const { data, collapse } = designer
+  const { data } = designer
   const { container } = data.value
-  const { width: containerWidth, height: containerHeight, left: containerLeft, top: ContainerTop } = container
+  const { width: containerWidth, height: containerHeight, left, top } = container
 
   if (isVertical) {
-    y =  ContainerTop + ((canvasHeight / 2) - (containerHeight / 2))
-    if(isBlock) y += currentTop
-    x = -15
+    y = top // 计算出容器的y
+    if (isBlock) y += currentTop // 如果是组件根据容器的y计算组件的y
+    x = 0
   } else {
-    x = containerLeft + ((canvasWidth / 2) - (collapse.left ? containerWidth / 2 : containerWidth))
-    if(isBlock) x += currentLeft
-    y = -15
+    x = left  // 计算出容器的x
+    if (isBlock) x += currentLeft // 如果是组件根据容器的x计算组件的x
+    y = 0
   }
 
   return { height, width, x, y, ctx }

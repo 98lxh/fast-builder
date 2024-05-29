@@ -1,20 +1,5 @@
 import { devices } from "~/constants/devices"
 
-// export interface DesignerContext {
-//   data: Ref<DesignerData>
-//   setData(data: DesignerData): void
-//   setBlockById(id: string, block: Block): void
-//   setSimulatorRef(simulator: HTMLElement | null): void
-//   setBlockStyleById(id: string, style: BlockStyle): void
-//   setContainer(container: Partial<Container>, isUpdateOriginal?: boolean): void
-//   deleteBlockById(deleteId: string): void
-//   setBlockFocus(blockId: string): void
-//   simulatorRef: Ref<HTMLElement | null>
-//   currentBlockID: Ref<string>
-//   clearBlockFocus(): void
-//   currentBlock: ComputedRef<Block | undefined>
-// }
-
 export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
 
 export const genarateDefaultData = (): DesignerData => ({
@@ -27,20 +12,14 @@ export function useDesigner() {
   // 左右侧面边的折叠状态
   const collapse = shallowReactive({ left: false, right: false })
   // 模拟器元素
-  const simulatorRef = ref<HTMLDivElement | null>(null)
+  const simulatorRef = ref<HTMLElement | null>(null)
   // 当前编辑的组件的ID
   const currentBlockID = shallowRef("")
-
   // 当前编辑的组件
   const currentBlock = computed(() => {
     const block = data.value.blocks.find(({ id }) => currentBlockID.value === id)
     return block
   })
-
-  /* 设置模拟器元素 */
-  function setSimulatorRef(simulator: HTMLDivElement) {
-    simulatorRef.value = simulator
-  }
   /* 设置数据 */
   function setData(updatedData: DesignerData) {
     data.value = updatedData
@@ -91,7 +70,6 @@ export function useDesigner() {
     collapse,
     setBlockStyleById,
     deleteBlockById,
-    setSimulatorRef,
     clearBlockFocus,
     currentBlockID,
     currentBlock,
