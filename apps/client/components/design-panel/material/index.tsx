@@ -1,10 +1,10 @@
 import { getDefaultCategoryKey } from "@h5-designer/material"
+import { useDesignerContext } from "~/composables/designer"
 import type { FC } from "vite-plugin-vueact"
 
 import { Sidebar } from "~/components/common"
 import Components from "./components"
 import Category from "./category"
-import { useDesignerContext } from "~/composables/designer"
 
 interface DefineProps {
   isCollapse?: boolean

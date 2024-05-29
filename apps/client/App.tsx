@@ -1,7 +1,8 @@
 import { useDarkMode } from "./composables/styles/dark"
 import { lightThemeOverrides, darkThemeOverrides } from "./constants/overrides"
-
 import { NConfigProvider, darkTheme } from "naive-ui"
+import "@h5-designer/material"
+
 
 function App() {
   const { initDarkMode, isDark } = useDarkMode()

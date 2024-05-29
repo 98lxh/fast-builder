@@ -1,6 +1,5 @@
 import type { FC } from "vite-plugin-vueact";
 import type { CSSProperties } from "vue";
-
 import { NTooltip } from "naive-ui"
 
 import { getCategories } from "@h5-designer/material";

@@ -5,7 +5,7 @@ import { layout } from "~/constants/layouts";
 import type { CSSProperties } from "vue";
 import { NEllipsis } from "naive-ui";
 
-import { onDragstart } from "../../utils";
+import { onDragstart } from "~/utils";
 import { chunk } from "@h5-designer/shared";
 
 interface DefineProps {
@@ -26,7 +26,7 @@ const Components: FC<DefineProps> = function (props) {
 
   const components = computed(() => {
     const components = getComponents(props.category)
-    return chunk(components,3)
+    return chunk(components, 3)
   })
 
   return (

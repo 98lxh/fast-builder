@@ -1,8 +1,8 @@
 import type { CSSProperties } from "vue"
 import { useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { type MoveListenerOptions, useDocumentMouseEvent, useEventOutside } from "~/composables/event"
-import { useMoveOverflow } from "../../utils"
-import { Editable } from "../../editable"
+import Editable from "~/components/design-editable"
+import { useMoveOverflow } from "~/utils"
 import Border from "./border";
 import Block from "./block";
 

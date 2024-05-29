@@ -1,6 +1,6 @@
 import type { FC } from "vite-plugin-vueact"
 import { useDesignerContext } from "~/composables/designer"
-import { Editable } from "../../editable"
+import Editable from "~/components/design-editable"
 
 import { render } from "@h5-designer/material"
 

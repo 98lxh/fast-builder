@@ -3,9 +3,7 @@ import type { FC } from "vite-plugin-vueact"
 import type { CSSProperties } from "vue"
 import { useDesignerContext, useHistoryContext } from "~/composables/designer"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "~/composables/event"
-
-import { Tools } from "./"
-
+import Tools from "./components"
 
 import {
   type BlockTranslate,
@@ -14,7 +12,7 @@ import {
   convertContainerStyles,
   calculateResizeStyle,
   convertBlockStyles
-} from "../utils"
+} from "~/utils"
 
 interface DefineProps {
   block?: Block;
@@ -58,8 +56,6 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
     styles.zIndex = zIndex
     styles.width = width + 'px'
     styles.height = height + 'px'
-    const translateX = isContainer.value ? `calc(-50% + ${left}px)` : `${left}px`
-    const translateY = isContainer.value ? `calc(-50% + ${top}px)` : `${top}px`
     styles.transform = `translate(${left}px,${top}px)`
     styles.cursor = state.focus ? 'move' : 'pointer'
     return styles

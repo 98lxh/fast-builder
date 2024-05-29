@@ -1,24 +1,26 @@
 import { useIsMobile } from "~/composables/styles/viewport"
-import "@h5-designer/material"
-
-import { Panel, Editor } from "~/components/designer"
 import { useDesignerContext } from "~/composables/designer"
+
+import DesignPanel from "~/components/design-panel"
+import DesignView from "~/components/design-view"
+
 
 function Designer() {
   const isMobile = useIsMobile()
-
   const designer = useDesignerContext()
 
-  watch(() => isMobile.value, () => {
+  function updateCollapse() {
     designer.collapse.left = isMobile.value
     designer.collapse.right = isMobile.value
-  }, { immediate: true })
+  }
+
+  watch(() => isMobile.value, updateCollapse, { immediate: true })
 
   return (
     <div class="flex h-full w-full">
-      <Panel.Material />
-      <Editor />
-      <Panel.Attribute />
+      <DesignPanel.Material />
+      <DesignView />
+      <DesignPanel.Attribute />
     </div>
   )
 }
