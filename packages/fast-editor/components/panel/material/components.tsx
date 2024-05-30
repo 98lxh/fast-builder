@@ -1,7 +1,6 @@
 import type { CSSProperties } from "vue";
 import type { FC } from "vite-plugin-vueact";
-import { useDesignerContext, useHistoryContext } from "@fast-builder/editor/composables/designer";
-import { onDragstart } from "@fast-builder/editor/utils";
+import { useEditorContext, useHistoryContext, onDragstart } from "../../../composables";
 import { NEllipsis } from "naive-ui";
 
 import { getComponents } from "@fast-builder/material";
@@ -13,7 +12,7 @@ interface DefineProps {
 
 const Components: FC<DefineProps> = function (props) {
   const history = useHistoryContext()
-  const designer = useDesignerContext()
+  const designer = useEditorContext()
 
   const styles = computed(() => {
     const styles: CSSProperties = {}
@@ -39,7 +38,7 @@ const Components: FC<DefineProps> = function (props) {
                 onDragstart={evt => onDragstart(evt, history.record, designer, component)}
                 draggable
               >
-                <NuxtIcon name={component.icon} />
+                {/* <NuxtIcon name={component.icon} /> */}
               </div>
 
               <NEllipsis class="text-[12px] whitespace-nowrap select-none" style="max-width: 40px">

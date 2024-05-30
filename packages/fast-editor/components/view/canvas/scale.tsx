@@ -2,7 +2,7 @@ import type { CSSProperties } from "vue";
 import type { FC } from "vite-plugin-vueact";
 
 import { useDarkMode } from "@fast-builder/shared";
-import { ruler } from "@fast-builder/editor/utils";
+import { ruler } from "../../../composables";
 
 interface DefineProps {
   mode?: 'vertical' | 'horizontal';

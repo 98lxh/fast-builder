@@ -1,5 +1,5 @@
 import { cloneDeep } from "@fast-builder/shared"
-import type { DesignerContext } from "@fast-builder/editor/composables/designer"
+import type { EditorContext } from "../context"
 
 export const generateCurrentBlock = (): Block => ({ style: { top: 0, left: 0, width: 0, height: 0, zIndex: 0 }, id: '' } as Block)
 export const generateCurrentContainer = (): Partial<Container> => ({ width: 0, height: 0 })
@@ -23,7 +23,7 @@ export function useCurrent() {
   }
 
   /* 计算组件resize后的边缘 */
-  function calculateResizeBlockEdge(designer: DesignerContext) {
+  function calculateResizeBlockEdge(designer: EditorContext) {
     // 组件resize后
     const { width, height } = designer.data.value.container
     // 当前组件的样式
@@ -36,7 +36,7 @@ export function useCurrent() {
   }
 
   /* 计算组件move后的边缘 */
-  function calculateMoveBlockEdge(designer: DesignerContext) {
+  function calculateMoveBlockEdge(designer: EditorContext) {
     // 组件移动后..
     const { width, height } = designer.data.value.container
     // 当前组件的样式
@@ -49,7 +49,7 @@ export function useCurrent() {
   }
 
   /* 计算当前容器边缘 */
-  function calculateContainerEdge(designer: DesignerContext) {
+  function calculateContainerEdge(designer: EditorContext) {
     const { blocks } = designer.data.value
     const position = blocks.map(block => ({ right: block.style.left + block.style.width, bottom: block.style.top + block.style.height }))
     const right = Math.max.apply(Math, position.map(({ right }) => right))

@@ -1,12 +1,12 @@
-import type { DesignerContext } from "@fast-builder/editor/composables/designer"
 import { primaryColor } from "@fast-builder/shared"
+import type { EditorContext } from "../context"
 
 interface ICurrent {
   styles: BasicStyle,
   isBlock: boolean
 }
 
-export function getRenderOptions(canvas: HTMLCanvasElement, current: ICurrent | null, designer: DesignerContext, props: any) {
+export function getRenderOptions(canvas: HTMLCanvasElement, current: ICurrent | null, designer: EditorContext, props: any) {
   const { width: canvasWidth, height: canvasHeight } = canvas.getBoundingClientRect()
   const dpi = 1
   canvas.width = canvasWidth * dpi
@@ -47,7 +47,7 @@ export function getRenderOptions(canvas: HTMLCanvasElement, current: ICurrent | 
   return { height, width, x, y, ctx }
 }
 
-export function mask(canvas: HTMLCanvasElement | null, current: ICurrent | null, designer: DesignerContext, props: any) {
+export function mask(canvas: HTMLCanvasElement | null, current: ICurrent | null, designer: EditorContext, props: any) {
   if (!canvas) { return }
   const options = getRenderOptions(canvas, current, designer, props)
   if (!options) { return }

@@ -3,6 +3,7 @@ import type { CSSProperties } from "vue"
 import { NTooltip } from "naive-ui"
 
 import { getCategories } from "@fast-builder/material"
+import { FastIcon } from "@fast-builder/icon"
 import { layout } from "@fast-builder/shared"
 
 interface DefineProps {
@@ -35,7 +36,11 @@ const Category: FC<DefineProps, DefineEmits> = function (props, { emit }) {
 
   return (
     <div class="h-full border-r-1 relative custom-menu custom-category" style={styles.value}>
-      <div class="absolute bottom-0 left-[50%] translate-[-50%] cursor-pointer hover:text-primary" onClick={() => emit('update:isCollapse', !props.isCollapse)}>
+      <div
+        class="absolute bottom-0 left-[50%] translate-[-50%] cursor-pointer hover:text-primary"
+        onClick={() => emit('update:isCollapse', !props.isCollapse)}
+      >
+        <FastIcon name={props.isCollapse ? 'direction/right-double' : 'direction/left-double'} />
         {/* <NuxtIcon class="inline-block w-[12px] h-[12px]" name={props.isCollapse ? 'direction/right-double' : 'direction/left-double'} /> */}
       </div>
       {getCategories().map(({ key, icon, text }) => (

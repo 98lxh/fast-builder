@@ -1,8 +1,8 @@
-import { type DesignerContext } from "@fast-builder/editor/composables/designer"
+import { type EditorContext } from "../context"
 import { useCurrent } from "./current"
 
 // resize组件时是否溢出
-export function useResizeOverflow(designer: DesignerContext) {
+export function useResizeOverflow(designer: EditorContext) {
   const {
     currentBlock,
     setCurrentBlock,
@@ -72,7 +72,7 @@ export function useResizeOverflow(designer: DesignerContext) {
 
 
 // 移动组件时是否溢出
-export function useMoveOverflow(designer: DesignerContext) {
+export function useMoveOverflow(designer: EditorContext) {
   const { setCurrentBlock, currentBlock, resetCurrentBlock, calculateMoveBlockEdge } = useCurrent()
   // 检查组件在移动中是否溢出并在溢出后做相应处理
   function check() {

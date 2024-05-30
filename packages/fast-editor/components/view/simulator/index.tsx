@@ -1,10 +1,10 @@
-import { useDesignerContext } from "@fast-builder/editor/composables/designer"
+import { useEditorContext } from "../../../composables";
 import Blocks from "./blocks"
 
 import { useDocumentMouseEvent, type MoveListenerOptions } from "@fast-builder/shared"
 
 function Simulator() {
-  const designer = useDesignerContext()
+  const designer = useEditorContext()
   const containerRef = ref<HTMLDivElement | null>(null)
 
   function move({ deltaX, deltaY }: MoveListenerOptions) {

@@ -1,13 +1,13 @@
 import type { CSSProperties } from "vue"
 import type { FC } from "vite-plugin-vueact"
-import { getMaxIndex, useDesignerContext } from "@fast-builder/editor/composables/designer"
+import { useEditorContext, getMaxIndex } from "../../../composables";
 
 interface DefineProps {
   currentBlock: Block
 }
 
 const Border: FC<DefineProps> = function (props) {
-  const { data } = useDesignerContext()
+  const { data } = useEditorContext()
   const styles = computed(() => {
     const styles: CSSProperties = {}
     if (!props.currentBlock) return styles

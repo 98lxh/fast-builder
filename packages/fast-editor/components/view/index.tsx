@@ -1,5 +1,5 @@
 import type { CSSProperties } from "vue"
-import { useDesignerContext } from "@fast-builder/editor/composables/designer"
+import { useEditorContext } from "../../composables";
 import Simulator from "./simulator"
 import Ruler from "./canvas"
 
@@ -7,7 +7,7 @@ import { layout } from "@fast-builder/shared"
 
 
 function View() {
-  const { collapse } = useDesignerContext()
+  const { collapse } = useEditorContext()
   const wrapper = ref<HTMLDivElement | null>(null)
   const size = reactive(useElementSize(wrapper))
 

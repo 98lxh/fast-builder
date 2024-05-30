@@ -1,5 +1,5 @@
 import type { FC } from "vite-plugin-vueact";
-import { placements, generatePointStyles } from "@fast-builder/editor/utils";
+import { placements, generatePointStyles } from "../../composables";
 
 interface DefineProps {
   isContainer: boolean;

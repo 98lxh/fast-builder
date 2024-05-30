@@ -9,7 +9,7 @@ interface DefineProps {
 
 const EditableSize: FC<DefineProps> = function (props) {
   const size = computed(() => {
-    const { container, block,isContainer } = props
+    const { container, block, isContainer } = props
     const height = (isContainer ? container?.height : block?.style.height || 0)
     const width = (isContainer ? container?.width : block?.style.width || 0)
     return { height, width }

@@ -1,4 +1,4 @@
-import { useDesignerContext } from "@fast-builder/editor/composables/designer"
+import { useEditorContext } from "../../../composables"
 import type { FC } from "vite-plugin-vueact"
 import Components from "./components"
 import Category from "./category"
@@ -15,7 +15,7 @@ interface DefineEmits {
 }
 
 const MaterialPanel: FC<DefineProps, DefineEmits> = function (props) {
-  const { collapse } = useDesignerContext()
+  const { collapse } = useEditorContext()
   const currentCategory = shallowRef(getDefaultCategoryKey())
 
   function onUpdateCategory(category: string) {

@@ -1,6 +1,6 @@
 import type { FC } from "vite-plugin-vueact"
-import { useDesignerContext } from "@fast-builder/editor/composables/designer"
 import { primaryColor, useEventOutside } from "@fast-builder/shared"
+import { useEditorContext } from "../../composables";
 
 interface DefineProps {
   isContainer: boolean;
@@ -14,7 +14,7 @@ interface DefineEmits {
 
 const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   const editableTitleRef = useEventOutside({ event: 'mousedown', excludeId: ['editable'] }, () => onUpdateValue(false))
-  const designer = useDesignerContext()
+  const designer = useEditorContext()
   const { data } = designer
 
   function onUpdateValue(focus: boolean, clear = false) {
@@ -32,7 +32,7 @@ const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
         onMousedown={() => onUpdateValue(true, true)}
         ref={editableTitleRef}
       >
-        { designer.data.value.container.name }
+        {designer.data.value.container.name}
       </p>
     )
   )

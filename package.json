@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "unplugin-auto-import": "^0.17.5",
+    "@fast-builder/icon": "1.0.0",
     "@fast-builder/shared": "1.0.0",
     "@fast-builder/material": "1.0.0",
     "@fast-builder/editor": "1.0.0",

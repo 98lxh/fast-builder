@@ -1,8 +1,7 @@
 import type { FC } from "vite-plugin-vueact"
 import { CSSProperties } from "vue"
-import Tools from "./components"
 
-import { useDesignerContext, useHistoryContext } from "@fast-builder/editor/composables"
+import { useEditorContext, useHistoryContext } from "@fast-builder/editor/composables"
 import { useDocumentMouseEvent, type MoveListenerOptions } from "@fast-builder/shared"
 
 import {
@@ -12,7 +11,13 @@ import {
   type BlockTranslate,
   convertBlockStyles,
   useResizeOverflow
-} from "@fast-builder/editor/utils"
+} from "../../composables"
+
+import Points from "./editable-points"
+import Border from "./editabl-border"
+import Title from "./editable-title"
+import Size from "./editable-size"
+
 
 interface DefineProps {
   block?: Block;
@@ -27,7 +32,7 @@ interface DefineEmits {
 }
 
 const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
-  const designer = useDesignerContext()
+  const designer = useEditorContext()
   const history = useHistoryContext()
 
   const onMousedown = useDocumentMouseEvent<BlockStyle>({
@@ -73,8 +78,8 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
 
   /* 编辑的时容器更新容器的信息 */
   function updateContainer(options: MoveListenerOptions<BlockStyle>, placement: string) {
-    const { height, width } = calculateContainerResizeStyle(options, placement)
-    const updatedContainer = { height, width }
+    const { height, width, top, left } = calculateContainerResizeStyle(options, placement)
+    const updatedContainer = { height, width, top, left }
     designer.setContainer(updatedContainer)
     overflow.setCurrentContainer(designer.data.value.container)
     overflow.checkContainer()
@@ -111,7 +116,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
       style={styles.value}
     >
       {/* 容器的标题 */}
-      <Tools.Title
+      <Title
         isContainer={isContainer.value}
         onMouseenter={onMouseenter}
         onMouseleave={onMouseleave}
@@ -119,7 +124,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
       />
 
       {/* 编辑点位 */}
-      <Tools.Points
+      <Points
         isContainer={isContainer.value}
         onMousedown={onMousedown}
         style={source.value}
@@ -127,14 +132,14 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
       />
 
       {/* 预览边框 */}
-      <Tools.Border
+      <Border
         isContainer={isContainer.value}
         hover={state.hover}
         focus={state.focus}
       />
 
       {/* 尺寸信息 */}
-      <Tools.Size
+      <Size
         isContainer={isContainer.value}
         container={props.container}
         block={props.block}

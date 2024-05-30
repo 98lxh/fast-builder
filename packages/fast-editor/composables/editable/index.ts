@@ -1,6 +1,6 @@
 import type { CSSProperties } from "vue";
-import { getMaxIndex, type DesignerContext } from "@fast-builder/editor/composables/designer";
-import type { MoveListenerOptions } from "@fast-builder/editor/composables/event";
+import { EditorContext, getMaxIndex } from "../context";
+import type { MoveListenerOptions } from "@fast-builder/shared";
 
 export interface BlockTranslate { x: number; y: number }
 
@@ -96,8 +96,8 @@ export function calculateContainerResizeStyle(
   width = width + (hasLeft ? -disX : hasRight ? disX : 0)
   height = height > 0 ? height : 0
   width = width > 0 ? width : 0
-  // left = left + (hasLeft ? disX : 0)
-  top = top + (hasTop ? (top * 2) : 0)
+  left = left + (hasLeft ? disX : 0)
+  top = top + (hasTop ? disY : 0)
   return { height, width, left, top, zIndex: 1 }
 }
 
@@ -105,15 +105,14 @@ export function calculateContainerResizeStyle(
 export function convertContainerStyles(container: Container) {
   const styles: BlockStyle = {} as BlockStyle
   const { width, height, top, left } = container
-  // 容器边框宽高+4px把左右border的2px计算进去
-  styles.height = height + 3
-  styles.width = width + 3
+  styles.height = height
+  styles.width = width
   styles.left = left
   styles.top = top
   return styles
 }
 
-export function convertBlockStyles(designer: DesignerContext, block: Block) {
+export function convertBlockStyles(designer: EditorContext, block: Block) {
   const styles: BlockStyle = {} as BlockStyle
   if (!block) { return styles }
   const { currentBlockID, data } = designer
@@ -126,5 +125,4 @@ export function convertBlockStyles(designer: DesignerContext, block: Block) {
   styles.left = left
   styles.top = top
   return styles
-
 }

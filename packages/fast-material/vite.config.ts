@@ -6,7 +6,6 @@ import vue from "@vitejs/plugin-vue";
 import UnoCss from "unocss/vite";
 import { vitePluginVueact } from "vite-plugin-vueact"
 import AutoImport from "unplugin-auto-import/vite";
-import { resolve } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({

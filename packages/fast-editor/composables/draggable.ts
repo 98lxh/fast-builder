@@ -1,5 +1,5 @@
 import type { MaterialComponent } from "@fast-builder/material";
-import { getMaxIndex, type DesignerContext } from "@fast-builder/editor/composables/designer";
+import { EditorContext, getMaxIndex } from "./context/editor";
 import { nanoid } from "nanoid"
 
 let currentComponent: null | MaterialComponent = null
@@ -32,7 +32,7 @@ function generateBlockName(blocks: Block[]) {
   return generator(length + 1, text)
 }
 
-function generateDropEventListener(designer: DesignerContext, record?: () => void) {
+function generateDropEventListener(designer: EditorContext, record?: () => void) {
   const { setData, data, simulatorRef } = designer
   return function (evt: DragEvent) {
     if (!currentComponent || !simulatorRef.value) { return }
@@ -61,7 +61,7 @@ function generateDropEventListener(designer: DesignerContext, record?: () => voi
   }
 }
 
-export function onDragstart(_: DragEvent, record: () => void, designer?: DesignerContext, component?: MaterialComponent) {
+export function onDragstart(_: DragEvent, record: () => void, designer?: EditorContext, component?: MaterialComponent) {
   const simulator = designer?.simulatorRef.value;
   if (!simulator || !component) { return }
   simulator.addEventListener('dragenter', onDragenter);
@@ -73,7 +73,7 @@ export function onDragstart(_: DragEvent, record: () => void, designer?: Designe
 }
 
 
-export function onDragend(_: DragEvent, designer?: DesignerContext) {
+export function onDragend(_: DragEvent, designer?: EditorContext) {
   const simulator = designer?.simulatorRef.value;
 
   if (!simulator || !currentDropEventListener) { return }

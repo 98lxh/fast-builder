@@ -1,9 +1,9 @@
 import { useIsMobile } from "~/composables/styles/viewport"
-import { View, Panel, useDesignerContext } from "@fast-builder/editor"
+import { View, Panel, useEditorContext } from "@fast-builder/editor"
 
 function Designer() {
   const isMobile = useIsMobile()
-  const designer = useDesignerContext()
+  const designer = useEditorContext()
 
   function updateCollapse() {
     designer.collapse.left = isMobile.value

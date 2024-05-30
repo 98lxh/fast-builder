@@ -1,7 +1,6 @@
 import type { FC } from "vite-plugin-vueact"
+import { useEditorContext } from "../../../composables";
 import Editable from "@fast-builder/editor/components/editable"
-import { useDesignerContext } from "@fast-builder/editor/composables/designer"
-
 import { render } from "@fast-builder/material"
 
 interface DefineEmits {
@@ -9,7 +8,7 @@ interface DefineEmits {
 }
 
 const Block: FC<unknown, DefineEmits> = function (_, { emit }) {
-  const designer = useDesignerContext()
+  const designer = useEditorContext()
   return designer.data.value.blocks.map((block) => (
     <Editable
       mode="block"

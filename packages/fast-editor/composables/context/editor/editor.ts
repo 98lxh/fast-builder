@@ -1,15 +1,14 @@
 import { computed, InjectionKey, ref, shallowReactive, shallowRef } from "vue"
-
 import { devices } from "@fast-builder/editor/constants/devices"
 
-export const designerInjectionKey: InjectionKey<DesignerContext> = Symbol('DESIGNER_INJECTION_KEY')
+export const editorInjectionKey: InjectionKey<EditorContext> = Symbol('DESIGNER_INJECTION_KEY')
 
 export const genarateDefaultData = (): DesignerData => ({
   container: { top: 0, left: 0, focus: false, name: devices[0].name, width: devices[0].width, height: devices[0].height },
   blocks: []
 })
 
-export function useDesigner() {
+export function useEditor() {
   const data = ref(genarateDefaultData())
   // 左右侧面边的折叠状态
   const collapse = shallowReactive({ left: false, right: false })
@@ -84,7 +83,7 @@ export function useDesigner() {
   }
 }
 
-export type DesignerContext = ReturnType<typeof useDesigner>
+export type EditorContext = ReturnType<typeof useEditor>
 
 // 获取最大层级
 export function getMaxIndex(blocks: Block[]) {
@@ -92,7 +91,7 @@ export function getMaxIndex(blocks: Block[]) {
   return zIndex.length === 0 ? 0 : Math.max.apply(Math, zIndex)
 }
 
-export function useDesignerContext() {
-  const context = inject(designerInjectionKey, useDesigner())
+export function useEditorContext() {
+  const context = inject(editorInjectionKey, useEditor())
   return context;
 }

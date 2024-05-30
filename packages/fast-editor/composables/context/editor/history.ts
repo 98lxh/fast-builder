@@ -1,6 +1,6 @@
 import { inject, InjectionKey, ref, Ref } from "vue";
 
-import { genarateDefaultData, useDesignerContext } from "./index";
+import { genarateDefaultData, useEditorContext } from "./index";
 import { cloneDeep } from "@fast-builder/shared"
 
 interface SimulatorSnapshot {
@@ -26,7 +26,7 @@ const generateDefaultSnapshot = (): SimulatorSnapshot => ({
 })
 
 export function useHistory(): HistoryContext {
-  const designer = useDesignerContext()
+  const designer = useEditorContext()
   /* 快照信息 */
   const snapshot = ref<SimulatorSnapshot>(generateDefaultSnapshot())
   function setDoable() {

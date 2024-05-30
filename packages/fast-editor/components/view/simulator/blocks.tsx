@@ -1,7 +1,6 @@
 import type { CSSProperties } from "vue"
-import { useDesignerContext, useHistoryContext } from "@fast-builder/editor/composables/designer"
+import { useEditorContext, useHistoryContext, useMoveOverflow } from "../../../composables";
 import Editable from "@fast-builder/editor/components/editable"
-import { useMoveOverflow } from "@fast-builder/editor/utils"
 import Border from "./border";
 import Block from "./block";
 
@@ -10,7 +9,7 @@ import { type MoveListenerOptions, useDocumentMouseEvent, useEventOutside } from
 
 function Blocks() {
   const history = useHistoryContext()
-  const designer = useDesignerContext()
+  const designer = useEditorContext()
   const overflow = useMoveOverflow(designer)
   const onMousedown = useDocumentMouseEvent({ down, move, up })
 
@@ -56,7 +55,7 @@ function Blocks() {
   return (
     <Editable mode="container" class="absolute" container={designer.data.value.container}>
       <div
-        class="bg-base-100 cursor-auto dark:border-0 relative top-[50%] left-[50%] translate-[-50%]"
+        class="bg-base-100 cursor-auto dark:border-0"
         {...{ 'data-theme': 'light' }}
         style={styles.value}
         ref={wrapperRef}

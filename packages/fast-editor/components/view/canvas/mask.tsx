@@ -1,8 +1,7 @@
 import type { CSSProperties } from "vue";
 import type { FC } from "vite-plugin-vueact";
 
-import { useDesignerContext } from "@fast-builder/editor/composables/designer";
-import { ruler } from "@fast-builder/editor/utils";
+import { useEditorContext, ruler } from "../../../composables";
 
 interface DefineProps {
   mode?: 'vertical' | 'horizontal';
@@ -15,7 +14,7 @@ interface DefineProps {
 
 const Ruler: FC<DefineProps> = function (props) {
   const canvasRef = ref<HTMLCanvasElement | null>(null)
-  const designer = useDesignerContext()
+  const designer = useEditorContext()
 
   const styles = computed(() => {
     const styles: CSSProperties = {}
