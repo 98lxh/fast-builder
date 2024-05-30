@@ -1,0 +1,31 @@
+{
+  "name": "@fast-builder/website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.5.1",
+    "@types/uuid": "^9.0.8",
+    "@unocss/nuxt": "^0.59.4",
+    "@vueuse/core": "^10.9.0",
+    "@vueuse/nuxt": "^10.9.0",
+    "light-ruler": "^1.0.3",
+    "naive-ui": "^2.38.2",
+    "nuxt": "^3.11.2",
+    "nuxt-icons": "^3.2.1",
+    "pinia": "^2.1.7",
+    "vue-draggable-next": "^2.2.1",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@css-render/vue3-ssr": "^0.15.12",
+    "@unocss/eslint-config": "^0.58.6",
+    "unplugin-auto-import": "^0.17.5"
+  }
+}

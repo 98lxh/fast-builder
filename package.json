@@ -1,13 +1,13 @@
 {
-  "name": "h5-designer",
+  "name": "fast-builder",
   "version": "1.0.0",
   "packageManager": "pnpm@8.15.5",
   "main": "index.js",
   "scripts": {
-    "client:dev": "pnpm -F client dev",
-    "client:build": "pnpm -F client build",
-    "server:dev": "pnpm -F api start:dev",
-    "server:build": "pnpm -F api start:dev"
+    "website:dev": "pnpm -F @fast-builder/website dev",
+    "website:build": "pnpm -F @fast-builder/website build",
+    "server:dev": "pnpm -F @fast-builder/server start:dev",
+    "server:build": "pnpm -F @fast-builder/server start:dev"
   },
   "keywords": [],
   "author": "",
@@ -16,11 +16,14 @@
     "daisyui": "^3.9.4",
     "naive-ui": "^2.38.2",
     "nuxtjs-naive-ui": "^1.0.2",
+    "nanoid": "^5.0.7",
     "vue": "^3.4.21"
   },
   "devDependencies": {
-    "@h5-designer/shared": "1.0.0",
-    "@h5-designer/material": "1.0.0",
+    "unplugin-auto-import": "^0.17.5",
+    "@fast-builder/shared": "1.0.0",
+    "@fast-builder/material": "1.0.0",
+    "@fast-builder/editor": "1.0.0",
     "@kirklin/eslint-config": "^2.2.0",
     "@types/node": "^20.11.30",
     "@unocss/eslint-config": "^0.58.6",
