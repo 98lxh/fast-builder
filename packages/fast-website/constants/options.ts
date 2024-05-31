@@ -6,19 +6,19 @@ export const sidebarOptions = [
     patch: '/workspace',
     class: 'btn-primary',
     text: '工作空间',
-    icon: 'sidebar/page',
+    icon: 'IconWorkbench',
     isExternal: false
   },
   {
     patch: '/community',
     text: '社区资源',
-    icon: 'sidebar/community',
+    icon: 'IconCommunity',
     isExternal: false
   },
   {
     patch: '/admin',
     text: '后台管理',
-    icon: 'sidebar/admin',
+    icon: 'IconAdmin',
     isExternal: true
   }
 ];
@@ -36,7 +36,7 @@ export const designerMenuOptions: DropdownOption[] = [
   }
 ]
 
-/* 组件的contextmenu */ 
+/* 组件的contextmenu */
 export const blockContextMenuOptions = [
   {
     text: '上移一层',

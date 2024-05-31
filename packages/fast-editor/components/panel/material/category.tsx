@@ -29,7 +29,7 @@ const Category: FC<DefineProps, DefineEmits> = function (props, { emit }) {
     const classes = `w-full h-full custom-menu-item collapse relative flex-col ${active}`
     return (
       <div class={classes} onClick={() => emit('change', key)}>
-        {/* <NuxtIcon class="w-[20px] h-[20px] inline-block" name={icon}></NuxtIcon> */}
+        <FastIcon size={16} name={icon} />
       </div>
     )
   }
@@ -40,8 +40,7 @@ const Category: FC<DefineProps, DefineEmits> = function (props, { emit }) {
         class="absolute bottom-0 left-[50%] translate-[-50%] cursor-pointer hover:text-primary"
         onClick={() => emit('update:isCollapse', !props.isCollapse)}
       >
-        <FastIcon name={props.isCollapse ? 'direction/right-double' : 'direction/left-double'} />
-        {/* <NuxtIcon class="inline-block w-[12px] h-[12px]" name={props.isCollapse ? 'direction/right-double' : 'direction/left-double'} /> */}
+        <FastIcon name={props.isCollapse ? 'IconRightDouble' : 'IconLeftDouble'} />
       </div>
       {getCategories().map(({ key, icon, text }) => (
         <NTooltip placement="right" v-slots={{ trigger: () => trigger(key, icon) }}>

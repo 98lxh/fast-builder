@@ -1,0 +1,6 @@
+export { default as IconLeftDouble } from "./icon-left-double"
+export { default as IconRightDouble } from "./icon-right-double"
+export { default as IconRightThin } from "./icon-right-thin"
+export { default as IconLeftThin } from "./icon-left-thin"
+export { default as IconRight } from "./icon-right"
+export { default as IconLeft } from "./icon-left"

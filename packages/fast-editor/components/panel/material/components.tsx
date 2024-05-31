@@ -5,6 +5,7 @@ import { NEllipsis } from "naive-ui";
 
 import { getComponents } from "@fast-builder/material";
 import { chunk, layout } from "@fast-builder/shared";
+import { FastIcon } from "@fast-builder/icon";
 
 interface DefineProps {
   category: string;
@@ -38,7 +39,7 @@ const Components: FC<DefineProps> = function (props) {
                 onDragstart={evt => onDragstart(evt, history.record, designer, component)}
                 draggable
               >
-                {/* <NuxtIcon name={component.icon} /> */}
+                <FastIcon size={22} name={component.icon} />
               </div>
 
               <NEllipsis class="text-[12px] whitespace-nowrap select-none" style="max-width: 40px">

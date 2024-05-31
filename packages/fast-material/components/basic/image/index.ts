@@ -3,7 +3,7 @@ import BasisImage from "./basis-image"
 
 export default defineMaterialComponent({
   style: { width: 100, height: 40 },
-  icon: 'designer/basis/image',
+  icon: 'IconImage',
   component: BasisImage,
   key: key('image'),
   text: '图片组件',

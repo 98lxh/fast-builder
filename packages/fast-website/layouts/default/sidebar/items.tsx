@@ -1,3 +1,4 @@
+import { FastIcon } from "@fast-builder/icon"
 import type { FC } from "vite-plugin-vueact"
 import { sidebarOptions } from "~/constants/options"
 
@@ -22,9 +23,9 @@ const SidebarItems: FC<DefineProps> = function (props) {
           class={`custom-menu-item relative ${item.patch === route.path ? 'active' : ''} ${classes.value}`}
           onClick={() => toPath(item.patch, item.isExternal)}
         >
-          <NuxtIcon class="inline-block" name={item.icon}></NuxtIcon>
+          <FastIcon class="inline-block" name={item.icon}></FastIcon>
           {!props.isCollapse && <p class="text-nowrap ml-[8px]">{item.text}</p>}
-          {!props.isCollapse && item.isExternal && <NuxtIcon class="absolute inline-block right-1" name="direction/right-thin" />}
+          {!props.isCollapse && item.isExternal && <FastIcon class="absolute right-1" name="IconRightThin" />}
         </div>
       ))}
     </div>

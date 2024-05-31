@@ -1,7 +1,8 @@
 import { computed, type CSSProperties } from "vue"
 import type { FC } from "vite-plugin-vueact"
 import { layout } from "@fast-builder/shared/constants"
-import { NIcon } from "naive-ui";
+
+import { FastIcon } from "@fast-builder/icon"
 
 interface DefineProps {
   isDesigner?: boolean;
@@ -13,11 +14,13 @@ interface DefineEmits {
   (name: 'update:isCollapse', isCollapse: boolean): void
 }
 
+const IconLeft = 'IconLeft'
+const IconRight = 'IconRight'
 const Arrow: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   const icon = computed(() => {
     const { isCollapse, right } = props
-    if (!right) { return isCollapse ? 'direction/right' : 'direction/left' }
-    return isCollapse ? 'direction/left' : 'direction/right'
+    if (!right) { return isCollapse ? IconRight : IconLeft }
+    return isCollapse ? IconLeft : IconRight
   })
 
   const styles = computed(() => {
@@ -28,7 +31,7 @@ const Arrow: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   })
 
   const classes = computed(() => {
-    let base = "w-[14px] h-[40px] border-1 absolute  top-[50%] translate-[-50%] cursor-pointer duration-300 hover:color-primary"
+    let base = "w-[14px] h-[40px] border-1 absolute  top-[50%] translate-[-50%] cursor-pointer duration-300 hover:color-primary flex items-center"
     const bgClass = props.isDesigner ? 'bg-base-300 dark:bg-base-100' : 'bg-base-100'
     if (!props.right) {
       base += ` ${bgClass} border-l-0 right-[-21px]`
@@ -40,8 +43,7 @@ const Arrow: FC<DefineProps, DefineEmits> = function (props, { emit }) {
 
   return (
     <div class={classes.value} style={styles.value} onClick={() => emit('update:isCollapse', !props.isCollapse)}>
-      <NIcon>
-      </NIcon>
+      <FastIcon name={icon.value} />
     </div>
   )
 }

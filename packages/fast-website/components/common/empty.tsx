@@ -2,6 +2,7 @@ import type { FC } from "vite-plugin-vueact"
 import type { CSSProperties } from "vue";
 
 import { useMergeProps } from "@fast-builder/shared"
+import { FastIcon } from "@fast-builder/icon";
 
 interface DefineProps {
   description?: string;
@@ -33,7 +34,7 @@ const Empty: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
 
   return (
     <div class="flex flex-col justify-center items-center select-none text-blueGray" >
-      <NuxtIcon class="inline-block w-[84px] h-[80px]" name="empty" />
+      <FastIcon size={80} name="IconEmpty" />
       {slots.description ? slots.description() : <p style={styles}> {props.description} </p>}
       {button()}
     </div>

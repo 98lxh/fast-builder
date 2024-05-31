@@ -7,8 +7,7 @@ export default defineNuxtConfig({
   modules: [
     '@unocss/nuxt',
     '@vueuse/nuxt',
-    'nuxtjs-naive-ui',
-    'nuxt-icons'
+    'nuxtjs-naive-ui'
   ],
   devServer: {
     port: 8888
