@@ -1,5 +1,5 @@
 import type { MaterialComponent } from "@fast-builder/material";
-import { EditorContext, getMaxIndex } from "./context/editor";
+import { EditorContext, getMaxIndex } from "../context/editor";
 import { nanoid } from "nanoid"
 
 let currentComponent: null | MaterialComponent = null

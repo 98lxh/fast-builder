@@ -7,6 +7,7 @@ function Header() {
         <HeaderButton.Menu />
       </div>
       <div class="flex">
+        <HeaderButton.Zoom />
       </div>
     </CommonHeader >
   )

@@ -102,12 +102,13 @@ export function calculateContainerResizeStyle(
 }
 
 
-export function convertContainerStyles(container: Container) {
+export function convertContainerStyles(container: Container, zoom: string) {
   const styles: BlockStyle = {} as BlockStyle
   const { width, height, top, left } = container
   styles.height = height
   styles.width = width
   styles.left = left
+  styles.zoom = zoom
   styles.top = top
   return styles
 }

@@ -32,7 +32,7 @@ interface DefineEmits {
 }
 
 const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots }) {
-  const designer = useEditorContext()
+  const editor = useEditorContext()
   const history = useHistoryContext()
 
   const onMousedown = useDocumentMouseEvent<BlockStyle>({
@@ -46,22 +46,23 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
 
   const state = shallowReactive({ focus: false, hover: false })
   const isContainer = computed(() => props.mode === 'container')
-  const overflow = useResizeOverflow(designer)
+  const overflow = useResizeOverflow(editor)
 
   /* 转换容器或组件的位置和尺寸信息为统一的格式 */
   const source = computed(() => {
-    if (isContainer.value) { return convertContainerStyles(props.container!) }
-    return convertBlockStyles(designer, props.block!)
+    if (isContainer.value) { return convertContainerStyles(props.container!, editor.zoom.value) }
+    return convertBlockStyles(editor, props.block!)
   })
 
   /* 计算样式 */
   const styles = computed(() => {
     const styles: CSSProperties = {}
-    let { zIndex, width, height, left, top } = source.value
+    let { zIndex, width, height, left, top, zoom } = source.value
     styles.zIndex = zIndex
     styles.width = width + 'px'
     styles.height = height + 'px'
     styles.transform = `translate(${left}px,${top}px)`
+    if (zoom) styles.transform += ` scale(${zoom})`
     styles.cursor = state.focus ? 'move' : 'pointer'
     return styles
   })
@@ -80,8 +81,8 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
   function updateContainer(options: MoveListenerOptions<BlockStyle>, placement: string) {
     const { height, width, top, left } = calculateContainerResizeStyle(options, placement)
     const updatedContainer = { height, width, top, left }
-    designer.setContainer(updatedContainer)
-    overflow.setCurrentContainer(designer.data.value.container)
+    editor.setContainer(updatedContainer)
+    overflow.setCurrentContainer(editor.data.value.container)
     overflow.checkContainer()
   }
 
@@ -89,7 +90,7 @@ const Editable: FC<DefineProps, DefineEmits> = function (props, { emit, slots })
   function updateBlock(options: MoveListenerOptions<BlockStyle>, placement: string) {
     const style = calculateResizeStyle(options, props.block!, placement)
     const updatedBlock = { ...props.block!, style: { ...style } }
-    designer.setBlockById(props.block!.id, updatedBlock)
+    editor.setBlockById(props.block!.id, updatedBlock)
     overflow.setCurrentBlock(updatedBlock)
     overflow.checkBlock()
   }

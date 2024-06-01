@@ -13,9 +13,13 @@ interface DefineEmits {
 }
 
 const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
-  const editableTitleRef = useEventOutside({ event: 'mousedown', excludeId: ['editable'] }, () => onUpdateValue(false))
   const editor = useEditorContext()
   const { data } = editor
+
+  const editableTitleRef = useEventOutside({
+    event: 'mousedown',
+    excludeId: ['editable', 'attribute']
+  }, () => onUpdateValue(false))
 
   function onUpdateValue(focus: boolean, clear = false) {
     editor.setContainer({ focus })
@@ -25,7 +29,7 @@ const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   return (
     !(props.isContainer) ? null : (
       <p
-        class="absolute top-[-20px] left-[2px] text-[13px] text-[#939393] dark:text-white select-none"
+        class="absolute top-[-20px] left-[2px] text-[13px] text-[#939393] dark:text-[#616162] select-none"
         style={{ color: props.hover || data.value.container.focus ? primaryColor : undefined }}
         onMouseenter={(evt) => emit('mouseenter', evt)}
         onMouseleave={(evt) => emit('mouseleave', evt)}

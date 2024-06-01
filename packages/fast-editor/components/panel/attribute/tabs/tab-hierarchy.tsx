@@ -17,18 +17,12 @@ function TabHierarchy() {
     )
   }
 
-  function handleSelectBlock(_: string[], options: (TreeOption | null)[]) {
+  /* 选中时同时再容器中选中对应的容器or组件 */
+  function onSelect(_: string[], options: (TreeOption | null)[]) {
     const [selected] = options as unknown as Block[];
-    const { data, setBlockFocus } = editor
-
-    /* 选中容器 */
-    if (selected.key === EDITOR_CONTAINER_KEY) {
-      data.value.container.focus = true
-      return
-    }
-
-    /* 选中组件 */
-    setBlockFocus(selected.id)
+    const { setBlockFocus, setContainerFocus } = editor
+    const isContainer = selected.key === EDITOR_CONTAINER_KEY
+    isContainer ? setContainerFocus() : setBlockFocus(selected.id)
   }
 
   return (
@@ -57,7 +51,7 @@ function TabHierarchy() {
         defaultExpandAll={true}
         selectable={true}
         selectedKeys={editor.currentBlock.value ? [editor.currentBlock.value.id] : []}
-        onUpdateSelectedKeys={handleSelectBlock}
+        onUpdateSelectedKeys={onSelect}
       />
     </div>
   )

@@ -1,5 +1,6 @@
 import { computed, InjectionKey, ref, shallowReactive, shallowRef } from "vue"
 import { devices } from "@fast-builder/editor/constants/devices"
+import { zoomOptions } from "@fast-builder/shared"
 import { nanoid } from "nanoid"
 
 export const editorInjectionKey: InjectionKey<EditorContext> = Symbol('DESIGNER_INJECTION_KEY')
@@ -13,12 +14,12 @@ export function useEditor() {
   const data = ref(genarateDefaultData())
   // 左右侧面边的折叠状态
   const collapse = shallowReactive({ left: false, right: false })
-  // 模拟器元素
-  const simulatorRef = ref<HTMLElement | null>(null)
-
   // 当前编辑的组件or容器的ID
   const currentBlockID = shallowRef("")
-
+  // 模拟器元素
+  const simulatorRef = ref<HTMLElement | null>(null)
+  // 容器缩放
+  const zoom = shallowRef<string>(zoomOptions[3].key as string)
   /* 当前编辑的组件or容器 */
   const currentBlock = computed(() => {
     const { container, blocks } = data.value
@@ -36,19 +37,26 @@ export function useEditor() {
     const updatedContainer = { ...container, ...updated }
     data.value.container = updatedContainer
   }
-  /* 清除所有组件的focus状态 */
+  /* 清除所有组件or容器的focus状态 */
   function clearBlockFocus() {
     currentBlockID.value = ""
     data.value.blocks.forEach(block => block.focus = false)
   }
+
+  /* 设置组件的focus状态根据组件ID */
+  function setContainerFocus() {
+    clearBlockFocus()
+    data.value.container.focus = true
+  }
+
   /* 设置组件的focus状态根据组件ID */
   function setBlockFocus(blockId: string) {
     const index = data.value.blocks.findIndex(({ id }) => id === blockId)
     if (index < 0) { return }
     clearBlockFocus()
-    data.value.container.focus = false
-    data.value.blocks[index].focus = true
+    setContainer({ focus: false })
     currentBlockID.value = blockId
+    data.value.blocks[index].focus = true
   }
 
   /* 设置组件属性根据组件的ID */
@@ -75,6 +83,7 @@ export function useEditor() {
 
 
   return {
+    zoom,
     collapse,
     setBlockStyleById,
     deleteBlockById,
@@ -82,6 +91,7 @@ export function useEditor() {
     currentBlockID,
     currentBlock,
     setBlockFocus,
+    setContainerFocus,
     setContainer,
     setBlockById,
     simulatorRef,

@@ -3,6 +3,7 @@ declare interface BasicStyle {
   left: number;
   width: number;
   height: number;
+  zoom?: string;
 }
 
 declare interface Block {
