@@ -32,7 +32,7 @@ export function getRenderOptions(canvas: HTMLCanvasElement, current: ICurrent | 
 
   const { data } = designer
   const { container } = data.value
-  const { width: containerWidth, height: containerHeight, left, top } = container
+  const { left, top } = container
 
   if (isVertical) {
     x = 0

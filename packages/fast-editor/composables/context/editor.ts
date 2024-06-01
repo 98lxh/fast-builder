@@ -1,10 +1,11 @@
 import { computed, InjectionKey, ref, shallowReactive, shallowRef } from "vue"
 import { devices } from "@fast-builder/editor/constants/devices"
+import { nanoid } from "nanoid"
 
 export const editorInjectionKey: InjectionKey<EditorContext> = Symbol('DESIGNER_INJECTION_KEY')
 
 export const genarateDefaultData = (): DesignerData => ({
-  container: { top: 0, left: 0, focus: false, name: devices[0].name, width: devices[0].width, height: devices[0].height },
+  container: { id: nanoid(), top: 0, left: 0, focus: false, name: devices[0].name, width: devices[0].width, height: devices[0].height },
   blocks: []
 })
 
@@ -14,21 +15,25 @@ export function useEditor() {
   const collapse = shallowReactive({ left: false, right: false })
   // 模拟器元素
   const simulatorRef = ref<HTMLElement | null>(null)
-  // 当前编辑的组件的ID
+
+  // 当前编辑的组件or容器的ID
   const currentBlockID = shallowRef("")
-  // 当前编辑的组件
+
+  /* 当前编辑的组件or容器 */
   const currentBlock = computed(() => {
-    const block = data.value.blocks.find(({ id }) => currentBlockID.value === id)
-    return block
+    const { container, blocks } = data.value
+    if (container.focus) { return convertContainerToBlock(container) }
+    return blocks.find(({ id }) => currentBlockID.value === id)
   })
+
   /* 设置数据 */
   function setData(updatedData: DesignerData) {
     data.value = updatedData
   }
   /* 设置容器 */
-  function setContainer(udapteValue: Partial<Container>) {
+  function setContainer(updated: Partial<Container>) {
     const { container } = data.value
-    const updatedContainer = { ...container, ...udapteValue }
+    const updatedContainer = { ...container, ...updated }
     data.value.container = updatedContainer
   }
   /* 清除所有组件的focus状态 */
@@ -41,6 +46,7 @@ export function useEditor() {
     const index = data.value.blocks.findIndex(({ id }) => id === blockId)
     if (index < 0) { return }
     clearBlockFocus()
+    data.value.container.focus = false
     data.value.blocks[index].focus = true
     currentBlockID.value = blockId
   }
@@ -67,6 +73,7 @@ export function useEditor() {
     data.value.blocks.splice(index, 1)
   }
 
+
   return {
     collapse,
     setBlockStyleById,
@@ -90,6 +97,25 @@ export function getMaxIndex(blocks: Block[]) {
   const zIndex = blocks.map(({ style }) => Number(style.zIndex))
   return zIndex.length === 0 ? 0 : Math.max.apply(Math, zIndex)
 }
+
+
+/* 容器的key */
+export const EDITOR_CONTAINER_KEY = 'EDITOR_CONTAINER'
+/* 将容器转换成组件 */
+export function convertContainerToBlock(container: Container, blocks?: Block[]): Block {
+  const { top, left, height, width, name, focus, id } = container
+  return {
+    style: { height, width, top, left, zIndex: 0 },
+    blocks: blocks ? blocks : [],
+    key: EDITOR_CONTAINER_KEY,
+    icon: 'IconBlock',
+    label: '容器',
+    focus,
+    name,
+    id
+  }
+}
+
 
 export function useEditorContext() {
   const context = inject(editorInjectionKey, useEditor())

@@ -85,7 +85,7 @@ export function useEventOutside(options = defaultEventOutsideOptions, callback: 
     if (!target.value) { return }
     const evtTarget = evt.target as HTMLElement
     let isContains = isOnlyChildContains ? ([...target.value.childNodes]).some(el => el.contains(evt.target as HTMLElement)) : target.value.contains(evtTarget)
-    excludeElement.value.length !== 0 && (isContains = excludeElement.value.some(element => element.contains(evtTarget)))
+    excludeElement.value.length !== 0 && (isContains = isContains || excludeElement.value.some(element => element.contains(evtTarget)))
     if (isContains) { return }
     callback()
   }
@@ -102,6 +102,6 @@ export function useEventOutside(options = defaultEventOutsideOptions, callback: 
   }))
 
   onUnmounted(() => document.documentElement.removeEventListener('mousedown', listener))
-  
+
   return target
 }

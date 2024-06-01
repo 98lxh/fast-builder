@@ -1,7 +1,7 @@
 import type { CSSProperties } from "vue"
 import { useEditorContext } from "../../composables";
 import Simulator from "./simulator"
-import Ruler from "./canvas"
+import Ruler from "./ruler"
 
 import { layout } from "@fast-builder/shared"
 

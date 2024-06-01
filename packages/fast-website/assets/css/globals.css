@@ -3,14 +3,13 @@
   --pf: 223 100% 55% !important;
   --pc: 0 0% 100% !important;
   --rounded-btn: 0% !important;
-
   --b1: 0 0% 97% !important;
   --b3: 0 0% 100% !important;
   --b2: 0 0% 96% !important;
   --b4: 210 4% 11% !important;
   --un-default-border-color: #E9E9EA;
 
-
+  --primary-color: '#1A5CFF';
   --menu-text: 223 100% 55%;
 }
 
@@ -61,18 +60,7 @@ body {
   position: absolute;
 }
 
-.block-focus {
-  /* background:
-    linear-gradient(90deg,  50%, transparent 0) repeat-x,
-    linear-gradient(90deg, #1A5CFF 50%, transparent 0) repeat-x,
-    linear-gradient(0deg, #1A5CFF 50%, transparent 0) repeat-y,
-    linear-gradient(0deg, #1A5CFF 50%, transparent 0) repeat-y;
-  background-size: 4px 2px, 4px 2px, 2px 4px, 2px 4px;
-  background-position: 0 0, 0 100%, 0 0, 100% 0;
-  animation: linearGradientMove .3s infinite linear; */
-
-  border: 2px solid #1A5CFF;
-}
+.block-focus { border: 2px solid #1A5CFF; }
 
 @keyframes linearGradientMove {
   100% {
@@ -223,7 +211,11 @@ body {
   padding: 2px 5px !important;
 }
 
-
 .n-tabs-tab--active {
   font-weight: bold !important;
+}
+
+.n-tree .n-tree-node-wrapper { border:1px solid transparent }
+.n-tree .n-tree-node-wrapper:hover{
+ border: 1px solid #1A5CFF !important;
 }

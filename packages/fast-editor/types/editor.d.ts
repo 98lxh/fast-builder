@@ -13,6 +13,7 @@ declare interface Block {
   label: string; // 组件名称
   focus: boolean; // 是否选中
   style: BlockStyle; // 组件样式
+  blocks?: Block[] // 子组件
   props?: Record<string, any>; // 组件属性
 }
 
@@ -21,8 +22,9 @@ declare interface BlockStyle extends BasicStyle {
 }
 
 declare interface Container extends BasicStyle {
+  id: string // 容器ID
   name: string  // 可自定义容器名 | 图层名
-  focus: boolean; // 容器是否选中是否选中
+  focus: boolean // 容器是否选中是否选中
 }
 
 declare interface DesignerData {

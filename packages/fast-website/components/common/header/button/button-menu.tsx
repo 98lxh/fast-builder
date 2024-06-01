@@ -18,7 +18,7 @@ function MenuButton() {
   return (
     <NDropdown options={designerMenuOptions} size="small" trigger="click" placement="bottom-start" onSelect={handleSelect}>
       <button class=" btn-ghost p-[3px] h-full">
-        <FastIcon size={16} name="IconMenu" />
+        <FastIcon size={20} name="IconMenu" />
       </button >
     </NDropdown>
   )

@@ -18,7 +18,7 @@ export const workspaceButtons = [
     label: '创建页面',
     description: '拖拽组件组成一个H5页面',
     icon: 'IconPage',
-    path: '/designer/start'
+    path: '/editor/start'
   },
   {
     label: '创建应用',

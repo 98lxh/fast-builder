@@ -13,7 +13,11 @@ function Blocks() {
   const overflow = useMoveOverflow(designer)
   const onMousedown = useDocumentMouseEvent({ down, move, up })
 
-  const wrapperRef = useEventOutside({ isOnlyChildContains: true, event: 'mousedown' }, designer.clearBlockFocus)
+  const wrapperRef = useEventOutside({
+    isOnlyChildContains: true,
+    excludeId: ['attribute'],
+    event: 'mousedown'
+  }, designer.clearBlockFocus)
 
   const styles = computed<CSSProperties>(() => {
     const styles: CSSProperties = {}

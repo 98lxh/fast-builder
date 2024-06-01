@@ -14,12 +14,12 @@ interface DefineEmits {
 
 const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
   const editableTitleRef = useEventOutside({ event: 'mousedown', excludeId: ['editable'] }, () => onUpdateValue(false))
-  const designer = useEditorContext()
-  const { data } = designer
+  const editor = useEditorContext()
+  const { data } = editor
 
   function onUpdateValue(focus: boolean, clear = false) {
-    designer.setContainer({ focus })
-    clear && designer.clearBlockFocus()
+    editor.setContainer({ focus })
+    clear && editor.clearBlockFocus()
   }
 
   return (
@@ -32,7 +32,7 @@ const EditableTitle: FC<DefineProps, DefineEmits> = function (props, { emit }) {
         onMousedown={() => onUpdateValue(true, true)}
         ref={editableTitleRef}
       >
-        {designer.data.value.container.name}
+        {data.value.container.name}
       </p>
     )
   )

@@ -12,7 +12,11 @@ const baseThemeOverride: GlobalThemeOverrides = {
   Input: {
     borderHover: primaryColor,
     borderFocus: primaryColor
-  }
+  },
+  Tree: {
+    nodeWrapperPadding: '0px',
+    nodeColorHover: 'transparent'
+  },
 }
 
 export const lightThemeOverrides: GlobalThemeOverrides = {
@@ -22,14 +26,22 @@ export const lightThemeOverrides: GlobalThemeOverrides = {
   },
   Tooltip: {
     textColor: "#000000",
+    padding: '5px',
+    borderRadius: 0
   },
   Dropdown: {
     color: '#F7F7F7'
   },
   Tabs: {
     tabColorSegment: '#F7F7F7',
-    colorSegment: "#ededed",
-    tabTextColorSegment: '#A2A2A2'
+    colorSegment: "#EDEDED",
+    tabTextColorSegment: '#A2A2A2',
+    tabTextColorLine: '#9D9D9D',
+    tabTextColorActiveLine: '#4D4D4D',
+    tabTextColorHoverLine: '#4D4D4D',
+    tabFontSizeSmall: "12px",
+    barColor: '#4D4D4D',
+    tabGapSmallLine: '20px'
   }
 }
 
@@ -40,5 +52,17 @@ export const darkThemeOverrides: GlobalThemeOverrides = {
   },
   Dropdown: {
     color: '#2b2b2b'
+  },
+  Tooltip: {
+    padding: '5px',
+    borderRadius: 0,
+  },
+  Tabs: {
+    tabTextColorLine: '#929295',
+    tabTextColorActiveLine: '#D5D5D6',
+    tabTextColorHoverLine: '#D5D5D6',
+    barColor: '#D5D5D6',
+    tabGapSmallLine: '20px',
+    tabFontSizeSmall: "12px",
   }
 }

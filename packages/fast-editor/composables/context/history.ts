@@ -1,6 +1,6 @@
 import { inject, InjectionKey, ref, Ref } from "vue";
 
-import { genarateDefaultData, useEditorContext } from "./index";
+import { genarateDefaultData, useEditorContext } from "./editor";
 import { cloneDeep } from "@fast-builder/shared"
 
 interface SimulatorSnapshot {
